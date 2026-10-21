@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vali Y tế FaCare Life</title>
+<meta name="description" content="Vali Y tế Gia Đình FaCare: đo huyết áp, đường huyết, axit uric, cholesterol, nhiệt độ, cân nặng tại nhà. Chỉ số tự lưu vào ứng dụng, con cháu xem từ xa. Mua hoặc thuê theo kỳ.">
+<meta property="og:title" content="Vali Y tế Gia Đình FaCare">
+<meta property="og:description" content="Biết chỉ số sức khỏe của bố mẹ mỗi ngày, ngay tại nhà. Mua trọn bộ hoặc thuê từ 400.000đ/tháng.">
+<meta property="og:image" content="img/vali.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<style>
+/* Một cột trên điện thoại, hai cột trên máy tính. Thứ tự: vấn đề → vali gồm gì → cách dùng → giá → đặt mua */
+:root{
+  --bg:#f6f8f8; --paper:#ffffff; --ink:#18222e; --muted:#566271; --line:#dbe4e6;
+  --teal:#0f5f6b; --teal-2:#0a7b86; --teal-soft:#e4f1f2; --navy:#14264d; --gold:#b8862b; --gold-soft:#f6ecd8; --warn:#9a3b2b; --warn-soft:#f7e6e1;
+  --f:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--f)}
+img{max-width:100%;display:block}
+a{color:var(--teal-2)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{color:var(--navy);text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,6vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.5px}
+h2{font-size:clamp(24px,4vw,32px);line-height:1.2;font-weight:800}
+h3{font-size:18px}
+p{margin:0}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.btn{display:inline-block;text-decoration:none;font:inherit;font-weight:700;border:0;border-radius:10px;padding:14px 22px;cursor:pointer;text-align:center}
+.btn-main{background:var(--teal);color:#fff}
+.btn-main:hover{background:var(--teal-2)}
+.btn-line{background:transparent;color:var(--teal);border:1.5px solid var(--teal)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+section{padding-block:48px}
+
+/* đầu trang */
+.top{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;padding-block:10px}
+.brand{font-weight:800;color:var(--teal);font-size:20px;text-decoration:none}
+.brand small{display:block;font-size:12px;color:var(--muted);font-weight:500}
+.top .btn{padding:10px 16px;font-size:14px}
+
+.hero{background:linear-gradient(180deg,var(--paper),var(--bg))}
+.hero .wrap{display:grid;gap:28px;align-items:center;grid-template-columns:1fr}
+.hero .txt{display:grid;gap:16px}
+.hero .lead{font-size:18px;color:var(--muted);max-width:34em}
+.hero .cta{display:flex;flex-wrap:wrap;gap:10px}
+.hero .note{font-size:14px;color:var(--muted)}
+.hero img{border-radius:16px;box-shadow:0 18px 40px rgba(20,38,77,.16);max-height:560px;object-fit:cover;width:100%}
+@media(min-width:860px){.hero .wrap{grid-template-columns:1.05fr .95fr}}
+
+.problem{display:grid;gap:14px;grid-template-columns:1fr;margin-top:22px}
+.problem div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px}
+.problem b{display:block;color:var(--navy);margin-bottom:4px}
+@media(min-width:760px){.problem{grid-template-columns:repeat(3,1fr)}}
+
+.devices{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:22px}
+.dev{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+.dev img{aspect-ratio:4/3;object-fit:contain;background:#fff;width:100%;padding:10px}
+.dev div{padding:12px 14px;display:grid;gap:4px}
+.dev span{font-size:14px;color:var(--muted)}
+.extra{margin-top:14px;font-size:15px;color:var(--muted)}
+
+.how{counter-reset:h;display:grid;gap:12px;grid-template-columns:1fr;margin-top:22px;padding:0;list-style:none}
+.how li{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;grid-template-columns:36px 1fr;gap:12px}
+.how li::before{counter-increment:h;content:counter(h);width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:700}
+@media(min-width:860px){.how{grid-template-columns:repeat(4,1fr)}.how li{grid-template-columns:1fr}}
+
+.plans{display:grid;gap:14px;grid-template-columns:1fr;margin-top:22px}
+@media(min-width:760px){.plans{grid-template-columns:repeat(3,1fr)}}
+.plan{background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:8px;align-content:start;position:relative}
+.plan.best{border-color:var(--teal);box-shadow:0 10px 26px rgba(15,95,107,.12)}
+.ribbon{position:absolute;top:-12px;left:18px;background:var(--gold);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;letter-spacing:.04em}
+.plan .m{color:var(--teal);font-weight:700;font-size:15px}
+.plan ul{margin:0;padding-left:18px;font-size:14px;color:var(--muted);display:grid;gap:2px}
+.price{font-size:28px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+.price small{font-size:14px;color:var(--muted);font-weight:500}
+.plan .btn{margin-top:6px}
+.rent{background:var(--teal-soft);border-radius:14px;padding:18px;margin-top:16px;display:grid;gap:12px}
+.rent table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px}
+.rent td,.rent th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+.rent td.r,.rent th.r{text-align:right}
+.rent .tbl{overflow-x:auto}
+
+.trust{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:22px}
+.trust div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.trust b{display:block;color:var(--navy)}
+
+/* đặt mua */
+.order{background:var(--paper)}
+.form{display:grid;gap:14px;max-width:640px;margin-top:20px}
+label{display:block;font-size:14px;color:var(--muted);margin-bottom:4px;font-weight:600}
+input,select,textarea{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+textarea{min-height:80px}
+.row2{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:560px){.row2{grid-template-columns:2fr 1fr}}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.chk input{width:auto;margin-top:5px}
+.sum{display:flex;justify-content:space-between;align-items:baseline;background:var(--teal-soft);border-radius:10px;padding:12px 14px;font-weight:700;color:var(--navy)}
+.sum span:last-child{font-size:22px;font-variant-numeric:tabular-nums}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.msg{padding:12px 14px;border-radius:10px;font-size:15px}
+.err{background:var(--warn-soft);color:var(--warn)}
+.done{background:var(--teal-soft);border-radius:14px;padding:18px;display:grid;gap:10px}
+.done table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.done td{padding:6px 0;border-bottom:1px solid var(--line)} .done td.r{text-align:right}
+.ref{font-size:14px;color:var(--muted)}
+
+footer{background:var(--navy);color:#dfe6f2;padding-block:28px;font-size:14px}
+footer .wrap{display:grid;gap:8px}
+footer b{color:#fff}
+.disclaimer{opacity:.85}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">FaCare Life<small>Bác sĩ gia đình tại nhà</small></a>
+    <a class="btn btn-main" href="#dat-mua">Đặt mua</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="txt">
+      <div class="eyebrow">Vali Y tế Gia Đình FaCare</div>
+      <h1>Biết chỉ số sức khỏe của bố mẹ mỗi ngày, ngay tại nhà</h1>
+      <p class="lead">Một vali gồm các thiết bị đo huyết áp, đường huyết, axit uric, cholesterol, nhiệt độ và cân nặng. Đo xong, chỉ số tự lưu vào ứng dụng FaCare. Con cháu ở xa vẫn xem được.</p>
+      <div class="cta"><a class="btn btn-main" href="#gia">Xem giá và lựa chọn</a><a class="btn btn-line" href="#dat-mua">Đặt mua ngay</a></div>
+      <p class="note">Giao tận nhà · Hướng dẫn sử dụng miễn phí · Bảo hành 24 tháng, máy sinh hoá bảo hành trọn đời</p>
+    </div>
+    <img src="img/vali.jpg" alt="Vali Y tế Gia Đình FaCare mở nắp, bên trong có máy đo huyết áp, nhiệt kế, máy đo sinh hoá, que thử" width="560" height="724">
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Vì sao cần đo tại nhà</div>
+    <h2>Một lần khám mỗi năm là chưa đủ</h2>
+    <div class="problem">
+      <div><b>Bệnh thường không báo trước</b>Huyết áp, đường huyết, mỡ máu tăng thường không gây đau. Chỉ đo thường xuyên mới thấy được.</div>
+      <div><b>Con cháu ở xa</b>Nhiều gia đình chỉ biết chỉ số của bố mẹ khi đưa ông bà đi viện. Đo tại nhà giúp cả nhà theo dõi hằng ngày.</div>
+      <div><b>Ghi chép dễ quên</b>Thiết bị kết nối ứng dụng, chỉ số tự lưu theo ngày giờ, xem lại được xu hướng theo tuần, theo tháng.</div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--paper)">
+  <div class="wrap">
+    <div class="eyebrow">Trong Vali Gia Đình 1</div>
+    <h2>Đủ thiết bị đo các chỉ số quan trọng của cả nhà</h2>
+    <div class="devices">
+      <div class="dev"><img src="img/huyet-ap.jpg" alt="Máy đo huyết áp điện tử FaCare FT-C24Y" loading="lazy"><div><h3>Máy đo huyết áp FT-C24Y</h3><span>Huyết áp và nhịp tim. Bảo hành 24 tháng.</span></div></div>
+      <div class="dev"><img src="img/sinh-hoa.jpg" alt="Thiết bị đo sinh hoá cầm tay 5in1 FaCare" loading="lazy"><div><h3>Máy đo sinh hoá 5in1</h3><span>Đường huyết, cholesterol, axit uric, ketone, lactate từ một giọt máu đầu ngón tay. Bảo hành trọn đời.</span></div></div>
+      <div class="dev"><img src="img/nhiet-ke.jpg" alt="Nhiệt kế hồng ngoại đo trán FaCare FT-F31" loading="lazy"><div><h3>Nhiệt kế hồng ngoại FT-F31</h3><span>Đo trán nhanh, không tiếp xúc, dùng được cho trẻ nhỏ. Bảo hành 24 tháng.</span></div></div>
+      <div class="dev"><img src="img/can.jpg" alt="Cân bàn điện tử SMC-268" loading="lazy"><div><h3>Cân bàn điện tử SMC-268</h3><span>Theo dõi cân nặng, nền tảng của dinh dưỡng và vận động. Bảo hành 24 tháng.</span></div></div>
+    </div>
+    <p class="extra">Kèm theo: que thử đường huyết (25 que), axit uric (10 que), cholesterol (10 que), 50 kim lấy máu, túi hộp 15 ngăn. Tặng túi xách cao cấp khi mua trọn bộ.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Cách dùng</div>
+    <h2>Đo tại nhà, cả nhà cùng theo dõi</h2>
+    <ol class="how">
+      <li><div><b>Nhận vali tận nhà</b><br>Nhân viên hoặc cộng tác viên hướng dẫn cách đo và cài ứng dụng.</div></li>
+      <li><div><b>Đo hằng ngày</b><br>Thao tác đơn giản, phù hợp người cao tuổi.</div></li>
+      <li><div><b>Chỉ số tự lưu</b><br>Kết nối Bluetooth với ứng dụng FaCare, lưu vào hồ sơ sức khỏe gia đình.</div></li>
+      <li><div><b>Có người đồng hành</b><br>Gia đình có thể đăng ký thêm gói bác sĩ gia đình đồng hành để được theo dõi và tư vấn từ xa.</div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="gia" style="background:var(--paper)">
+  <div class="wrap">
+    <div class="eyebrow">Giá đã gồm VAT, giao tận nhà</div>
+    <h2>Chọn bộ phù hợp với gia đình</h2>
+    <div class="plans">
+      <div class="plan best"><span class="ribbon">ĐƯỢC CHỌN NHIỀU</span>
+        <h3>Vali Gia Đình 1</h3><div class="m">Máy sinh hoá 5in1</div>
+        <ul><li>Huyết áp, đường huyết, axit uric, cholesterol</li><li>Nhiệt độ, cân nặng</li><li>Que thử 3 loại, kim, túi hộp</li></ul>
+        <div class="price">7.624.500đ</div>
+        <a class="btn btn-main" href="#dat-mua" data-sp="VALI-GD1">Chọn mua</a>
+      </div>
+      <div class="plan">
+        <h3>Vali Gia Đình 2</h3><div class="m">Máy đo đường huyết</div>
+        <ul><li>Huyết áp, đường huyết</li><li>Nhiệt độ, cân nặng</li><li>Hợp gia đình có người theo dõi tiểu đường</li></ul>
+        <div class="price">6.700.500đ</div>
+        <a class="btn btn-line" href="#dat-mua" data-sp="VALI-GD2">Chọn mua</a>
+      </div>
+      <div class="plan">
+        <h3>Vali Huấn luyện viên</h3><div class="m">Máy 7in1 và máy đường huyết</div>
+        <ul><li>Đường huyết, cholesterol, triglyceride, axit uric, ketone, lactate, hemoglobin</li><li>Huyết áp bắp tay, nhiệt độ, cân nặng</li><li>Dành cho người đo cho nhiều khách</li></ul>
+        <div class="price">9.483.000đ</div>
+        <a class="btn btn-line" href="#dat-mua" data-sp="VALI-HLV">Chọn mua</a>
+      </div>
+    </div>
+    <div class="rent">
+      <h3>Hoặc thuê Vali Gia Đình 1 theo kỳ</h3>
+      <div class="tbl"><table>
+        <tr><th>Kỳ thuê</th><th class="r">Trả trọn kỳ</th><th class="r">Bình quân mỗi tháng</th><th></th></tr>
+        <tr><td>3 tháng</td><td class="r">1.770.000đ</td><td class="r">590.000đ</td><td class="r"><a href="#dat-mua" data-sp="THUE-GD1-03">Chọn</a></td></tr>
+        <tr><td>6 tháng</td><td class="r">3.120.000đ</td><td class="r">520.000đ</td><td class="r"><a href="#dat-mua" data-sp="THUE-GD1-06">Chọn</a></td></tr>
+        <tr><td>9 tháng</td><td class="r">4.050.000đ</td><td class="r">450.000đ</td><td class="r"><a href="#dat-mua" data-sp="THUE-GD1-09">Chọn</a></td></tr>
+        <tr><td><b>12 tháng</b></td><td class="r"><b>4.800.000đ</b></td><td class="r"><b>400.000đ</b></td><td class="r"><a href="#dat-mua" data-sp="THUE-GD1-12">Chọn</a></td></tr>
+      </table></div>
+      <p class="ref">Đặt cọc thiết bị 5.000.000đ mỗi hợp đồng, hoàn lại trong 7 ngày làm việc khi trả thiết bị nguyên vẹn.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Cam kết</div>
+    <h2>Mua yên tâm</h2>
+    <div class="trust">
+      <div><b>Thanh toán minh bạch</b>Chuyển khoản vào tài khoản công ty, nội dung là mã đơn. Không thu tiền mặt.</div>
+      <div><b>Giá niêm yết</b>Giá theo quyết định của công ty, đã gồm VAT, giống nhau ở mọi nơi bán.</div>
+      <div><b>Bảo hành rõ ràng</b>Thiết bị bảo hành 24 tháng, máy sinh hoá bảo hành trọn đời.</div>
+      <div><b>Có người hướng dẫn</b>Giao tận nhà, hướng dẫn sử dụng và cài ứng dụng miễn phí.</div>
+    </div>
+  </div>
+</section>
+
+<section id="dat-mua" class="order">
+  <div class="wrap">
+    <div class="eyebrow">Đặt mua</div>
+    <h2>Để lại thông tin, chúng tôi gọi xác nhận trong 24 giờ</h2>
+    <form class="form" id="f" novalidate>
+      <div><label for="sp">Sản phẩm</label>
+        <select id="sp" name="sp">
+          <option value="VALI-GD1" data-gia="7624500">Vali Gia Đình 1 · 7.624.500đ</option>
+          <option value="VALI-GD2" data-gia="6700500">Vali Gia Đình 2 · 6.700.500đ</option>
+          <option value="VALI-HLV" data-gia="9483000">Vali Huấn luyện viên · 9.483.000đ</option>
+          <option value="THUE-GD1-03" data-gia="1770000" data-thue="1">Thuê Vali Gia Đình 1, 3 tháng · 1.770.000đ</option>
+          <option value="THUE-GD1-06" data-gia="3120000" data-thue="1">Thuê Vali Gia Đình 1, 6 tháng · 3.120.000đ</option>
+          <option value="THUE-GD1-09" data-gia="4050000" data-thue="1">Thuê Vali Gia Đình 1, 9 tháng · 4.050.000đ</option>
+          <option value="THUE-GD1-12" data-gia="4800000" data-thue="1">Thuê Vali Gia Đình 1, 12 tháng · 4.800.000đ</option>
+        </select></div>
+      <div class="row2">
+        <div><label for="ten">Họ và tên</label><input id="ten" autocomplete="name"></div>
+        <div><label for="sl">Số lượng</label><input id="sl" type="number" min="1" max="20" value="1" inputmode="numeric"></div>
+      </div>
+      <div><label for="sdt">Số điện thoại</label><input id="sdt" inputmode="tel" autocomplete="tel"></div>
+      <div><label for="dc">Địa chỉ nhận hàng</label><input id="dc" autocomplete="street-address"></div>
+      <div><label for="tinh">Tỉnh, thành</label><input id="tinh" autocomplete="address-level1"></div>
+      <div><label for="gc">Ghi chú (không bắt buộc)</label><textarea id="gc" placeholder="Thời gian tiện gọi, người nhận hàng..."></textarea></div>
+      <div class="hp" aria-hidden="true"><label for="web">Website</label><input id="web" tabindex="-1" autocomplete="off"></div>
+      <div class="sum"><span>Tạm tính</span><span id="tong">7.624.500đ</span></div>
+      <p class="ref" id="cocnote" hidden>Đã gồm tiền đặt cọc 5.000.000đ (hoàn lại khi trả thiết bị).</p>
+      <div class="chk"><input type="checkbox" id="dongy"><label for="dongy" style="margin:0;font-weight:400;color:var(--ink)">Tôi đồng ý để FaCare Life dùng họ tên, số điện thoại, địa chỉ trên để liên hệ, giao hàng và hướng dẫn sử dụng.</label></div>
+      <p class="ref" id="refnote" hidden></p>
+      <button class="btn btn-main" type="submit" id="gui">Gửi đơn đặt mua</button>
+      <div id="msg"></div>
+    </form>
+    <div class="done" id="done" hidden></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><b>FaCare &amp; FaCare Life</b> · Bác sĩ gia đình tại nhà</div>
+    <div>Website: facare.vn · Email: info@facare.vn</div>
+    <div class="disclaimer">Thiết bị dùng để theo dõi chỉ số sức khỏe tại nhà, không thay thế việc khám và điều trị tại cơ sở y tế. Khi có dấu hiệu bất thường, hãy liên hệ bác sĩ.</div>
+  </div>
+</footer>
+
+<script>
+const API = 'https://script.google.com/macros/s/AKfycbwQLJWWakj_8im-O4n6kAm9AlWtaLTtojXj_xAkHrQEPVqJwAb8nByzlO1rhJXg61ob/exec';
+const COC = 5000000;
+const $ = id => document.getElementById(id);
+const vnd = n => (Math.round(n)||0).toLocaleString('vi-VN') + 'đ';
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+const QS = new URLSearchParams(location.search);
+let CTV = (QS.get('ctv')||'').trim().toUpperCase().replace(/[^A-Z0-9-]/g,'');
+try{ if(CTV) localStorage.setItem('fcl_ref', CTV); else CTV = localStorage.getItem('fcl_ref') || ''; }catch(e){}
+if(CTV){ $('refnote').hidden=false; $('refnote').textContent='Cộng tác viên giới thiệu: '+CTV+'. Cộng tác viên sẽ liên hệ và hướng dẫn anh/chị.'; }
+
+function calc(){
+  const o = $('sp').selectedOptions[0], sl = Math.max(1, +$('sl').value||1);
+  const thue = !!o.dataset.thue;
+  $('tong').textContent = vnd((+o.dataset.gia + (thue?COC:0)) * sl);
+  $('cocnote').hidden = !thue;
+}
+$('sp').onchange = calc; $('sl').oninput = calc;
+document.querySelectorAll('[data-sp]').forEach(a=>a.addEventListener('click',()=>{ $('sp').value=a.dataset.sp; calc(); }));
+calc();
+
+$('f').addEventListener('submit', e=>{
+  e.preventDefault();
+  const b = $('gui'); b.disabled = true; b.textContent = 'Đang gửi...'; $('msg').innerHTML='';
+  const body = {fn:'datMua', args:[{sp:$('sp').value, sl:$('sl').value, ten:$('ten').value, sdt:$('sdt').value, diachi:$('dc').value, tinh:$('tinh').value, ghichu:$('gc').value, dongy:$('dongy').checked, ctv:CTV, web:$('web').value}]};
+  fetch(API,{method:'POST',credentials:'omit',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)})
+    .then(r=>{ if(!r.ok) throw new Error('Không kết nối được máy chủ. Vui lòng thử lại.'); return r.json(); })
+    .then(j=>{
+      if(!j.ok) throw new Error(j.error);
+      const d = j.data;
+      const rows = d.lines.map(l=>'<tr><td>'+esc(l.ten)+' × '+l.sl+'</td><td class="r">'+vnd(l.tien)+'</td></tr>').join('');
+      $('done').innerHTML = '<h3>Đã nhận đơn '+esc(d.madon)+'</h3><p>Cảm ơn anh/chị. Chúng tôi sẽ gọi xác nhận trong 24 giờ.</p><table>'+rows+'<tr><td><b>Tổng</b></td><td class="r"><b>'+vnd(d.total)+'</b></td></tr></table>'
+        + (d.taikhoan ? '<p><b>Thanh toán:</b> '+esc(d.taikhoan)+'<br>Nội dung chuyển khoản: <b>'+esc(d.madon)+'</b></p>' : '<p>Thông tin thanh toán sẽ được gửi khi gọi xác nhận. Vui lòng chỉ chuyển khoản vào tài khoản công ty, nội dung là mã đơn <b>'+esc(d.madon)+'</b>.</p>')
+        + '<p class="ref">Vui lòng lưu lại mã đơn để tra cứu.</p>';
+      $('f').hidden = true; $('done').hidden = false; $('done').scrollIntoView({behavior:'smooth',block:'start'});
+    })
+    .catch(err=>{ $('msg').innerHTML='<div class="msg err">'+esc(err.message||err)+'</div>'; b.disabled=false; b.textContent='Gửi đơn đặt mua'; });
+});
+</script>
+</body>
+</html>

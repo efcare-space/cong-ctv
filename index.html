@@ -165,7 +165,7 @@ $('r_btn').onclick = ()=> call('registerCTV',[{ten:$('r_ten').value,sdt:$('r_sdt
   try{localStorage.setItem('fcl_ma',r.ma)}catch(e){}
   msg('r_msg','Đăng ký thành công. Mã CTV của anh/chị: <b>'+esc(r.ma)+'</b>. Hãy ghi nhớ mã PIN. Admin sẽ liên hệ để duyệt và mời đào tạo.'
     +'<div style="margin-top:8px">Link lên đơn của anh/chị:</div>'+copyBox(URL+'?p=don&ctv='+r.ma)
-    +'<div style="margin-top:8px">Link mời người khác đăng ký CTV:</div>'+copyBox(URL+'?p=dangky&gt='+r.ma), true);
+    +'<div style="margin-top:8px">Link mời người khác đăng ký CTV:</div>'+copyBox(URL+'?p=dangky&gt='+r.ma)+'<div style="margin-top:8px">Link trang giới thiệu sản phẩm (khách tự đặt mua, đơn ghi cho bạn sau khi được duyệt):</div>'+copyBox(URL+'mua/?ctv='+r.ma), true);
 }, $('r_btn'), 'r_msg');
 
 // ---- lên đơn
@@ -212,6 +212,7 @@ $('m_btn').onclick = ()=> call('myData',[$('m_ma').value,$('m_pin').value], d=>{
    + '<div>Hoa hồng tạm tính tháng<b>'+vnd(d.hhKy)+'</b></div><div>Số sao<b>'+(d.sao? d.sao+' ★ ('+d.soDanhGia+')':'Chưa có')+'</b></div></div>'
    + '<p class="muted">'+tiep+' Hoa hồng chỉ tính khi khách đã thanh toán đủ; chi trả theo lịch của công ty.</p>'
    + '<p class="muted" style="margin-bottom:4px">Link lên đơn của tôi:</p>'+copyBox(URL+'?p=don&ctv='+d.ma)
+   + '<p class="muted" style="margin-bottom:4px">Link trang giới thiệu sản phẩm của tôi (gửi khách tự đặt mua):</p>'+copyBox(URL+'mua/?ctv='+d.ma)
    + '<p class="muted" style="margin-bottom:4px">Link mời đăng ký CTV (đã có '+d.gioiThieu+' người):</p>'+copyBox(URL+'?p=dangky&gt='+d.ma)+'</div>';
   h += '<div class="card"><h2>Đơn hàng</h2>' + (d.don.length? '<table><tr><th>Đơn</th><th>Trạng thái</th><th class="r">Tiền</th></tr>'+d.don.map(o=>'<tr><td>'+esc(o.ma)+'<br><span class="muted">'+esc(o.ngay)+' · '+esc(o.sp.join(', '))+'</span></td><td>'+esc(o.tt)+'</td><td class="r">'+vnd(o.tong)+'</td></tr>').join('')+'</table>' : '<p class="muted">Chưa có đơn.</p>') + '</div>';
   h += '<div class="card"><h2>Khách hàng của tôi ('+d.khach.length+')</h2>' + (d.khach.length? '<table>'+d.khach.map(k=>'<tr><td>'+esc(k.ma)+'</td><td>'+esc(k.ten)+'</td><td class="r">'+esc(k.sdt)+'</td></tr>').join('')+'</table>' : '<p class="muted">Chưa có khách.</p>') + '</div>';
