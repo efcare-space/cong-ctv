@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FaCare Life · Cổng CTV</title>
+<style>
+  :root{--teal:#0f5f6b;--teal2:#e7f2f3;--navy:#14264d;--ink:#222a36;--muted:#5d6577;--line:#d9e2e5;--gold:#b8862b;--red:#a3402f;--bg:#f5f7f8}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  header{background:var(--teal);color:#fff;padding:14px 16px}
+  header b{font-size:18px} header span{display:block;font-size:12px;opacity:.85}
+  nav{display:flex;gap:6px;padding:10px 12px;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto}
+  nav a{white-space:nowrap;text-decoration:none;color:var(--teal);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px}
+  nav a.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+  main{max-width:560px;margin:0 auto;padding:14px 12px 40px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}
+  h2{font-size:17px;margin:0 0 10px;color:var(--navy)}
+  label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+  input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+  textarea{min-height:70px}
+  .row{display:flex;gap:8px;align-items:flex-end}
+  .row>*{flex:1;min-width:0}
+  .row .sl{flex:0 0 76px}
+  button{font:inherit;cursor:pointer;border:0;border-radius:8px;padding:12px 14px;background:var(--teal);color:#fff;font-weight:600;width:100%;margin-top:12px}
+  button.ghost{background:#fff;color:var(--teal);border:1px solid var(--teal)}
+  button.x{width:auto;margin:0;padding:10px 12px;background:#fff;color:var(--red);border:1px solid var(--line)}
+  button:disabled{opacity:.6}
+  .chk{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:14px}
+  .chk input{width:auto;margin-top:4px}
+  .total{display:flex;justify-content:space-between;font-weight:700;font-size:17px;margin-top:12px;color:var(--navy)}
+  .msg{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .err{background:#f9e7e3;color:var(--red)} .ok{background:var(--teal2);color:var(--teal)}
+  .muted{color:var(--muted);font-size:13px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  td,th{padding:7px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  td.r,th.r{text-align:right;white-space:nowrap}
+  .kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .kpi div{background:var(--teal2);border-radius:8px;padding:10px}
+  .kpi b{display:block;font-size:18px;color:var(--navy)}
+  .pill{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--teal2);color:var(--teal)}
+  .copy{display:flex;gap:6px;margin-top:6px}.copy input{font-size:13px}.copy button{width:auto;margin:0;padding:8px 12px}
+  .stars{display:flex;gap:6px}.stars button{width:auto;margin:0;flex:1;background:#fff;color:var(--gold);border:1px solid var(--line);font-size:22px;padding:8px 0}
+  .stars button.on{background:var(--gold);color:#fff}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header><b>FaCare Life</b><span>Cổng Cộng tác viên · Bác sĩ gia đình tại nhà</span></header>
+<nav>
+  <a data-p="don" href="#">Lên đơn</a>
+  <a data-p="cuatoi" href="#">Của tôi</a>
+  <a data-p="dangky" href="#">Đăng ký CTV</a>
+  <a data-p="danhgia" href="#">Đánh giá</a>
+</nav>
+<main>
+
+<!-- ĐĂNG KÝ -->
+<section id="dangky" hidden>
+  <div class="card">
+    <h2>Đăng ký Cộng tác viên</h2>
+    <p class="muted">Sau khi đăng ký, Admin duyệt và mời tham gia buổi giới thiệu và khoá đào tạo. Được duyệt rồi mới lên đơn được.</p>
+    <label for="r_ten">Họ và tên</label><input id="r_ten" autocomplete="name">
+    <label for="r_sdt">Số điện thoại</label><input id="r_sdt" inputmode="tel" autocomplete="tel">
+    <label for="r_email">Email (không bắt buộc)</label><input id="r_email" inputmode="email">
+    <label for="r_tinh">Tỉnh, thành</label><input id="r_tinh">
+    <label for="r_gt">Mã người giới thiệu (nếu có)</label><input id="r_gt" placeholder="CTV-0001">
+    <label for="r_pin">Tự đặt mã PIN (4–6 số) để đăng nhập</label><input id="r_pin" inputmode="numeric" type="password" maxlength="6">
+    <div class="chk"><input type="checkbox" id="r_dongy"><label for="r_dongy" style="margin:0;color:var(--ink)">Tôi đồng ý cộng tác theo chính sách của EFCARE và đồng ý cho EFCARE xử lý thông tin trên để quản lý cộng tác viên (Luật Bảo vệ dữ liệu cá nhân 91/2025).</label></div>
+    <button id="r_btn">Đăng ký</button>
+    <div id="r_msg"></div>
+  </div>
+</section>
+
+<!-- LÊN ĐƠN -->
+<section id="don" hidden>
+  <div class="card">
+    <h2>1. Cộng tác viên</h2>
+    <div class="row"><div><label for="o_ma">Mã CTV</label><input id="o_ma" placeholder="CTV-0001"></div><div><label for="o_pin">Mã PIN</label><input id="o_pin" type="password" inputmode="numeric" maxlength="6"></div></div>
+  </div>
+  <div class="card">
+    <h2>2. Khách hàng</h2>
+    <label for="o_ten">Họ tên khách</label><input id="o_ten">
+    <label for="o_sdt">Số điện thoại</label><input id="o_sdt" inputmode="tel">
+    <label for="o_dc">Địa chỉ giao hàng</label><input id="o_dc">
+    <label for="o_tinh">Tỉnh, thành</label><input id="o_tinh">
+    <div class="chk"><input type="checkbox" id="o_dongy"><label for="o_dongy" style="margin:0;color:var(--ink)">Khách đồng ý cho FaCare Life xử lý họ tên, số điện thoại, địa chỉ để giao hàng, hướng dẫn và chăm sóc.</label></div>
+  </div>
+  <div class="card">
+    <h2>3. Sản phẩm</h2>
+    <div id="o_items"></div>
+    <button class="ghost" id="o_add">+ Thêm sản phẩm</button>
+    <p class="muted" id="o_cocnote" hidden>Thuê Vali: hệ thống tự thêm tiền đặt cọc 5.000.000đ mỗi hợp đồng (hoàn lại khi trả máy nguyên vẹn).</p>
+    <div class="total"><span>Tạm tính</span><span id="o_total">0đ</span></div>
+    <label for="o_note">Ghi chú (không ghi tình trạng bệnh)</label><textarea id="o_note"></textarea>
+    <button id="o_btn">Tạo đơn</button>
+    <div id="o_msg"></div>
+  </div>
+  <div class="card" id="o_done" hidden></div>
+</section>
+
+<!-- CỦA TÔI -->
+<section id="cuatoi" hidden>
+  <div class="card" id="m_login">
+    <h2>Đăng nhập</h2>
+    <div class="row"><div><label for="m_ma">Mã CTV</label><input id="m_ma" placeholder="CTV-0001"></div><div><label for="m_pin">Mã PIN</label><input id="m_pin" type="password" inputmode="numeric" maxlength="6"></div></div>
+    <button id="m_btn">Xem</button>
+    <div id="m_msg"></div>
+  </div>
+  <div id="m_out" hidden></div>
+</section>
+
+<!-- ĐÁNH GIÁ -->
+<section id="danhgia" hidden>
+  <div class="card">
+    <h2>Đánh giá cộng tác viên</h2>
+    <p class="muted">Cảm ơn anh/chị đã dùng dịch vụ FaCare Life. Đánh giá giúp chúng tôi phục vụ tốt hơn.</p>
+    <label for="g_don">Mã đơn hàng</label><input id="g_don" placeholder="DH-...">
+    <label for="g_sdt">Số điện thoại đặt hàng</label><input id="g_sdt" inputmode="tel">
+    <label>Mức hài lòng</label>
+    <div class="stars" id="g_stars"></div>
+    <label for="g_nx">Nhận xét</label><textarea id="g_nx"></textarea>
+    <button id="g_btn">Gửi đánh giá</button>
+    <div id="g_msg"></div>
+  </div>
+</section>
+
+</main>
+<script>
+const API = 'https://script.google.com/macros/s/AKfycbwQLJWWakj_8im-O4n6kAm9AlWtaLTtojXj_xAkHrQEPVqJwAb8nByzlO1rhJXg61ob/exec';
+const QS = new URLSearchParams(location.search);
+const clean = s => String(s||'').trim().replace(/[<>]/g,'').toUpperCase();
+const PAGE = ['dangky','don','cuatoi','danhgia'].indexOf(QS.get('p'))>=0 ? QS.get('p') : 'don';
+const CTV = clean(QS.get('ctv')), GT = clean(QS.get('gt')), DON = clean(QS.get('don'));
+const URL = location.origin + location.pathname;
+const $ = id => document.getElementById(id);
+const vnd = n => (Math.round(n)||0).toLocaleString('vi-VN') + 'đ';
+const pct = x => Math.round(x*100) + '%';
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function msg(id, text, ok){ $(id).innerHTML = text ? '<div class="msg '+(ok?'ok':'err')+'">'+text+'</div>' : ''; }
+function api(fn, args){
+  return fetch(API, {method:'POST', credentials:'omit', redirect:'follow', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify({fn:fn, args:args})})
+    .then(r=>{ if(!r.ok) throw new Error('Không kết nối được máy chủ (mã '+r.status+'). Vui lòng thử lại.'); return r.json(); })
+    .then(j=>{ if(!j.ok) throw new Error(j.error); return j.data; });
+}
+function call(fn, args, done, btn, msgId){
+  if(btn){btn.disabled=true;} if(msgId) msg(msgId,'');
+  api(fn,args).then(r=>{ if(btn)btn.disabled=false; done(r); })
+    .catch(e=>{ if(btn)btn.disabled=false; msg(msgId, esc(e.message||e)); });
+}
+function show(p){
+  document.querySelectorAll('main>section').forEach(s=>s.hidden = s.id!==p);
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on', a.dataset.p===p));
+}
+document.querySelectorAll('nav a').forEach(a=>a.onclick=e=>{e.preventDefault();show(a.dataset.p);});
+function copyBox(v){ return '<div class="copy"><input readonly value="'+esc(v)+'"><button type="button" onclick="this.previousSibling.select();try{navigator.clipboard.writeText(this.previousSibling.value)}catch(e){}">Chép</button></div>'; }
+try{ const s = localStorage.getItem('fcl_ma'); if(s && !CTV){ $('o_ma').value=s; $('m_ma').value=s; } }catch(e){}
+if(CTV){ $('o_ma').value=CTV; $('m_ma').value=CTV; }
+if(GT) $('r_gt').value=GT;
+if(DON) $('g_don').value=DON;
+show(PAGE);
+
+// ---- đăng ký
+$('r_btn').onclick = ()=> call('registerCTV',[{ten:$('r_ten').value,sdt:$('r_sdt').value,email:$('r_email').value,tinh:$('r_tinh').value,gt:$('r_gt').value,pin:$('r_pin').value,dongy:$('r_dongy').checked}], r=>{
+  try{localStorage.setItem('fcl_ma',r.ma)}catch(e){}
+  msg('r_msg','Đăng ký thành công. Mã CTV của anh/chị: <b>'+esc(r.ma)+'</b>. Hãy ghi nhớ mã PIN. Admin sẽ liên hệ để duyệt và mời đào tạo.'
+    +'<div style="margin-top:8px">Link lên đơn của anh/chị:</div>'+copyBox(URL+'?p=don&ctv='+r.ma)
+    +'<div style="margin-top:8px">Link mời người khác đăng ký CTV:</div>'+copyBox(URL+'?p=dangky&gt='+r.ma), true);
+}, $('r_btn'), 'r_msg');
+
+// ---- lên đơn
+let CAT = null;
+function itemRow(){
+  const d = document.createElement('div'); d.className='row'; d.style.marginTop='8px';
+  d.innerHTML = '<div><select class="sp"><option value="">Chọn sản phẩm</option>'
+    + (CAT? groups(): '') + '</select></div><div class="sl"><input class="qty" type="number" min="1" value="1" inputmode="numeric" aria-label="Số lượng"></div>'
+    + '<button type="button" class="x" aria-label="Xoá">✕</button>';
+  d.querySelector('.x').onclick=()=>{d.remove();calc();};
+  d.querySelector('.sp').onchange=calc; d.querySelector('.qty').oninput=calc;
+  $('o_items').appendChild(d);
+}
+function groups(){
+  const by = {}; CAT.items.forEach(x=>{(by[x.loai]=by[x.loai]||[]).push(x);});
+  return Object.keys(by).map(g=>'<optgroup label="'+esc(g)+'">'+by[g].map(x=>'<option value="'+esc(x.ma)+'">'+esc(x.ten)+' · '+vnd(x.gia)+'</option>').join('')+'</optgroup>').join('');
+}
+function items(){ return [...document.querySelectorAll('#o_items .row')].map(r=>({sp:r.querySelector('.sp').value, sl:r.querySelector('.qty').value})).filter(x=>x.sp); }
+function calc(){
+  if(!CAT) return; const p={}; CAT.items.forEach(x=>p[x.ma]=x.gia);
+  let t=0, thue=0; items().forEach(x=>{ t+=(p[x.sp]||0)*(+x.sl||0); if(x.sp.indexOf('THUE-')===0) thue+=(+x.sl||0); });
+  t += thue*CAT.coc; $('o_cocnote').hidden = !thue; $('o_total').textContent=vnd(t);
+}
+api('getCatalog',[]).then(c=>{ CAT=c; $('o_items').innerHTML=''; itemRow(); }).catch(e=>msg('o_msg',esc(e.message)));
+$('o_add').onclick=()=>itemRow();
+$('o_btn').onclick = ()=> call('createOrder',[{ma:$('o_ma').value,pin:$('o_pin').value,kh:{ten:$('o_ten').value,sdt:$('o_sdt').value,diachi:$('o_dc').value,tinh:$('o_tinh').value,dongy:$('o_dongy').checked},items:items(),ghichu:$('o_note').value}], r=>{
+  try{localStorage.setItem('fcl_ma',$('o_ma').value.trim().toUpperCase())}catch(e){}
+  const rows = r.lines.map(l=>'<tr><td>'+esc(l.ten)+' × '+l.sl+'</td><td class="r">'+vnd(l.tien)+'</td></tr>').join('');
+  $('o_done').innerHTML = '<h2>Đã tạo đơn '+esc(r.madon)+'</h2><table>'+rows+'<tr><th>Tổng khách cần chuyển</th><th class="r">'+vnd(r.total)+'</th></tr></table>'
+   + '<p><b>Gửi khách thông tin chuyển khoản:</b></p><p>'+esc(r.taikhoan)+'<br>Nội dung chuyển khoản: <b>'+esc(r.madon)+'</b><br>Thanh toán trong 24 giờ. Không thu tiền mặt.</p>'
+   + (r.flag?'<div class="msg err">'+esc(r.flag)+'</div>':'')
+   + '<p class="muted">Sau khi giao hàng, gửi khách link đánh giá:</p>'+copyBox(URL+'?p=danhgia&don='+r.madon)
+   + '<button type="button" class="ghost" onclick="location.reload()">Lên đơn mới</button>';
+  $('o_done').hidden=false; $('o_done').scrollIntoView({behavior:'smooth'});
+  ['o_ten','o_sdt','o_dc','o_tinh','o_note'].forEach(i=>$(i).value=''); $('o_dongy').checked=false;
+}, $('o_btn'), 'o_msg');
+
+// ---- của tôi
+$('m_btn').onclick = ()=> call('myData',[$('m_ma').value,$('m_pin').value], d=>{
+  try{localStorage.setItem('fcl_ma',d.ma)}catch(e){}
+  const tiep = d.tiep ? 'Còn '+vnd(d.tiep.moc-d.dsKy)+' doanh số nữa để lên bậc '+pct(d.tiep.tyle)+'.' : 'Đang ở bậc cao nhất.';
+  let h = '<div class="card"><h2>'+esc(d.ten)+' · '+esc(d.ma)+'</h2><span class="pill">'+esc(d.tt)+'</span> <span class="pill">Đào tạo: '+esc(d.dt)+'</span>'
+   + '<div class="kpi" style="margin-top:10px"><div>Doanh số tháng '+esc(d.ky)+'<b>'+vnd(d.dsKy)+'</b></div><div>Bậc hiện tại<b>'+pct(d.tyle)+'</b></div>'
+   + '<div>Hoa hồng tạm tính tháng<b>'+vnd(d.hhKy)+'</b></div><div>Số sao<b>'+(d.sao? d.sao+' ★ ('+d.soDanhGia+')':'Chưa có')+'</b></div></div>'
+   + '<p class="muted">'+tiep+' Hoa hồng chỉ tính khi khách đã thanh toán đủ; chi trả theo lịch của công ty.</p>'
+   + '<p class="muted" style="margin-bottom:4px">Link lên đơn của tôi:</p>'+copyBox(URL+'?p=don&ctv='+d.ma)
+   + '<p class="muted" style="margin-bottom:4px">Link mời đăng ký CTV (đã có '+d.gioiThieu+' người):</p>'+copyBox(URL+'?p=dangky&gt='+d.ma)+'</div>';
+  h += '<div class="card"><h2>Đơn hàng</h2>' + (d.don.length? '<table><tr><th>Đơn</th><th>Trạng thái</th><th class="r">Tiền</th></tr>'+d.don.map(o=>'<tr><td>'+esc(o.ma)+'<br><span class="muted">'+esc(o.ngay)+' · '+esc(o.sp.join(', '))+'</span></td><td>'+esc(o.tt)+'</td><td class="r">'+vnd(o.tong)+'</td></tr>').join('')+'</table>' : '<p class="muted">Chưa có đơn.</p>') + '</div>';
+  h += '<div class="card"><h2>Khách hàng của tôi ('+d.khach.length+')</h2>' + (d.khach.length? '<table>'+d.khach.map(k=>'<tr><td>'+esc(k.ma)+'</td><td>'+esc(k.ten)+'</td><td class="r">'+esc(k.sdt)+'</td></tr>').join('')+'</table>' : '<p class="muted">Chưa có khách.</p>') + '</div>';
+  $('m_out').innerHTML=h; $('m_out').hidden=false;
+}, $('m_btn'), 'm_msg');
+
+// ---- đánh giá
+let SAO = 0;
+$('g_stars').innerHTML = [1,2,3,4,5].map(i=>'<button type="button" data-s="'+i+'" aria-label="'+i+' sao">★</button>').join('');
+$('g_stars').querySelectorAll('button').forEach(b=>b.onclick=()=>{SAO=+b.dataset.s; $('g_stars').querySelectorAll('button').forEach(x=>x.classList.toggle('on', +x.dataset.s<=SAO));});
+$('g_btn').onclick = ()=> call('rate',[{madon:$('g_don').value,sdt:$('g_sdt').value,sao:SAO,nhanxet:$('g_nx').value}], ()=>{
+  msg('g_msg','Cảm ơn anh/chị đã đánh giá.', true); $('g_btn').disabled=true;
+}, $('g_btn'), 'g_msg');
+</script>
+</body>
+</html>
