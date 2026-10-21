@@ -318,6 +318,7 @@ $('f').addEventListener('submit', e=>{
         + '<p class="ref">Vui lòng lưu lại mã đơn. Anh/chị theo dõi đơn và đánh giá tư vấn viên tại trang tra cứu.</p>'
         + '<a class="btn btn-main" href="../?p=tracuu&don='+encodeURIComponent(d.madon)+'">Theo dõi đơn hàng</a>';
       try{ localStorage.setItem('fcl_tc', JSON.stringify({don:d.madon, sdt:$('sdt').value})); }catch(e){}
+      $('done').insertAdjacentHTML('beforeend','<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line)"><p><b>Muốn giới thiệu Vali cho người thân, bạn bè và có thêm thu nhập?</b> Đăng ký làm Cộng tác viên, được đào tạo miễn phí.</p><a class="btn btn-line" href="../?p=dangky'+(CTV?'&gt='+encodeURIComponent(CTV):'')+'&sdt='+encodeURIComponent($('sdt').value)+'">Đăng ký làm CTV</a></div>');
       $('f').hidden = true; $('done').hidden = false; $('done').scrollIntoView({behavior:'smooth',block:'start'});
     })
     .catch(err=>{ $('msg').innerHTML='<div class="msg err">'+esc(err.message||err)+'</div>'; b.disabled=false; b.textContent='Gửi đơn đặt mua'; });

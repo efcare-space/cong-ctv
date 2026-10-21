@@ -45,8 +45,13 @@
   .copy{display:flex;gap:6px;margin-top:6px}.copy input{font-size:13px}
   .stars{display:flex;gap:6px}.stars button{width:auto;margin:0;flex:1;background:#fff;color:var(--gold);border:1px solid var(--line);font-size:22px;padding:8px 0}
   .stars button.on{background:var(--gold);color:#fff}
-  .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
-  .tabs button{margin:0;background:#fff;color:var(--teal);border:1px solid var(--line);padding:10px 4px;font-size:14px}
+  .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+  .tabs button{margin:0;background:#fff;color:var(--teal);border:1px solid var(--line);padding:10px 2px;font-size:13px}
+  .mem{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:9px 0;border-bottom:1px solid var(--line)}
+  .mem:last-child{border-bottom:0}
+  .mem .who b{font-weight:600}.mem .r{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .pill.kh{background:var(--gold2);color:#7a5714}.pill.off{background:var(--bg);color:var(--muted)}
+  .cta{background:var(--gold2);border-color:transparent}
   .tabs button.on{background:var(--teal);color:#fff;border-color:var(--teal)}
   .badge{display:inline-block;min-width:20px;padding:0 6px;border-radius:999px;background:var(--red);color:#fff;font-size:12px;margin-left:4px}
   .banner{border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:14px;background:var(--gold2);color:#5e4410}
@@ -118,10 +123,12 @@
       <button data-t="viec" class="on" role="tab">Việc cần làm<span class="badge" id="h_badge" hidden></span></button>
       <button data-t="ban" role="tab">Bán hàng</button>
       <button data-t="thu" role="tab">Thu nhập</button>
+      <button data-t="nhom" role="tab">Nhóm</button>
     </div>
     <div id="t_viec"></div>
     <div id="t_ban" hidden></div>
     <div id="t_thu" hidden></div>
+    <div id="t_nhom" hidden></div>
   </div>
 </section>
 
@@ -214,6 +221,7 @@ const SESSION = {
 let ME = null, CRED = null; // CRED = {ma, pin} với pin là PIN hoặc phiên t1.…
 (function(){ const s=SESSION.get(); if(s&&s.tok) CRED={ma:s.ma,pin:s.tok}; let m=''; try{m=localStorage.getItem('fcl_ma')||'';}catch(e){} $('m_ma').value=CTVQ||m; $('o_ma').value=CTVQ||m; })();
 if(GT) $('r_gt').value=GT;
+(function(){ const s=(QS.get('sdt')||'').replace(/[^0-9]/g,''); if(s) $('r_sdt').value=s; })();
 if(DON) $('q_don').value=DON;
 show(PAGE);
 
@@ -239,7 +247,7 @@ $('m_btn').onclick = ()=> call('login',[$('m_ma').value,$('m_pin').value,$('m_nh
 }, $('m_btn'), 'm_msg');
 $('h_out').onclick = ()=>{ SESSION.clear(); CRED=null; ME=null; $('home').hidden=true; $('m_login').hidden=false; };
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
-function tab(t){ document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t)); ['viec','ban','thu'].forEach(k=>$('t_'+k).hidden=k!==t); }
+function tab(t){ document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t)); ['viec','ban','thu','nhom'].forEach(k=>$('t_'+k).hidden=k!==t); }
 function renderHome(){
   const d=ME; $('m_login').hidden=true; $('home').hidden=false;
   $('h_ten').textContent=d.ten; $('h_sub').textContent=d.ma+' · Đào tạo: '+d.dt;
@@ -247,7 +255,7 @@ function renderHome(){
   $('h_banner').innerHTML = active ? '' : '<div class="banner"><b>'+(d.tt==='Tạm dừng'?'Tài khoản đang tạm dừng.':'Đang chờ Admin duyệt.')+'</b> '
     +(d.tt==='Tạm dừng'?'Vui lòng liên hệ Admin.':'Admin sẽ liên hệ và mời bạn tham gia khoá đào tạo. Sau khi được duyệt, bạn lên đơn và chia sẻ trang giới thiệu được ngay'+(d.email?'; chúng tôi sẽ báo qua email '+esc(d.email)+'.':'.'))+'</div>';
   const n=d.viec.length; $('h_badge').hidden=!n; $('h_badge').textContent=n;
-  renderViec(); renderBan(); renderThu();
+  renderViec(); renderBan(); renderThu(); renderNhom();
   tab(n ? 'viec' : (active ? 'ban' : 'viec'));
 }
 function payText(x){
@@ -294,7 +302,7 @@ function renderBan(){
     +'<div class="acts"><button class="sm ghost" id="b_cpmsg">Chép tin nhắn</button><button class="sm ghost" data-copy="'+esc(link)+'">Chép link</button><button class="sm ghost" id="b_dlqr">Tải mã QR</button></div>'
     +'<label>Tin nhắn soạn sẵn</label><div class="tpl" id="b_tpl"></div><a class="btn ghost" href="'+esc(link)+'" target="_blank" rel="noopener">Xem trang khách sẽ thấy</a></div>'
     +'<div class="card"><h2>Lên đơn hộ khách</h2><p class="muted">Khi khách nhờ bạn đặt giúp, hoặc mua nhiều sản phẩm một lúc.</p><a class="btn" href="?p=don">Lên đơn mới</a></div>'
-    +'<div class="card"><h2>Mời người làm CTV</h2><p class="muted">Đã có '+d.gioiThieu+' người đăng ký qua link của bạn. Bán Vali, thiết bị: hoa hồng tính trên doanh số của chính mỗi người (QĐ09). Khi người bạn mời bán thành công gói dịch vụ đầu tiên, bạn được thưởng 10% doanh thu gói đó (Affiliate, QĐ10).</p>'+copyBox(BASE+'?p=dangky&gt='+d.ma)+'</div>';
+    +'<div class="card"><h2>Mời người làm CTV</h2><p class="muted">Người đăng ký qua link này, hoặc khách hàng của bạn đăng ký làm CTV, vào nhóm của bạn. Xem ở thẻ Nhóm.</p>'+copyBox(BASE+'?p=dangky&gt='+d.ma)+'</div>';
   $('b_tpl').textContent=shareMsg();
   try{ new QRCode($('qr'),{text:link,width:200,height:200,colorDark:'#0f5f6b',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M}); }catch(e){ $('qr').textContent='Không tạo được mã QR. Dùng nút Chép link.'; }
   $('b_cpmsg').onclick=e=>copyText(shareMsg(), e.target);
@@ -310,6 +318,30 @@ function renderThu(){
   h+='<div class="card"><h2>Đơn hàng</h2>'+(d.don.length?'<table><tr><th>Đơn</th><th>Trạng thái</th><th class="r">Tiền</th></tr>'+d.don.map(o=>'<tr><td>'+esc(o.ma)+'<br><span class="muted">'+esc(o.ngay)+' · '+esc(o.sp.join(', '))+'</span></td><td>'+esc(o.tt)+'</td><td class="r">'+vnd(o.tong)+'</td></tr>').join('')+'</table>':'<p class="muted">Chưa có đơn.</p>')+'</div>';
   h+='<div class="card"><h2>Khách hàng của tôi ('+d.khach.length+')</h2>'+(d.khach.length?'<table>'+d.khach.map(k=>'<tr><td>'+esc(k.ma)+'</td><td>'+esc(k.ten)+'</td><td class="r">'+esc(k.sdt)+'</td></tr>').join('')+'</table>':'<p class="muted">Chưa có khách.</p>')+'</div>';
   $('t_thu').innerHTML=h;
+}
+function renderNhom(){
+  const d=ME, n=d.nhom||{thanhVien:[],soF1:0,soTong:0,soTuKhach:0,soHoatDong:0,dsNhomKy:0,dsNhomTong:0,dsToiKy:0};
+  const invite=BASE+'?p=dangky&gt='+d.ma;
+  const msgMoi='Chào anh/chị, em là '+d.ten+', cộng tác viên FaCare Life. Em đang giới thiệu Vali Y tế Gia Đình, giúp các gia đình tự đo huyết áp, đường huyết, mỡ máu tại nhà. Anh/chị muốn cùng làm, có thu nhập theo chính sách của EFCARE, đăng ký tại đây: '+invite;
+  let h='<div class="card"><h2>Nhóm của tôi · tháng '+esc(d.ky)+'</h2><div class="kpi">'
+   +'<div>Doanh số nhóm tháng này<b>'+vnd(n.dsNhomKy)+'</b></div><div>Thành viên<b>'+n.soTong+'</b></div>'
+   +'<div>Bạn mời trực tiếp<b>'+n.soF1+'</b></div><div>Khách thành CTV<b>'+n.soTuKhach+'</b></div></div>'
+   +'<p class="muted" style="margin:10px 0 0">Doanh số nhóm gồm của bạn ('+vnd(n.dsToiKy)+') và của mọi người trong nhóm, chỉ tính đơn khách đã thanh toán đủ. Từ trước đến nay: '+vnd(n.dsNhomTong)+'. Số này để bạn theo dõi và xét cấp quản lý; hoa hồng của mỗi người vẫn tính trên doanh số của chính người đó (QĐ09), thưởng giới thiệu CTV theo QĐ10.</p></div>';
+  if(!n.thanhVien.length){
+    h+='<div class="card"><h3>Nhóm chưa có ai</h3><p class="muted">Khi người bạn mời đăng ký qua link của bạn, hoặc khách hàng của bạn đăng ký làm CTV, họ sẽ hiện ở đây.</p></div>';
+  } else {
+    h+='<div class="card"><h2>Thành viên ('+n.soHoatDong+' đang hoạt động)</h2>'+n.thanhVien.map(x=>{
+      const pad=Math.min(x.tang-1,3)*16;
+      return '<div class="mem" style="padding-left:'+pad+'px"><div class="who"><b>'+esc(x.ten)+'</b> <span class="muted">'+esc(x.ma)+'</span><br>'
+        +'<span class="pill '+(x.tt==='Hoạt động'?'':'off')+'">'+esc(x.tt)+'</span> '+(x.tuKhach?'<span class="pill kh">Từ khách hàng</span> ':'')
+        +'<span class="muted">'+(x.tang===1?'Bạn mời':'Tầng '+x.tang+' · do '+esc(x.gt)+' mời')+' · '+esc(x.ngay)+'</span>'
+        +(x.tang===1?'<br><a class="call" href="tel:'+esc(x.sdt)+'">'+esc(x.sdt)+'</a>':'')+'</div>'
+        +'<div class="r"><b>'+vnd(x.dsKy)+'</b><br><span class="muted">tháng này</span></div></div>';
+    }).join('')+'</div>';
+  }
+  h+='<div class="card"><h2>Mời người vào nhóm</h2><p class="muted">Gửi link cho người muốn làm CTV, hoặc cho khách đã dùng Vali hài lòng. Khách hàng của bạn đăng ký làm CTV sẽ tự vào nhóm của bạn.</p>'
+   +copyBox(invite)+'<button class="ghost" data-share="'+esc(msgMoi)+'">Gửi lời mời qua Zalo</button></div>';
+  $('t_nhom').innerHTML=h;
 }
 if(PAGE==='cuatoi') loadHome();
 
@@ -366,6 +398,7 @@ function traCuu(){
     h+='</div>';
     if(d.coTheDanhGia) h+='<div class="card" id="rate"><h2>Đánh giá tư vấn viên</h2><div class="stars" id="g_stars">'+[1,2,3,4,5].map(i=>'<button type="button" data-s="'+i+'" aria-label="'+i+' sao">★</button>').join('')+'</div><label for="g_nx">Nhận xét</label><textarea id="g_nx"></textarea><button id="g_btn">Gửi đánh giá</button><div id="g_msg"></div></div>';
     else if(d.daDanhGia) h+='<div class="card"><p class="muted" style="margin:0">Cảm ơn anh/chị đã đánh giá.</p></div>';
+    h+='<div class="card cta"><h2>Giới thiệu Vali cho người thân, có thêm thu nhập</h2><p class="muted">Anh/chị có thể đăng ký làm Cộng tác viên FaCare Life'+(d.ctv?', cùng nhóm với tư vấn viên '+esc(d.ctv.ten):'')+'. Được đào tạo miễn phí, hưởng hoa hồng theo chính sách của EFCARE.</p><a class="btn" href="?p=dangky'+(d.ctv?'&gt='+encodeURIComponent(d.ctv.ma):'')+'&sdt='+encodeURIComponent($('q_sdt').value)+'">Đăng ký làm CTV</a></div>';
     $('q_out').innerHTML=h; $('q_out').hidden=false;
     if(d.coTheDanhGia){
       $('g_stars').querySelectorAll('button').forEach(b=>b.onclick=()=>{SAO=+b.dataset.s; $('g_stars').querySelectorAll('button').forEach(x=>x.classList.toggle('on',+x.dataset.s<=SAO));});
