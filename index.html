@@ -152,6 +152,11 @@
     <h2>Sản phẩm</h2>
     <div id="o_items"></div>
     <button class="ghost" id="o_add">+ Thêm sản phẩm</button>
+    <div style="margin-top:12px;padding:10px;border:1px dashed var(--line);border-radius:8px">
+      <b>Gói An tâm gia đình</b> <span class="muted">(QĐ03)</span>
+      <div class="row"><div><label for="o_gky">Kỳ hạn</label><select id="o_gky"><option value="6">6 tháng</option><option value="9">9 tháng</option><option value="12" selected>12 tháng</option></select></div><div><label for="o_gso">Số thành viên</label><input id="o_gso" type="number" min="1" max="30" value="1" inputmode="numeric"></div></div>
+      <button class="ghost" id="o_gadd" type="button">+ Thêm gói vào đơn</button>
+    </div>
     <p class="muted" id="o_cocnote" hidden>Thuê Vali: hệ thống tự thêm tiền đặt cọc 5.000.000đ mỗi hợp đồng (hoàn lại khi trả máy nguyên vẹn).</p>
     <div class="total"><span>Tạm tính</span><span id="o_total">0đ</span></div>
     <label for="o_note">Ghi chú (không ghi tình trạng bệnh)</label><textarea id="o_note"></textarea>
@@ -284,7 +289,9 @@ function taskCard(x){
     case 'huongdan': return '<div class="task"><div class="top"><b>Hướng dẫn đo, cài ứng dụng · '+esc(x.ma)+'</b><span class="pill">Mới giao</span></div>'+who
        +'<div class="muted">Gọi hoặc ghé hướng dẫn đo từng máy, cài ứng dụng FaCare, mời con cháu cùng xem. Xong báo Admin chuyển đơn sang Đã kích hoạt.</div>'
        +'<div class="acts"><button class="sm ghost" data-share="'+esc('Anh/chị xem thiết bị, bảo hành và quyền lợi của gia đình tại đây: '+BASE+'khach/')+'">Gửi trang Của tôi cho khách</button></div></div>';
-    case 'giahan': return '<div class="task"><div class="top"><b>Gia hạn thuê · '+esc(x.ma)+'</b><span class="pill wait">'+(x.con>=0?'Còn '+x.con+' ngày':'Quá '+(-x.con)+' ngày')+'</span></div>'+who
+    case 'giahan': if(x.goi) return '<div class="task"><div class="top"><b>Gia hạn Gói An tâm gia đình · '+esc(x.ma)+'</b><span class="pill wait">'+(x.con>=0?'Còn '+x.con+' ngày':'Quá '+(-x.con)+' ngày')+'</span></div>'+who
+       +'<div class="muted">Gói hết ngày '+esc(x.het)+' và tự gia hạn theo kỳ cũ. Gọi hỏi gia đình có thêm hay bớt thành viên, nhắc thanh toán trước ngày gia hạn.</div></div>';
+      return '<div class="task"><div class="top"><b>Gia hạn thuê · '+esc(x.ma)+'</b><span class="pill wait">'+(x.con>=0?'Còn '+x.con+' ngày':'Quá '+(-x.con)+' ngày')+'</span></div>'+who
        +'<div class="muted">Kỳ thuê hết ngày '+esc(x.het)+'. Hỏi khách gia hạn (3, 6, 9, 12 tháng) hoặc chuyển sang mua; nếu trả máy, hẹn ngày thu hồi để hoàn cọc.</div>'
        +'<div class="acts"><button class="sm ghost" data-share="'+esc('Kỳ thuê Vali Y tế của gia đình mình hết ngày '+x.het+'. Anh/chị muốn gia hạn thêm để tiếp tục theo dõi sức khỏe, em lên đơn giúp nhé: '+SHOP+'?ctv='+ME.ma+'#gia')+'">Gửi lời nhắc gia hạn</button></div></div>';
     case 'quethu': return '<div class="task"><div class="top"><b>Nhắc mua que thử</b><span class="pill wait">'+x.ngay+' ngày</span></div>'+who
@@ -430,11 +437,16 @@ function itemRow(){
   d.querySelector('.x').onclick=()=>{d.remove();calc();}; d.querySelector('.sp').onchange=calc; d.querySelector('.qty').oninput=calc;
   $('o_items').appendChild(d);
 }
-function groups(){ const by={}; CAT.items.forEach(x=>{(by[x.loai]=by[x.loai]||[]).push(x);}); return Object.keys(by).map(g=>'<optgroup label="'+esc(g)+'">'+by[g].map(x=>'<option value="'+esc(x.ma)+'">'+esc(x.ten)+' · '+vnd(x.gia)+'</option>').join('')+'</optgroup>').join(''); }
+function groups(){ const by={}; CAT.items.filter(x=>x.ma.indexOf('GOI-ATGD-')!==0).forEach(x=>{(by[x.loai]=by[x.loai]||[]).push(x);}); return Object.keys(by).map(g=>'<optgroup label="'+esc(g)+'">'+by[g].map(x=>'<option value="'+esc(x.ma)+'">'+esc(x.ten)+' · '+vnd(x.gia)+'</option>').join('')+'</optgroup>').join(''); }
 function items(){ return [...document.querySelectorAll('#o_items .row')].map(r=>({sp:r.querySelector('.sp').value,sl:r.querySelector('.qty').value})).filter(x=>x.sp); }
 function calc(){ if(!CAT) return; const p={}; CAT.items.forEach(x=>p[x.ma]=x.gia); let t=0,thue=0; items().forEach(x=>{t+=(p[x.sp]||0)*(+x.sl||0); if(x.sp.indexOf('THUE-')===0) thue+=(+x.sl||0);}); t+=thue*CAT.coc; $('o_cocnote').hidden=!thue; $('o_total').textContent=vnd(t); }
 if(PAGE==='don') api('getCatalog',[]).then(c=>{ CAT=c; $('o_items').innerHTML=''; itemRow(); }).catch(e=>msg('o_msg',esc(e.message)));
 $('o_add').onclick=()=>itemRow();
+$('o_gadd').onclick=()=>{ if(!CAT) return; const ky=('0'+$('o_gky').value).slice(-2), so=Math.max(1,Math.min(30,+$('o_gso').value||1));
+  for(let i=1;i<=Math.min(so,6);i++){ const ma='GOI-ATGD-'+ky+'-'+i, x=CAT.items.find(y=>y.ma===ma); if(!x) continue;
+    itemRow(); const r=[...document.querySelectorAll('#o_items .row')].pop(); const s=r.querySelector('.sp');
+    const o=document.createElement('option'); o.value=x.ma; o.textContent=x.ten+' · '+vnd(x.gia); s.appendChild(o); s.value=x.ma; r.querySelector('.qty').value= i===6? so-5 : 1; }
+  calc(); };
 $('o_btn').onclick=()=>{
   const useSes = $('o_auth').hidden && CRED;
   const ma = useSes ? CRED.ma : $('o_ma').value, pin = useSes ? CRED.pin : $('o_pin').value;

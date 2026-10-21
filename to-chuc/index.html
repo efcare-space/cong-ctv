@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kiosk sức khỏe cho tổ chức · EFCARE</title>
+<meta name="description" content="Kiosk sức khỏe thông minh và gói chăm sóc sức khỏe cho doanh nghiệp, nhà máy, trường học, khu dân cư. EFCARE đầu tư, lắp đặt Kiosk; nhân viên, học sinh có hồ sơ sức khỏe điện tử và bác sĩ theo dõi.">
+<meta property="og:title" content="Kiosk sức khỏe tại nơi làm việc, trường học">
+<meta property="og:description" content="Gói An toàn doanh nghiệp từ 90.000đ/người/tháng. Gói An sinh học đường từ 90.000đ/học sinh/tháng. EFCARE lắp đặt Kiosk.">
+<meta property="og:image" content="img/kiosk.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<style>
+/* Kiosk trên đầu → chọn nhóm của mình (phân luồng theo nỗi lo) → nội dung, giá của nhóm đó → đăng ký */
+:root{
+  --bg:#f4f7fb; --paper:#ffffff; --ink:#18222e; --muted:#566271; --line:#dbe3ec;
+  --blue:#1f3fae; --blue-soft:#e8edfb; --teal:#0f5f6b; --teal-soft:#e4f1f2; --navy:#14264d; --gold:#b8862b; --gold-soft:#f6ecd8; --warn:#9a3b2b; --warn-soft:#f7e6e1;
+  --f:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--f)}
+img{max-width:100%;display:block}
+a{color:var(--teal)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{color:var(--navy);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,5.5vw,46px);line-height:1.12;font-weight:800;letter-spacing:-.5px}
+h2{font-size:clamp(23px,4vw,30px);line-height:1.2;font-weight:800}
+h3{font-size:18px}
+p{margin:0}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.lead{font-size:18px;color:var(--muted);max-width:34em}
+.muted{color:var(--muted);font-size:15px}
+.ref{font-size:14px;color:var(--muted)}
+.btn{display:inline-block;text-decoration:none;font:inherit;font-weight:700;border:0;border-radius:10px;padding:14px 22px;cursor:pointer;text-align:center}
+.btn-main{background:var(--teal);color:#fff}
+.btn-line{background:transparent;color:var(--teal);border:1.5px solid var(--teal)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+section{padding-block:44px}
+
+.top{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;padding-block:10px;gap:12px}
+.brand{font-weight:800;color:var(--teal);font-size:20px;text-decoration:none}
+.brand small{display:block;font-size:12px;color:var(--muted);font-weight:500}
+.top .btn{padding:10px 16px;font-size:14px}
+
+.hero{background:linear-gradient(160deg,#eef3fd 0%,#dfe8fb 60%,#f4f7fb 100%);padding-block:28px 40px}
+.hero .wrap{display:grid;gap:22px;align-items:center;grid-template-columns:1fr}
+.hero .pic{order:-1;display:grid;justify-items:center}
+.hero .pic img{max-height:420px;width:auto;border-radius:18px}
+.hero .txt{display:grid;gap:14px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
+.facts div{background:rgba(255,255,255,.75);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.facts b{display:block;color:var(--blue);font-size:20px;font-variant-numeric:tabular-nums}
+.facts span{font-size:13px;color:var(--muted)}
+@media(min-width:860px){.hero .wrap{grid-template-columns:1.1fr .9fr}.hero .pic{order:0}.hero .pic img{max-height:560px}}
+
+.pick{display:grid;gap:12px;grid-template-columns:repeat(2,1fr);margin-top:20px}
+@media(min-width:860px){.pick{grid-template-columns:repeat(4,1fr)}}
+.pick button{font:inherit;text-align:left;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:0;overflow:hidden;cursor:pointer;display:grid;grid-template-rows:auto 1fr;color:var(--ink)}
+.pick button img{aspect-ratio:16/10;object-fit:cover;width:100%}
+.pick button .ph{aspect-ratio:16/10;background:var(--blue-soft);display:grid;place-items:center;color:var(--blue);font-weight:800;font-size:15px;padding:10px;text-align:center}
+.pick button div.t{padding:10px 12px 12px;display:grid;gap:2px}
+.pick button b{color:var(--navy)}
+.pick button span{font-size:13px;color:var(--muted)}
+.pick button[aria-pressed="true"]{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-soft)}
+
+.seg{display:grid;gap:16px;margin-top:22px}
+.pain{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:760px){.pain{grid-template-columns:repeat(3,1fr)}}
+.pain div{background:var(--warn-soft);border-radius:12px;padding:14px;font-size:15px}
+.pain b{display:block;color:var(--warn)}
+.two{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:860px){.two{grid-template-columns:1.1fr .9fr}}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px;align-content:start;min-width:0}
+.ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.ul b{color:var(--navy)}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px}
+td,th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:14px}
+td.r,th.r{text-align:right;white-space:nowrap}
+.calc{background:var(--gold-soft);border-radius:12px;padding:14px;display:grid;gap:10px}
+.calc .row{display:flex;gap:8px;flex-wrap:wrap}
+.calc .row button{flex:1;min-width:90px;font:inherit;font-weight:700;padding:9px;border-radius:10px;border:1.5px solid var(--teal);background:#fff;color:var(--teal);cursor:pointer}
+.calc .row button.on{background:var(--teal);color:#fff}
+.calc .out{display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-variant-numeric:tabular-nums}
+.calc .out span:nth-child(even){text-align:right;font-weight:700}
+.calc .out .tot{border-top:1px solid rgba(0,0,0,.12);padding-top:6px;color:var(--navy);font-size:18px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:30px 1fr;gap:10px}
+.steps li::before{counter-increment:s;content:counter(s);width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+
+.order{background:var(--paper)}
+.form{display:grid;gap:14px;max-width:640px;margin-top:20px}
+label{display:block;font-size:14px;color:var(--muted);margin-bottom:4px;font-weight:600}
+input,select,textarea{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+textarea{min-height:90px}
+.row2{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:560px){.row2{grid-template-columns:1fr 1fr}}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px}.chk input{width:auto;margin-top:5px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.msg{padding:12px 14px;border-radius:10px;font-size:15px}.err{background:var(--warn-soft);color:var(--warn)}
+.done{background:var(--teal-soft);border-radius:14px;padding:18px;display:grid;gap:10px}
+footer{background:var(--navy);color:#dfe6f2;padding-block:28px;font-size:14px}
+footer .wrap{display:grid;gap:8px} footer b,footer a{color:#fff}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#" >EFCARE · FaCare Life<small>Sức khỏe cho tổ chức</small></a>
+    <a class="btn btn-main" href="#dang-ky">Đăng ký khảo sát</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="txt">
+      <div class="eyebrow">Kiosk sức khỏe thông minh</div>
+      <h1>Một trạm đo sức khỏe ngay tại nơi làm việc, nơi học tập</h1>
+      <p class="lead">Mỗi người đo huyết áp, nhịp tim, SpO2, chiều cao, cân nặng, thân nhiệt trong vài phút. Kết quả tự vào hồ sơ sức khỏe điện tử; bác sĩ theo dõi và liên hệ khi có bất thường.</p>
+      <div class="facts">
+        <div><b>10 ngày</b><span>lắp đặt, tính từ khi ký</span></div>
+        <div><b>0đ</b><span>phí lắp đặt, bảo trì Kiosk theo gói</span></div>
+        <div><b>3 ngày</b><span>xử lý sự cố</span></div>
+      </div>
+      <p class="ref" id="refnote" hidden></p>
+    </div>
+    <div class="pic"><img src="img/kiosk.jpg" alt="Kiosk sức khỏe FaCare: màn hình cảm ứng, máy đo huyết áp bắp tay, khay que thử" width="580" height="890"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Anh/chị đang lo cho ai</div>
+    <h2>Chọn đơn vị của anh/chị</h2>
+    <div class="pick" role="group" aria-label="Loại đơn vị">
+      <button type="button" data-seg="doanh-nghiep" aria-pressed="true"><img src="img/doanh-nghiep.jpg" alt="" width="448" height="264"><div class="t"><b>Doanh nghiệp, văn phòng</b><span>Nhân viên ngồi nhiều, ít khám định kỳ</span></div></button>
+      <button type="button" data-seg="nha-may" aria-pressed="false"><img src="img/nha-may.jpg" alt="" width="420" height="264"><div class="t"><b>Nhà máy, khu công nghiệp</b><span>Làm ca, môi trường lao động đặc thù</span></div></button>
+      <button type="button" data-seg="truong-hoc" aria-pressed="false"><img src="img/gia-dinh.jpg" alt="" width="468" height="264"><div class="t"><b>Trường học</b><span>Phụ huynh muốn biết con phát triển ra sao</span></div></button>
+      <button type="button" data-seg="cong-dong" aria-pressed="false"><img src="img/bac-si.jpg" alt="" width="460" height="264"><div class="t"><b>Phòng khám, khu dân cư</b><span>Mua Kiosk đặt tại sảnh, nhà văn hoá</span></div></button>
+    </div>
+
+    <!-- DOANH NGHIỆP + NHÀ MÁY: QĐ01 -->
+    <div class="seg" id="seg-dn">
+      <div class="pain" id="pain-dn"></div>
+      <div class="two">
+        <div class="card">
+          <h3>Gói An toàn doanh nghiệp</h3>
+          <ul class="ul">
+            <li><b>Quản lý:</b> mỗi nhân viên một hồ sơ sức khỏe điện tử và kế hoạch chăm sóc theo tuổi, yếu tố nguy cơ; ngưỡng cảnh báo riêng; người thân được theo dõi.</li>
+            <li><b>Chăm sóc:</b> đo tại Kiosk ở công ty; bác sĩ nhắn tư vấn khi chỉ số bất thường; theo dõi bệnh mạn tính, bệnh nghề nghiệp; phối hợp y tế doanh nghiệp xử trí ban đầu; đánh giá nguy cơ môi trường lao động, workshop sức khỏe hằng năm.</li>
+            <li><b>Đồng hành:</b> 2 buổi lớp học sức khỏe trực tiếp mỗi năm, chương trình "Tam Khí Cân Bằng" tại nơi làm việc, cộng đồng hội viên.</li>
+            <li><b>Ban Giám đốc</b> nhận báo cáo sức khỏe ẩn danh, tổng hợp theo quý, năm để lên kế hoạch phúc lợi.</li>
+          </ul>
+          <p class="ref">Không thay thế cấp cứu 115 hay khám chữa bệnh; khi cần, EFCARE đề xuất khám chuyên sâu tại cơ sở y tế.</p>
+        </div>
+        <div class="card">
+          <h3>Giá theo số nhân viên</h3>
+          <div class="tbl"><table>
+            <tr><th>Số nhân viên đăng ký</th><th class="r">/người/tháng</th></tr>
+            <tr><td>Dưới 300</td><td class="r">120.000đ</td></tr>
+            <tr><td>300 đến dưới 500</td><td class="r">110.000đ</td></tr>
+            <tr><td>500 đến dưới 1.000</td><td class="r">100.000đ</td></tr>
+            <tr><td>Từ 1.000</td><td class="r">90.000đ</td></tr>
+          </table></div>
+          <div class="calc">
+            <label for="dn_n" style="margin:0">Số nhân viên</label><input id="dn_n" type="number" min="1" value="200" inputmode="numeric">
+            <div class="row"><button type="button" data-dk="6">Gói 6 tháng</button><button type="button" data-dk="12" class="on">Gói 12 tháng</button></div>
+            <div class="out"><span>Đơn giá</span><span id="dn_dg"></span><span>Mỗi tháng</span><span id="dn_th"></span><span class="tot">Tổng cả kỳ</span><span class="tot" id="dn_tong"></span></div>
+          </div>
+          <p class="ref">Trả trọn kỳ trong 24 giờ sau ký; tự gia hạn; dừng thì báo trước 15 ngày, không chấm dứt giữa kỳ. Danh sách chốt đầu kỳ. Theo Quyết định 01/2026/QĐ-EFCARE.</p>
+          <a class="btn btn-main" href="#dang-ky" data-go="Gói An toàn doanh nghiệp">Đăng ký khảo sát miễn phí</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRƯỜNG HỌC: QĐ02 -->
+    <div class="seg" id="seg-th" hidden>
+      <div class="pain">
+        <div><b>Một lần khám mỗi năm</b>Chiều cao, cân nặng, huyết áp của học sinh chỉ được đo vào kỳ khám đầu năm. Thừa cân, suy dinh dưỡng phát hiện muộn.</div>
+        <div><b>Phụ huynh không thấy số liệu</b>Kết quả khám nằm ở phòng y tế trường, phụ huynh khó theo dõi con lớn lên ra sao.</div>
+        <div><b>Y tế trường quá tải</b>Một cán bộ y tế cho hàng trăm, hàng nghìn học sinh; mùa dịch càng khó sàng lọc sốt.</div>
+      </div>
+      <div class="two">
+        <div class="card">
+          <h3>Gói An sinh học đường (EFCARE School Care)</h3>
+          <ol class="steps">
+            <li><div><b>Lắp Kiosk tại trường</b><span class="muted"> · EFCARE đầu tư, lắp đặt, bảo trì; khoảng 1 Kiosk cho 500–800 học sinh. Phụ huynh xác nhận đồng ý tham gia.</span></div></li>
+            <li><div><b>Trải nghiệm miễn phí</b><span class="muted"> · Mỗi học sinh đo 1 lần, khởi tạo hồ sơ sức khỏe điện tử, phụ huynh nhận kết quả qua ứng dụng.</span></div></li>
+            <li><div><b>Gói có phí, tự nguyện</b><span class="muted"> · Đo tối thiểu 1 lần mỗi tháng, bác sĩ gia đình tư vấn phụ huynh khi bất thường, báo cáo hằng tháng; 2 buổi giáo dục sức khỏe trực tiếp mỗi năm; báo cáo tổng hợp ẩn danh gửi Ban Giám hiệu.</span></div></li>
+          </ol>
+          <p class="ref">Kiosk đo chiều cao, cân nặng, BMI, huyết áp, nhịp tim, SpO2, thân nhiệt (thị lực nếu tích hợp). Chỉ thu thập dữ liệu khi phụ huynh đồng ý. Không đăng ký gói có phí không ảnh hưởng quyền lợi y tế học đường thông thường của học sinh.</p>
+        </div>
+        <div class="card">
+          <h3>Giá gói có phí</h3>
+          <div class="tbl"><table>
+            <tr><th>Học sinh tham gia</th><th class="r">Gói 5 tháng</th><th class="r">Gói 10 tháng</th></tr>
+            <tr><td>Dưới 1.000</td><td class="r">500.000đ</td><td class="r">1.000.000đ</td></tr>
+            <tr><td>Từ 1.000</td><td class="r">450.000đ</td><td class="r">900.000đ</td></tr>
+          </table></div>
+          <p class="muted">Tính trên mỗi học sinh, tương đương 90.000 đến 100.000đ một tháng. Không thu cọc thiết bị.</p>
+          <h3 style="font-size:16px">Hai cách triển khai</h3>
+          <ul class="ul">
+            <li><b>Nhà trường mua cho học sinh</b> từ ngân sách, quỹ phúc lợi, tài trợ hợp pháp.</li>
+            <li><b>Nhà trường cùng EFCARE giới thiệu</b> để phụ huynh tự đăng ký; đối soát theo thỏa thuận hợp tác.</li>
+          </ul>
+          <p class="ref">Ký thỏa thuận ba bên: EFCARE, cơ sở y tế đối tác, nhà trường. Theo Quyết định 02/2026/QĐ-EFCARE.</p>
+          <a class="btn btn-main" href="#dang-ky" data-go="Gói An sinh học đường">Đăng ký lắp Kiosk thử nghiệm</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHÒNG KHÁM, KHU DÂN CƯ: Kiosk QĐ08 -->
+    <div class="seg" id="seg-cd" hidden>
+      <div class="pain">
+        <div><b>Người dân ngại đi khám</b>Nhiều người chỉ đến cơ sở y tế khi đã có triệu chứng.</div>
+        <div><b>Thiếu điểm đo gần nhà</b>Người cao tuổi khó tự đo đủ chỉ số, không có ai lưu lại kết quả.</div>
+        <div><b>Phòng khám cần thu hút</b>Một điểm đo miễn phí ở sảnh là lý do để người dân ghé và quay lại.</div>
+      </div>
+      <div class="two">
+        <div class="card">
+          <h3>Mua Kiosk sức khỏe thông minh</h3>
+          <ul class="ul">
+            <li>Đặt tại sảnh phòng khám, nhà thuốc, nhà văn hoá, hội người cao tuổi, chung cư.</li>
+            <li>Người dân tự đo và nhận kết quả trên điện thoại; hồ sơ sức khỏe lưu theo từng người.</li>
+            <li>Gia đình có nhu cầu theo dõi thêm có thể đăng ký Gói An tâm gia đình với bác sĩ đồng hành.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Giá Kiosk</h3>
+          <div class="tbl"><table>
+            <tr><th>Hình thức</th><th class="r">Giá</th></tr>
+            <tr><td>Đơn vị mua để dùng</td><td class="r">279.000.000đ</td></tr>
+            <tr><td>Đại lý, đối tác phân phối</td><td class="r">190.000.000đ</td></tr>
+          </table></div>
+          <p class="ref">Giá đã gồm VAT, theo Quyết định 08/2026/QĐ-EFCARE. Đại lý xem <a href="../doi-tac/" class="keepctv">chính sách Đối tác</a>.</p>
+          <a class="btn btn-main" href="#dang-ky" data-go="Kiosk sức khỏe">Nhận báo giá, lịch xem Kiosk</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dang-ky" class="order">
+  <div class="wrap">
+    <div class="eyebrow">Khảo sát miễn phí</div>
+    <h2>Để lại thông tin đơn vị</h2>
+    <p class="muted" style="margin-top:6px">Bộ phận Kinh doanh dự án của EFCARE liên hệ trong 24 giờ làm việc để khảo sát và báo giá.</p>
+    <form class="form" id="f" novalidate>
+      <div><label for="loai">Quan tâm</label>
+        <select id="loai">
+          <option>Gói An toàn doanh nghiệp</option>
+          <option>Gói An sinh học đường</option>
+          <option>Kiosk sức khỏe</option>
+        </select></div>
+      <div><label for="ten">Tên đơn vị</label><input id="ten" autocomplete="organization"></div>
+      <div class="row2">
+        <div><label for="lh">Người liên hệ, chức vụ</label><input id="lh" autocomplete="name"></div>
+        <div><label for="sdt">Số điện thoại</label><input id="sdt" inputmode="tel" autocomplete="tel"></div>
+      </div>
+      <div class="row2">
+        <div><label for="quymo">Số nhân viên, học sinh</label><input id="quymo" inputmode="numeric"></div>
+        <div><label for="tinh">Tỉnh, thành</label><input id="tinh"></div>
+      </div>
+      <div><label for="nc">Ghi chú</label><textarea id="nc" placeholder="Thời gian mong muốn triển khai, số điểm đặt Kiosk…"></textarea></div>
+      <div class="hp" aria-hidden="true"><label for="web">Website</label><input id="web" tabindex="-1" autocomplete="off"></div>
+      <div class="chk"><input type="checkbox" id="dongy"><label for="dongy" style="margin:0;color:var(--ink);font-weight:500">Tôi đồng ý để EFCARE dùng thông tin trên để liên hệ tư vấn.</label></div>
+      <button class="btn btn-main" id="gui" type="submit">Gửi đăng ký</button>
+      <div id="msg"></div>
+    </form>
+    <div class="done" id="done" hidden></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>EFCARE · FaCare Life · Bác sĩ gia đình tại nhà</b>
+    <span>Gia đình: <a class="keepctv" href="../mua/">Vali Y tế, Gói An tâm gia đình</a> · Đại lý, nhà phân phối: <a class="keepctv" href="../doi-tac/">Hợp tác cùng EFCARE</a></span>
+    <span>Kết quả đo mang tính sàng lọc, theo dõi; không thay thế khám, chẩn đoán, điều trị tại cơ sở y tế và không thay thế cấp cứu 115.</span>
+  </div>
+</footer>
+
+<script>
+const API='https://script.google.com/macros/s/AKfycbx99ftRRaloqf7q3AV7ksrYeYfR_qswmgLolqyHNPrUVxP3LONbr0lYIg-vom3x0sQ/exec';
+const $=id=>document.getElementById(id);
+const vnd=n=>(Math.round(n)||0).toLocaleString('vi-VN')+'đ';
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+const QS=new URLSearchParams(location.search);
+let CTV=(QS.get('ctv')||'').trim().toUpperCase().replace(/[^A-Z0-9-]/g,'');
+try{ if(CTV) localStorage.setItem('fcl_ref',CTV); else CTV=localStorage.getItem('fcl_ref')||''; }catch(e){}
+if(CTV){
+  document.querySelectorAll('a.keepctv').forEach(a=>a.href=a.getAttribute('href')+'?ctv='+encodeURIComponent(CTV));
+  fetch(API,{method:'POST',credentials:'omit',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn:'getRef',args:[CTV]})})
+    .then(r=>r.json()).then(j=>{ if(!j.ok||!j.data) return; $('refnote').hidden=false;
+      $('refnote').innerHTML='Người giới thiệu: <b>'+esc(j.data.ten)+'</b>'+(j.data.sdt?' · <a href="tel:'+esc(j.data.sdt)+'">'+esc(j.data.sdt)+'</a>':'')+'. Bộ phận Kinh doanh dự án sẽ trực tiếp tư vấn.'; }).catch(()=>{});
+}
+const PAIN={
+  'doanh-nghiep':[['Ngồi nhiều, ít vận động','Huyết áp, mỡ máu, đường huyết tăng âm thầm ở tuổi 30–45; khám định kỳ một năm một lần là không đủ.'],['Nghỉ ốm khó đoán','Một người nghỉ đột ngột kéo cả nhóm chậm việc; doanh nghiệp không có số liệu để phòng trước.'],['Phúc lợi khó đo','Chi cho sức khỏe nhân viên nhưng không biết hiệu quả; thiếu báo cáo cho Ban Giám đốc.']],
+  'nha-may':[['Làm ca, áp lực thể lực','Huyết áp, nhịp tim bất thường dễ bị bỏ qua; rủi ro tai nạn khi người lao động không khỏe.'],['Bệnh nghề nghiệp','Môi trường bụi, ồn, hoá chất cần theo dõi dài hạn theo từng người.'],['Y tế nhà máy quá tải','Một phòng y tế cho hàng nghìn công nhân; cần công cụ sàng lọc nhanh tại chỗ.']]
+};
+const SEG={'doanh-nghiep':'dn','nha-may':'dn','truong-hoc':'th','cong-dong':'cd'};
+function pick(s){
+  if(!SEG[s]) s='doanh-nghiep';
+  document.querySelectorAll('[data-seg]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.seg===s));
+  ['dn','th','cd'].forEach(k=>$('seg-'+k).hidden=k!==SEG[s]);
+  if(PAIN[s]) $('pain-dn').innerHTML=PAIN[s].map(p=>'<div><b>'+p[0]+'</b>'+p[1]+'</div>').join('');
+  $('loai').value = SEG[s]==='th'?'Gói An sinh học đường':(SEG[s]==='cd'?'Kiosk sức khỏe':'Gói An toàn doanh nghiệp');
+  try{history.replaceState(null,'','#'+s)}catch(e){}
+}
+document.querySelectorAll('[data-seg]').forEach(b=>b.onclick=()=>pick(b.dataset.seg));
+pick((location.hash||'').slice(1));
+let DK=12;
+function dnCalc(){ const n=Math.max(1,+$('dn_n').value||0), dg=n>=1000?90000:n>=500?100000:n>=300?110000:120000;
+  $('dn_dg').textContent=vnd(dg); $('dn_th').textContent=vnd(dg*n); $('dn_tong').textContent=vnd(dg*n*DK);
+  document.querySelectorAll('[data-dk]').forEach(b=>b.classList.toggle('on',+b.dataset.dk===DK)); }
+$('dn_n').oninput=dnCalc; document.querySelectorAll('[data-dk]').forEach(b=>b.onclick=()=>{DK=+b.dataset.dk;dnCalc();}); dnCalc();
+document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',()=>{ $('loai').value=a.dataset.go; if(a.dataset.go==='Gói An toàn doanh nghiệp'){ $('quymo').value=$('dn_n').value; if(!$('nc').value) $('nc').value='Quan tâm Gói '+DK+' tháng'; } }));
+$('f').addEventListener('submit',e=>{
+  e.preventDefault(); const b=$('gui'); b.disabled=true; b.textContent='Đang gửi...'; $('msg').innerHTML='';
+  const seg=document.querySelector('[data-seg][aria-pressed="true"]');
+  const body={fn:'dangKyHopTac',args:[{loai:'Khách hàng',ten:$('ten').value,lienhe:$('lh').value,sdt:$('sdt').value,tinh:$('tinh').value,
+    nhucau:'['+$('loai').value+' · '+(seg?seg.querySelector('b').textContent:'')+'] Quy mô: '+$('quymo').value+'. '+$('nc').value,dongy:$('dongy').checked,ctv:CTV,web:$('web').value}]};
+  fetch(API,{method:'POST',credentials:'omit',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)})
+    .then(r=>{ if(!r.ok) throw new Error('Không kết nối được máy chủ. Vui lòng thử lại.'); return r.json(); })
+    .then(j=>{ if(!j.ok) throw new Error(j.error);
+      $('done').innerHTML='<h3>Đã nhận đăng ký</h3><p>Cảm ơn anh/chị. Bộ phận Kinh doanh dự án của EFCARE sẽ liên hệ số '+esc($('sdt').value)+' trong 24 giờ làm việc. Mã ghi nhận: <b>'+esc(j.data.ma)+'</b>.</p>';
+      $('f').hidden=true; $('done').hidden=false; $('done').scrollIntoView({behavior:'smooth',block:'start'}); })
+    .catch(err=>{ $('msg').innerHTML='<div class="msg err">'+esc(err.message||err)+'</div>'; b.disabled=false; b.textContent='Gửi đăng ký'; });
+});
+</script>
+</body>
+</html>

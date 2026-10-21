@@ -110,6 +110,20 @@ textarea{min-height:80px}
 .done table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 .done td{padding:6px 0;border-bottom:1px solid var(--line)} .done td.r{text-align:right}
 .ref{font-size:14px;color:var(--muted)}
+.tiers{display:grid;gap:14px;grid-template-columns:1fr;margin-top:22px}
+@media(min-width:860px){.tiers{grid-template-columns:1fr 1.3fr}}
+.tier{background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:10px;align-content:start}
+.tier.prem{border-color:var(--teal);box-shadow:0 10px 26px rgba(15,95,107,.12)}
+.tier ul{margin:0;padding-left:18px;font-size:15px;display:grid;gap:4px}
+.tier ul b{color:var(--navy)}
+.calc{background:var(--teal-soft);border-radius:12px;padding:14px;display:grid;gap:10px}
+.calc .row2{grid-template-columns:1fr 1fr}
+.kyhan{display:flex;gap:8px}.kyhan button{flex:1;font:inherit;font-weight:700;padding:10px;border-radius:10px;border:1.5px solid var(--teal);background:#fff;color:var(--teal);cursor:pointer}
+.kyhan button.on{background:var(--teal);color:#fff}
+.calc .out{display:flex;justify-content:space-between;align-items:baseline;font-weight:700;color:var(--navy)}
+.calc .out b{font-size:24px;font-variant-numeric:tabular-nums}
+.mtable{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.mtable td{padding:4px 0;border-bottom:1px solid var(--line)}.mtable td:last-child{text-align:right}
 .refill{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:14px}
 .refill a{display:flex;justify-content:space-between;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-decoration:none;color:var(--ink);font-size:15px}
 .refill a b{color:var(--navy);white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -134,7 +148,7 @@ footer b{color:#fff}
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#">FaCare Life<small>Bác sĩ gia đình tại nhà</small></a>
-    <a class="btn btn-main" href="#dat-mua">Đặt mua</a>
+    <a class="btn btn-line" href="#an-tam" style="margin-right:6px">Gói gia đình</a><a class="btn btn-main" href="#dat-mua">Đặt mua</a>
   </div>
 </header>
 
@@ -238,15 +252,53 @@ footer b{color:#fff}
       </div>
     </div>
     <div class="org">
-      <div class="eyebrow" style="color:#f0c977">Nhà thuốc · Phòng khám · Trường học · Doanh nghiệp</div>
-      <h3>Mua số lượng lớn, phân phối lại hoặc đặt Kiosk sức khỏe</h3>
+      <div class="eyebrow" style="color:#f0c977">Không phải hộ gia đình?</div>
+      <h3>Doanh nghiệp, trường học, nhà thuốc, phòng khám</h3>
       <div class="cols">
-        <div><b>Đối tác phân phối</b>Nhập Vali, thiết bị để bán lại, cho thuê lại. Chiết khấu 20% đến 30% theo doanh số.</div>
-        <div><b>Tổ chức mua để dùng</b>Trường học, doanh nghiệp, câu lạc bộ trang bị Vali cho nhân viên, hội viên. Bộ phận Kinh doanh dự án tư vấn, báo giá.</div>
-        <div><b>Kiosk sức khỏe thông minh</b>FaCare AIoT Health Kiosk đặt tại sảnh, phòng khám, khu dân cư. Giá bán lẻ 279.000.000đ.</div>
+        <div><b>Doanh nghiệp, nhà máy</b>Kiosk sức khỏe tại công ty, hồ sơ sức khỏe từng nhân viên. Từ 90.000đ/người/tháng.<br><a href="../to-chuc/#doanh-nghiep" class="orgl" style="color:#f0c977">Xem gói doanh nghiệp</a></div>
+        <div><b>Trường học</b>Kiosk tại trường, phụ huynh theo dõi con qua ứng dụng. Từ 90.000đ/học sinh/tháng.<br><a href="../to-chuc/#truong-hoc" class="orgl" style="color:#f0c977">Xem gói học đường</a></div>
+        <div><b>Nhà thuốc, phòng khám, nhà phân phối</b>Nhập Vali để bán lại, chiết khấu 20% đến 30%; đại lý Kiosk.<br><a href="../doi-tac/" class="orgl" style="color:#f0c977">Hợp tác phân phối</a></div>
       </div>
-      <a class="btn btn-main" id="org-link" href="../doi-tac/">Xem chính sách và đăng ký tư vấn</a>
     </div>
+  </div>
+</section>
+
+<section id="an-tam">
+  <div class="wrap">
+    <div class="eyebrow">Có bác sĩ gia đình đồng hành</div>
+    <h2>Gói An tâm gia đình</h2>
+    <p class="lead" style="margin-top:8px;color:var(--muted);max-width:40em">Đo tại nhà mới là bước đầu. Gói An tâm gia đình có bác sĩ theo dõi chỉ số của từng người, chủ động gọi khi có bất thường và cùng gia đình lên kế hoạch chăm sóc.</p>
+    <div class="tiers">
+      <div class="tier">
+        <h3>Hội viên miễn phí</h3><div class="price">0đ</div>
+        <ul>
+          <li>Hồ sơ sức khỏe điện tử cho từng người</li>
+          <li>Ngưỡng cảnh báo cá nhân, người thân cùng theo dõi trên ứng dụng</li>
+          <li>Báo cáo sức khỏe định kỳ</li>
+          <li>Lớp học sức khỏe, cộng đồng hội viên</li>
+        </ul>
+        <p class="ref">Không gồm bác sĩ theo dõi dữ liệu và tư vấn qua điện thoại, tin nhắn.</p>
+      </div>
+      <div class="tier prem">
+        <h3>Gói An tâm gia đình</h3><div class="m" style="color:var(--teal);font-weight:700">Từ 200.000đ một người mỗi tháng</div>
+        <ul>
+          <li><b>Quản lý:</b> hồ sơ và kế hoạch chăm sóc riêng từng người, cảnh báo cá nhân, báo cáo tháng, quý, năm.</li>
+          <li><b>Chăm sóc chủ động:</b> tư vấn viên hỗ trợ đo 2 lần mỗi tháng; bác sĩ gia đình theo dõi dữ liệu và chủ động liên hệ khi bất thường; nhắn tin tối đa 50 tin mỗi ngày, gọi 15 phút x 4 lần mỗi tháng; tư vấn dinh dưỡng, vận động, dùng thuốc an toàn, khám định kỳ.</li>
+          <li><b>Đồng hành:</b> lớp học sức khỏe hằng tuần, chương trình "Tam Khí Cân Bằng", cộng đồng hội viên. Gia đình từ 5 người mua gói từ 12 tháng được tặng 1 suất du lịch cộng đồng.</li>
+        </ul>
+        <div class="calc">
+          <div class="row2">
+            <div><label for="g_so">Số người trong gia đình</label><input id="g_so" type="number" min="1" max="30" value="2" inputmode="numeric"></div>
+            <div><label>Kỳ hạn</label><div class="kyhan"><button type="button" data-k="6">6 th</button><button type="button" data-k="9">9 th</button><button type="button" data-k="12" class="on">12 th</button></div></div>
+          </div>
+          <table class="mtable" id="g_tbl"></table>
+          <div class="out"><span>Tổng cả kỳ</span><b id="g_tong">0đ</b></div>
+          <a class="btn btn-main" href="#dat-mua" id="g_dat">Đăng ký gói này</a>
+        </div>
+        <p class="ref">Người thứ 2 giảm 10%, thứ 3 giảm 20%, thứ 4 giảm 30%, thứ 5 giảm 40%, từ người thứ 6 giảm 50%. Thanh toán trọn kỳ, tự gia hạn theo kỳ đã chọn; muốn dừng thì báo trước ngày gia hạn, không chấm dứt giữa kỳ. Mỗi thành viên tự xác nhận đồng ý chia sẻ dữ liệu sức khỏe.</p>
+      </div>
+    </div>
+    <p class="ref" style="margin-top:12px">Dịch vụ thêm, đặt khi cần: kỹ thuật viên đến nhà đo mạch, nhiệt độ, huyết áp, SpO2 40.000đ/lượt; xét nghiệm nhanh tại nhà đường huyết 50.000đ, cholesterol 78.000đ, axit uric 55.000đ/lần. Kết quả đo và tư vấn từ xa mang tính sàng lọc, theo dõi; không thay thế khám, chẩn đoán, điều trị tại cơ sở y tế và không thay thế cấp cứu 115.</p>
   </div>
 </section>
 
@@ -270,6 +322,7 @@ footer b{color:#fff}
     <form class="form" id="f" novalidate>
       <div><label for="sp">Sản phẩm</label>
         <select id="sp" name="sp">
+          <option value="GOI-ATGD" data-goi="1">Gói An tâm gia đình (chọn số người, kỳ hạn)</option>
           <option value="VALI-GD1" data-gia="7624500">Vali Gia Đình 1 · 7.624.500đ</option>
           <option value="VALI-GD2" data-gia="6700500">Vali Gia Đình 2 · 6.700.500đ</option>
           <option value="VALI-HLV" data-gia="9483000">Vali Huấn luyện viên · 9.483.000đ</option>
@@ -284,6 +337,10 @@ footer b{color:#fff}
           <option value="VT-TD4643" data-gia="357000">Que cholesterol TD-4643 (10) · 357.000đ</option>
           <option value="VT-KIM50" data-gia="21000">Kim lấy máu (50) · 21.000đ</option>
         </select></div>
+      <div class="row2" id="goi_box" hidden>
+        <div><label for="f_so">Số người đăng ký</label><input id="f_so" type="number" min="1" max="30" value="2" inputmode="numeric"></div>
+        <div><label for="f_ky">Kỳ hạn</label><select id="f_ky"><option value="6">6 tháng</option><option value="9">9 tháng</option><option value="12" selected>12 tháng</option></select></div>
+      </div>
       <div class="row2">
         <div><label for="ten">Họ và tên</label><input id="ten" autocomplete="name"></div>
         <div><label for="sl">Số lượng</label><input id="sl" type="number" min="1" max="20" value="1" inputmode="numeric"></div>
@@ -321,7 +378,7 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','
 const QS = new URLSearchParams(location.search);
 let CTV = (QS.get('ctv')||'').trim().toUpperCase().replace(/[^A-Z0-9-]/g,'');
 try{ if(CTV) localStorage.setItem('fcl_ref', CTV); else CTV = localStorage.getItem('fcl_ref') || ''; }catch(e){}
-if(CTV){ $('org-link').href='../doi-tac/?ctv='+encodeURIComponent(CTV); }
+if(CTV){ document.querySelectorAll('a.orgl').forEach(a=>{ const h=a.getAttribute('href'), k=h.indexOf('#'); a.href=(k<0?h:h.slice(0,k))+'?ctv='+encodeURIComponent(CTV)+(k<0?'':h.slice(k)); }); }
 if(CTV){
   $('refnote').hidden=false; $('refnote').textContent='Tư vấn viên của anh/chị: '+CTV+'. Tư vấn viên sẽ gọi xác nhận và hướng dẫn anh/chị.';
   fetch(API,{method:'POST',credentials:'omit',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn:'getRef',args:[CTV]})})
@@ -332,20 +389,35 @@ if(CTV){
     }).catch(()=>{});
 }
 
+const GIA_GOI=[200000,180000,160000,140000,120000,100000];
+function goiThang(n){ let s=0; for(let i=0;i<n;i++) s+=GIA_GOI[Math.min(i,5)]; return s; }
+let KY=12;
+function goiCalc(){
+  const n=Math.max(1,Math.min(30,+$('g_so').value||1)); let rows='';
+  for(let i=0;i<Math.min(n,6);i++){ const so=i===5?n-5:1; rows+='<tr><td>Người thứ '+(i+1)+(i===5&&n>6?' đến '+n:'')+'</td><td>'+vnd(GIA_GOI[i]*so)+'/tháng</td></tr>'; }
+  $('g_tbl').innerHTML=rows+'<tr><td><b>Cả gia đình mỗi tháng</b></td><td><b>'+vnd(goiThang(n))+'</b></td></tr>';
+  $('g_tong').textContent=vnd(goiThang(n)*KY);
+  document.querySelectorAll('[data-k]').forEach(b=>b.classList.toggle('on',+b.dataset.k===KY));
+}
+$('g_so').oninput=goiCalc; document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{KY=+b.dataset.k;goiCalc();});
+$('g_dat').addEventListener('click',()=>{ $('sp').value='GOI-ATGD'; $('f_so').value=$('g_so').value; $('f_ky').value=KY; calc(); });
+goiCalc();
 function calc(){
   const o = $('sp').selectedOptions[0], sl = Math.max(1, +$('sl').value||1);
-  const thue = !!o.dataset.thue;
+  const goi = !!o.dataset.goi, thue = !!o.dataset.thue;
+  $('goi_box').hidden = !goi; $('sl').disabled = goi;
+  if(goi){ const n=Math.max(1,Math.min(30,+$('f_so').value||1)); $('tong').textContent = vnd(goiThang(n)*(+$('f_ky').value)); $('cocnote').hidden=true; return; }
   $('tong').textContent = vnd((+o.dataset.gia + (thue?COC:0)) * sl);
   $('cocnote').hidden = !thue;
 }
-$('sp').onchange = calc; $('sl').oninput = calc;
+$('sp').onchange = calc; $('sl').oninput = calc; $('f_so').oninput = calc; $('f_ky').onchange = calc;
 document.querySelectorAll('[data-sp]').forEach(a=>a.addEventListener('click',()=>{ $('sp').value=a.dataset.sp; calc(); }));
 calc();
 
 $('f').addEventListener('submit', e=>{
   e.preventDefault();
   const b = $('gui'); b.disabled = true; b.textContent = 'Đang gửi...'; $('msg').innerHTML='';
-  const body = {fn:'datMua', args:[{sp:$('sp').value, sl:$('sl').value, ten:$('ten').value, sdt:$('sdt').value, diachi:$('dc').value, tinh:$('tinh').value, ghichu:$('gc').value, dongy:$('dongy').checked, ctv:CTV, web:$('web').value}]};
+  const body = {fn:'datMua', args:[{sp:$('sp').value, sl:$('sl').value, ky:$('f_ky').value, so:$('f_so').value, ten:$('ten').value, sdt:$('sdt').value, diachi:$('dc').value, tinh:$('tinh').value, ghichu:$('gc').value, dongy:$('dongy').checked, ctv:CTV, web:$('web').value}]};
   fetch(API,{method:'POST',credentials:'omit',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)})
     .then(r=>{ if(!r.ok) throw new Error('Không kết nối được máy chủ. Vui lòng thử lại.'); return r.json(); })
     .then(j=>{

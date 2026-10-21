@@ -111,7 +111,20 @@ function render(d){
    +'<li><span><b>Que thử, kim đúng loại, giao tận nhà</b><br><span class="muted">'+(d.queThu?'Anh/chị đã mua '+d.queThu+' hộp. ':'')+'Giá niêm yết như nhau ở mọi nơi bán.</span></span></li>'
    +'<li><span><b>Tư vấn viên đồng hành</b><br><span class="muted">Một người phụ trách gia đình, hỏi bất cứ khi nào cần.</span></span></li>'
    +'</ul></div>';
-  h+='<div class="card"><h2>Gói dịch vụ</h2><p class="muted">Gia đình chưa đăng ký gói dịch vụ nào. Gói Bác sĩ gia đình đồng hành sẽ hiện ở đây khi FaCare Life mở bán, kèm quyền lợi và thời hạn của từng gói.</p></div>';
+  const G=d.goiDichVu||[];
+  if(G.length){
+    h+='<div class="card"><h2>Gói dịch vụ</h2>'+G.map(g=>{
+      const st=g.conNgay==null?'<span class="pill warn">Kích hoạt khi thanh toán</span>':(g.conNgay<0?'<span class="pill off">Đã hết kỳ</span>':(g.conNgay<=30?'<span class="pill warn">Còn '+g.conNgay+' ngày</span>':'<span class="pill ok">Còn '+g.conNgay+' ngày</span>'));
+      return '<div class="rent"><div class="top"><b>'+esc(g.ten)+' · '+g.so+' thành viên</b>'+st+'</div><span class="muted">Đơn '+esc(g.don)+(g.batDau?' · từ '+esc(g.batDau)+' đến '+esc(g.ketThuc)+', tự gia hạn theo kỳ':'')+'</span></div>';
+    }).join('')
+    +'<h3 style="margin-top:12px">Quyền lợi của gói</h3><ul class="perks">'
+    +'<li><span><b>Quản lý</b><br><span class="muted">Hồ sơ sức khỏe điện tử, kế hoạch chăm sóc riêng từng người, ngưỡng cảnh báo cá nhân, người thân cùng theo dõi, báo cáo tháng, quý, năm.</span></span></li>'
+    +'<li><span><b>Chăm sóc chủ động</b><br><span class="muted">Cộng tác viên hỗ trợ đo 2 lần mỗi tháng. Bác sĩ gia đình theo dõi dữ liệu, chủ động liên hệ khi chỉ số bất thường. Nhắn tin tối đa 50 tin mỗi ngày, gọi 15 phút x 4 lần mỗi tháng. Tư vấn dinh dưỡng, vận động, dùng thuốc an toàn.</span></span></li>'
+    +'<li><span><b>Đồng hành</b><br><span class="muted">Lớp học sức khỏe hằng tuần, chương trình "Tam Khí Cân Bằng", cộng đồng hội viên. Gia đình từ 5 người mua gói từ 12 tháng được tặng 1 suất du lịch cộng đồng.</span></span></li>'
+    +'</ul><p class="muted" style="margin-top:8px">Muốn dừng, báo trước ngày gia hạn. Không chấm dứt giữa kỳ đã thanh toán.</p></div>';
+  } else {
+    h+='<div class="card cta"><h2>Gói An tâm gia đình</h2><p class="muted">Có bác sĩ gia đình theo dõi chỉ số của cả nhà, chủ động gọi khi có bất thường. Từ 200.000đ một người mỗi tháng, thành viên thứ 2 trở đi giảm dần đến 50%.</p><a class="btn" href="'+mua+'#an-tam">Xem gói</a></div>';
+  }
   h+='<div class="card"><h2>Đơn hàng ('+d.don.length+')</h2><div class="list">'+d.don.map(o=>{
     const t=TT[o.tt]||[o.tt,''];
     return '<div class="it"><div><b>'+esc(o.ma)+'</b> <span class="pill '+t[1]+'">'+esc(t[0])+'</span><br><span class="muted">'+esc(o.ngay)+' · '+o.items.map(i=>esc(i.ten)+' × '+i.sl).join(', ')+'</span></div><div class="r"><b>'+vnd(o.tong)+'</b><br><a class="muted" href="'+ROOT+'?p=tracuu&don='+encodeURIComponent(o.ma)+'">Chi tiết</a></div></div>';
