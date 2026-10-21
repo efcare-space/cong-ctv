@@ -302,11 +302,26 @@ function renderBan(){
     +'<div class="acts"><button class="sm ghost" id="b_cpmsg">Chép tin nhắn</button><button class="sm ghost" data-copy="'+esc(link)+'">Chép link</button><button class="sm ghost" id="b_dlqr">Tải mã QR</button></div>'
     +'<label>Tin nhắn soạn sẵn</label><div class="tpl" id="b_tpl"></div><a class="btn ghost" href="'+esc(link)+'" target="_blank" rel="noopener">Xem trang khách sẽ thấy</a></div>'
     +'<div class="card"><h2>Lên đơn hộ khách</h2><p class="muted">Khi khách nhờ bạn đặt giúp, hoặc mua nhiều sản phẩm một lúc.</p><a class="btn" href="?p=don">Lên đơn mới</a></div>'
+    +'<div class="card"><h2>Giới thiệu Đối tác, khách hàng cho công ty</h2><p class="muted">Dùng khi bạn không tự bán: nhà thuốc, phòng khám, cửa hàng muốn nhập Vali để bán lại (Đối tác, chiết khấu theo QĐ11), hoặc trường học, doanh nghiệp, gia đình mua nhiều. Bộ phận Kinh doanh dự án tư vấn, báo giá, ký và thu tiền. Bạn hưởng Affiliate 5% số tiền họ trả (QĐ12). Tự bán thì lên đơn, hưởng hoa hồng bậc cao hơn.</p>'
+    +'<button class="ghost" id="g_open">Ghi nhận giới thiệu</button><div id="g_form" hidden>'
+    +'<label for="g_loai">Loại</label><select id="g_loai"><option value="Đối tác">Đối tác (mua để bán lại, cho thuê lại)</option><option value="Khách hàng">Khách hàng (mua, thuê để dùng)</option></select>'
+    +'<label for="g_ten">Tên tổ chức hoặc người</label><input id="g_ten">'
+    +'<label for="g_lh">Người liên hệ</label><input id="g_lh">'
+    +'<label for="g_sdt">Số điện thoại liên hệ</label><input id="g_sdt" inputmode="tel">'
+    +'<label for="g_ht">Bạn muốn</label><select id="g_ht"><option value="a">Chỉ giới thiệu: công ty chăm sóc, bạn hưởng 5% đơn hàng đầu tiên</option><option value="b">Giới thiệu và tự chăm sóc: hưởng 5% mỗi đơn trong thời gian bạn chăm sóc</option></select>'
+    +'<label for="g_nc">Nhu cầu (số lượng, sản phẩm, thời gian)</label><textarea id="g_nc"></textarea>'
+    +'<div class="chk"><input type="checkbox" id="g_dy"><label for="g_dy">Người được giới thiệu đã đồng ý để FaCare Life, EFCARE liên hệ.</label></div>'
+    +'<button id="g_btn">Gửi giới thiệu</button><div id="g_msg"></div></div></div>'
     +'<div class="card"><h2>Mời người làm CTV</h2><p class="muted">Người đăng ký qua link này, hoặc khách hàng của bạn đăng ký làm CTV, vào nhóm của bạn. Xem ở thẻ Nhóm.</p>'+copyBox(BASE+'?p=dangky&gt='+d.ma)+'</div>';
   $('b_tpl').textContent=shareMsg();
   try{ new QRCode($('qr'),{text:link,width:200,height:200,colorDark:'#0f5f6b',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M}); }catch(e){ $('qr').textContent='Không tạo được mã QR. Dùng nút Chép link.'; }
   $('b_cpmsg').onclick=e=>copyText(shareMsg(), e.target);
   $('b_share').onclick=()=>{ if(navigator.share){ navigator.share({text:shareMsg()}).catch(()=>{}); } else { copyText(shareMsg()); $('b_share').textContent='Đã chép tin nhắn, dán vào Zalo'; } };
+  $('g_open').onclick=()=>{ $('g_form').hidden=false; $('g_open').hidden=true; };
+  $('g_btn').onclick=()=>call('gioiThieu',[CRED.ma,CRED.pin,{loai:$('g_loai').value,ten:$('g_ten').value,lienhe:$('g_lh').value,sdt:$('g_sdt').value,hinhthuc:$('g_ht').value,nhucau:$('g_nc').value,dongy:$('g_dy').checked}],r=>{
+    msg('g_msg','Đã ghi nhận '+esc(r.ma)+' · '+esc(r.ten)+'. Giám đốc Kinh doanh duyệt, bạn nhận email kết quả. Theo dõi ở thẻ Thu nhập.',true);
+    ['g_ten','g_lh','g_sdt','g_nc'].forEach(i=>$(i).value=''); $('g_dy').checked=false;
+  },$('g_btn'),'g_msg');
   $('b_dlqr').onclick=()=>{ const c=$('qr').querySelector('canvas'), im=$('qr').querySelector('img'); const url=c?c.toDataURL('image/png'):(im?im.src:''); if(!url) return; const a=document.createElement('a'); a.href=url; a.download='QR-'+ME.ma+'.png'; document.body.appendChild(a); a.click(); a.remove(); };
 }
 function renderThu(){
@@ -317,6 +332,12 @@ function renderThu(){
    +'<div style="margin-top:12px" class="bar" aria-label="Tiến độ lên bậc"><i style="width:'+tienDo+'%"></i></div><p class="muted" style="margin:6px 0 0">'+tiep+' Hoa hồng tính khi khách đã thanh toán đủ, chốt trước ngày 05, trả chậm nhất cuối tháng sau.</p></div>';
   h+='<div class="card"><h2>Đơn hàng</h2>'+(d.don.length?'<table><tr><th>Đơn</th><th>Trạng thái</th><th class="r">Tiền</th></tr>'+d.don.map(o=>'<tr><td>'+esc(o.ma)+'<br><span class="muted">'+esc(o.ngay)+' · '+esc(o.sp.join(', '))+'</span></td><td>'+esc(o.tt)+'</td><td class="r">'+vnd(o.tong)+'</td></tr>').join('')+'</table>':'<p class="muted">Chưa có đơn.</p>')+'</div>';
   h+='<div class="card"><h2>Khách hàng của tôi ('+d.khach.length+')</h2>'+(d.khach.length?'<table>'+d.khach.map(k=>'<tr><td>'+esc(k.ma)+'</td><td>'+esc(k.ten)+'</td><td class="r">'+esc(k.sdt)+'</td></tr>').join('')+'</table>':'<p class="muted">Chưa có khách.</p>')+'</div>';
+  const af=d.aff||{hhKy:0,hhTong:0,ds:[]};
+  if(af.ds.length){
+    h+='<div class="card"><h2>Giới thiệu Đối tác, khách hàng (Affiliate)</h2><div class="kpi"><div>Affiliate tháng này<b>'+vnd(af.hhKy)+'</b></div><div>Từ trước đến nay<b>'+vnd(af.hhTong)+'</b></div></div>'
+     +'<table style="margin-top:10px"><tr><th>Giới thiệu</th><th>Trạng thái</th><th class="r">Affiliate</th></tr>'+af.ds.map(x=>'<tr><td>'+esc(x.ten)+'<br><span class="muted">'+esc(x.ma)+' · '+esc(x.loai)+' · '+(x.ht==='b'?'tự chăm sóc':'chỉ giới thiệu')+' · '+esc(x.ngay)+'</span></td><td>'+esc(x.tt)+'</td><td class="r">'+vnd(x.hh)+'</td></tr>').join('')+'</table>'
+     +'<p class="muted" style="margin:8px 0 0">5% số tiền Đối tác, khách đã trả sau chiết khấu (QĐ12). Không cộng vào doanh số xét bậc. Kế toán ghi nhận khi tiền về.</p></div>';
+  }
   $('t_thu').innerHTML=h;
 }
 function renderNhom(){
