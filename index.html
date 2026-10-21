@@ -294,7 +294,7 @@ function renderBan(){
     +'<div class="acts"><button class="sm ghost" id="b_cpmsg">Chép tin nhắn</button><button class="sm ghost" data-copy="'+esc(link)+'">Chép link</button><button class="sm ghost" id="b_dlqr">Tải mã QR</button></div>'
     +'<label>Tin nhắn soạn sẵn</label><div class="tpl" id="b_tpl"></div><a class="btn ghost" href="'+esc(link)+'" target="_blank" rel="noopener">Xem trang khách sẽ thấy</a></div>'
     +'<div class="card"><h2>Lên đơn hộ khách</h2><p class="muted">Khi khách nhờ bạn đặt giúp, hoặc mua nhiều sản phẩm một lúc.</p><a class="btn" href="?p=don">Lên đơn mới</a></div>'
-    +'<div class="card"><h2>Mời người làm CTV</h2><p class="muted">Đã có '+d.gioiThieu+' người đăng ký qua link của bạn. Link chỉ ghi nguồn giới thiệu; hoa hồng tính trên doanh số của chính mỗi người (QĐ09).</p>'+copyBox(BASE+'?p=dangky&gt='+d.ma)+'</div>';
+    +'<div class="card"><h2>Mời người làm CTV</h2><p class="muted">Đã có '+d.gioiThieu+' người đăng ký qua link của bạn. Bán Vali, thiết bị: hoa hồng tính trên doanh số của chính mỗi người (QĐ09). Khi người bạn mời bán thành công gói dịch vụ đầu tiên, bạn được thưởng 10% doanh thu gói đó (Affiliate, QĐ10).</p>'+copyBox(BASE+'?p=dangky&gt='+d.ma)+'</div>';
   $('b_tpl').textContent=shareMsg();
   try{ new QRCode($('qr'),{text:link,width:200,height:200,colorDark:'#0f5f6b',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M}); }catch(e){ $('qr').textContent='Không tạo được mã QR. Dùng nút Chép link.'; }
   $('b_cpmsg').onclick=e=>copyText(shareMsg(), e.target);
