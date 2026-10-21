@@ -57,7 +57,10 @@
   .banner{border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:14px;background:var(--gold2);color:#5e4410}
   .task{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;background:#fff}
   .task .top,.card>.top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-  .steps .acts{margin-top:8px}.btn.sm{width:auto;display:inline-block;margin:0}
+  .steps .acts{margin-top:8px}
+  .dtpick{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .dtpick button{width:auto;margin:0;padding:8px 12px;font-size:14px;background:#fff;color:var(--teal);border:1px solid var(--teal)}
+  .dtpick button.on{background:var(--teal);color:#fff}.btn.sm{width:auto;display:inline-block;margin:0}
   .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
   .acts button{flex:1 1 30%;margin:0;padding:9px 6px;font-size:13px}
   .call{color:var(--teal);font-weight:700;text-decoration:none}
@@ -342,20 +345,43 @@ function renderViec(){
       .catch(e=>{ box.querySelectorAll('button').forEach(x=>x.disabled=false); box.querySelector('.kqmsg').innerHTML='<div class="msg err">'+esc(e.message)+'</div>'; });
   });
 }
-function shareMsg(){
-  const link=SHOP+'?ctv='+ME.ma;
-  return 'Chào anh/chị, em là '+ME.ten+', cộng tác viên FaCare Life.\nBên em có Vali Y tế Gia Đình để đo huyết áp, đường huyết, mỡ máu, axit uric, nhiệt độ, cân nặng ngay tại nhà. Chỉ số tự lưu vào điện thoại, con cháu ở xa vẫn theo dõi được.\nCó thể mua trọn bộ hoặc thuê từ 400.000đ/tháng, giao tận nhà, hướng dẫn miễn phí.\nAnh/chị xem chi tiết và đặt tại đây: '+link+'\nCần em tư vấn thêm, anh/chị cứ nhắn em nhé.';
+const DT={
+  giadinh:{ten:'Cá nhân, gia đình',duong:'mua/',ai:'Người có bố mẹ cao tuổi, gia đình có người huyết áp, tiểu đường',hh:'Hoa hồng bậc 20–30% (Vali, thuê, que thử); Gói An tâm gia đình theo QĐ10.',
+    msg:(m,l)=>'Chào anh/chị, em là '+m.ten+', tư vấn viên FaCare Life.\nBên em có Vali Y tế Gia Đình để đo huyết áp, đường huyết, mỡ máu, axit uric, nhiệt độ, cân nặng ngay tại nhà; chỉ số tự lưu vào điện thoại, con cháu ở xa vẫn theo dõi được. Mua trọn bộ hoặc thuê từ 400.000đ/tháng.\nGia đình muốn có bác sĩ theo dõi thì có Gói An tâm gia đình, từ 200.000đ một người mỗi tháng, giảm dần từ người thứ 2.\nAnh/chị xem và đặt tại đây: '+l+'\nCần em tư vấn, anh/chị cứ nhắn em nhé.'},
+  doanhnghiep:{ten:'Doanh nghiệp, nhà máy',duong:'doanh-nghiep/',ai:'Chủ doanh nghiệp, giám đốc nhân sự, công đoàn, quản lý nhà máy',hh:'Họ đăng ký qua link: ghi nhận Affiliate 5% cho bạn (QĐ12, sau khi Giám đốc KD duyệt). Bạn tự tư vấn, ký: hoa hồng gói dịch vụ QĐ10.',
+    msg:(m,l)=>'Chào anh/chị, em là '+m.ten+', đối tác của EFCARE.\nEFCARE có Gói An toàn doanh nghiệp: lắp Kiosk sức khỏe ngay tại công ty, mỗi nhân viên có hồ sơ sức khỏe điện tử và bác sĩ theo dõi, Ban Giám đốc nhận báo cáo ẩn danh để lên kế hoạch phúc lợi. Từ 90.000đ một người mỗi tháng, không thu phí lắp đặt Kiosk.\nAnh/chị xem chi tiết và đăng ký khảo sát miễn phí: '+l},
+  truonghoc:{ten:'Trường học',duong:'truong-hoc/',ai:'Ban Giám hiệu, y tế học đường, Ban đại diện cha mẹ học sinh',hh:'Trường đăng ký qua link: ghi nhận Affiliate 5% cho bạn (QĐ12, sau khi Giám đốc KD duyệt).',
+    msg:(m,l)=>'Kính gửi Thầy/Cô, em là '+m.ten+', đối tác của EFCARE.\nEFCARE có Gói An sinh học đường: lắp Kiosk sức khỏe tại trường, học sinh đo chiều cao, cân nặng, huyết áp, SpO2, thân nhiệt; phụ huynh theo dõi con qua ứng dụng. Học sinh được trải nghiệm miễn phí trước, phụ huynh tự nguyện đăng ký gói theo dõi sau.\nThầy/Cô xem chi tiết và đăng ký thử nghiệm: '+l},
+  doitac:{ten:'Đối tác, đại lý',duong:'doi-tac/',ai:'Nhà thuốc, phòng khám, cửa hàng thiết bị y tế, nhà phân phối',hh:'Đơn vị đăng ký qua link: ghi nhận Affiliate 5% số tiền họ nhập sau chiết khấu (QĐ12).',
+    msg:(m,l)=>'Chào anh/chị, em là '+m.ten+', đối tác của EFCARE.\nEFCARE đang tìm Đối tác phân phối Vali Y tế và Kiosk sức khỏe FaCare: chiết khấu 20% đến 30% theo doanh số, giá bán lẻ thống nhất toàn quốc, EFCARE bảo hành cho khách cuối; khách mua Vali quay lại mua que thử hằng tháng.\nAnh/chị xem chính sách và đăng ký: '+l},
+  ctv:{ten:'Mời làm CTV',duong:'?p=dangky',ai:'Người muốn có thêm thu nhập, khách hàng hài lòng',hh:'Người đăng ký vào nhóm của bạn. Thưởng giới thiệu CTV theo QĐ10.',
+    msg:(m,l)=>'Chào anh/chị, em là '+m.ten+', cộng tác viên FaCare Life. Em đang giới thiệu Vali Y tế Gia Đình và các gói chăm sóc sức khỏe của EFCARE. Anh/chị muốn cùng làm, được đào tạo miễn phí, có thu nhập theo chính sách của công ty, đăng ký tại đây: '+l}
+};
+let DT_CUR='giadinh';
+function dtLink(k){ const d=DT[k]; return k==='ctv' ? BASE+'?p=dangky&gt='+ME.ma : BASE+d.duong+'?ctv='+ME.ma; }
+function shareMsg(k){ k=k||DT_CUR; return DT[k].msg(ME, dtLink(k)); }
+function drawDT(){
+  const k=DT_CUR, d=DT[k], link=dtLink(k);
+  document.querySelectorAll('[data-dt]').forEach(b=>b.classList.toggle('on',b.dataset.dt===k));
+  $('dt_ai').textContent=d.ai; $('dt_hh').textContent=d.hh;
+  $('dt_link').value=link; $('dt_cp').setAttribute('data-copy',link); $('dt_view').href=link;
+  $('b_tpl').textContent=shareMsg(k);
+  $('qr').innerHTML='';
+  try{ new QRCode($('qr'),{text:link,width:200,height:200,colorDark:'#0f5f6b',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M}); }catch(e){ $('qr').textContent='Không tạo được mã QR. Dùng nút Chép link.'; }
 }
 function renderBan(){
-  const d=ME, active=d.tt==='Hoạt động', link=SHOP+'?ctv='+d.ma;
+  const d=ME, active=d.tt==='Hoạt động';
   if(!active){ $('t_ban').innerHTML='<div class="card"><h3>Chưa mở bán</h3><p class="muted">Bộ chia sẻ và chức năng lên đơn mở sau khi bạn được Admin duyệt.</p></div>'; return; }
   $('t_ban').innerHTML =
-    '<div class="card"><h2>Trang giới thiệu của bạn</h2><p class="muted">Khách đặt qua link hoặc mã QR này thì đơn ghi cho bạn và bạn được báo. Trang hiện '+(d.hienSdt?'tên và số điện thoại':'tên')+' của bạn.</p>'
-    +'<div class="qrbox"><div id="qr"></div><span class="muted">Khách quét bằng camera điện thoại</span></div>'
+    '<div class="card"><h2>Link giới thiệu theo đối tượng</h2><p class="muted">Chọn người bạn sắp gửi. Mỗi trang có link, mã QR và tin nhắn riêng; ai đặt mua hoặc đăng ký qua link đều ghi cho bạn. Trang hiện '+(d.hienSdt?'tên và số điện thoại':'tên')+' của bạn.</p>'
+    +'<div class="dtpick">'+Object.keys(DT).map(k=>'<button type="button" data-dt="'+k+'">'+esc(DT[k].ten)+'</button>').join('')+'</div>'
+    +'<p class="muted" style="margin:10px 0 0"><b>Gửi cho:</b> <span id="dt_ai"></span></p><p class="muted" style="margin:4px 0 0"><b>Bạn hưởng:</b> <span id="dt_hh"></span></p>'
+    +'<div class="qrbox" style="margin-top:10px"><div id="qr"></div><span class="muted">Quét bằng camera điện thoại</span></div>'
     +'<button id="b_share">Chia sẻ qua Zalo, Messenger…</button>'
-    +'<div class="acts"><button class="sm ghost" id="b_cpmsg">Chép tin nhắn</button><button class="sm ghost" data-copy="'+esc(link)+'">Chép link</button><button class="sm ghost" id="b_dlqr">Tải mã QR</button></div>'
-    +'<label>Tin nhắn soạn sẵn</label><div class="tpl" id="b_tpl"></div><a class="btn ghost" href="'+esc(link)+'" target="_blank" rel="noopener">Xem trang khách sẽ thấy</a></div>'
-    +'<div class="card"><h2>Lên đơn hộ khách</h2><p class="muted">Khi khách nhờ bạn đặt giúp, hoặc mua nhiều sản phẩm một lúc.</p><a class="btn" href="?p=don">Lên đơn mới</a></div>'
+    +'<div class="copy"><input readonly id="dt_link" aria-label="Link"><button type="button" class="sm" id="dt_cp">Chép</button></div>'
+    +'<div class="acts"><button class="sm ghost" id="b_cpmsg">Chép tin nhắn</button><button class="sm ghost" id="b_dlqr">Tải mã QR</button></div>'
+    +'<label>Tin nhắn soạn sẵn</label><div class="tpl" id="b_tpl"></div><a class="btn ghost" id="dt_view" target="_blank" rel="noopener">Xem trang khách sẽ thấy</a></div>'
+    +'<div class="card"><h2>Lên đơn hộ khách</h2><p class="muted">Khi khách nhờ bạn đặt giúp, mua nhiều sản phẩm, hoặc đăng ký Gói An tâm gia đình.</p><a class="btn" href="?p=don">Lên đơn mới</a></div>'
     +'<div class="card"><h2>Giới thiệu Đối tác, khách hàng cho công ty</h2><p class="muted">Dùng khi bạn không tự bán: nhà thuốc, phòng khám, cửa hàng muốn nhập Vali để bán lại (Đối tác, chiết khấu theo QĐ11), hoặc trường học, doanh nghiệp, gia đình mua nhiều. Bộ phận Kinh doanh dự án tư vấn, báo giá, ký và thu tiền. Bạn hưởng Affiliate 5% số tiền họ trả (QĐ12). Tự bán thì lên đơn, hưởng hoa hồng bậc cao hơn.</p>'
     +'<button class="ghost" id="g_open">Ghi nhận giới thiệu</button><div id="g_form" hidden>'
     +'<label for="g_loai">Loại</label><select id="g_loai"><option value="Đối tác">Đối tác (mua để bán lại, cho thuê lại)</option><option value="Khách hàng">Khách hàng (mua, thuê để dùng)</option></select>'
@@ -367,9 +393,9 @@ function renderBan(){
     +'<label for="g_nc">Nhu cầu (số lượng, sản phẩm, thời gian)</label><textarea id="g_nc"></textarea>'
     +'<div class="chk"><input type="checkbox" id="g_dy"><label for="g_dy">Người được giới thiệu đã đồng ý để FaCare Life, EFCARE liên hệ.</label></div>'
     +'<button id="g_btn">Gửi giới thiệu</button><div id="g_msg"></div></div></div>'
-    +'<div class="card"><h2>Mời người làm CTV</h2><p class="muted">Người đăng ký qua link này, hoặc khách hàng của bạn đăng ký làm CTV, vào nhóm của bạn. Xem ở thẻ Nhóm.</p>'+copyBox(BASE+'?p=dangky&gt='+d.ma)+'</div>';
-  $('b_tpl').textContent=shareMsg();
-  try{ new QRCode($('qr'),{text:link,width:200,height:200,colorDark:'#0f5f6b',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M}); }catch(e){ $('qr').textContent='Không tạo được mã QR. Dùng nút Chép link.'; }
+    ;
+  document.querySelectorAll('[data-dt]').forEach(b=>b.onclick=()=>{ DT_CUR=b.dataset.dt; drawDT(); });
+  drawDT();
   $('b_cpmsg').onclick=e=>copyText(shareMsg(), e.target);
   $('b_share').onclick=()=>{ if(navigator.share){ navigator.share({text:shareMsg()}).catch(()=>{}); } else { copyText(shareMsg()); $('b_share').textContent='Đã chép tin nhắn, dán vào Zalo'; } };
   $('g_open').onclick=()=>{ $('g_form').hidden=false; $('g_open').hidden=true; };
@@ -377,7 +403,7 @@ function renderBan(){
     msg('g_msg','Đã ghi nhận '+esc(r.ma)+' · '+esc(r.ten)+'. Giám đốc Kinh doanh duyệt, bạn nhận email kết quả. Theo dõi ở thẻ Thu nhập.',true);
     ['g_ten','g_lh','g_sdt','g_nc'].forEach(i=>$(i).value=''); $('g_dy').checked=false;
   },$('g_btn'),'g_msg');
-  $('b_dlqr').onclick=()=>{ const c=$('qr').querySelector('canvas'), im=$('qr').querySelector('img'); const url=c?c.toDataURL('image/png'):(im?im.src:''); if(!url) return; const a=document.createElement('a'); a.href=url; a.download='QR-'+ME.ma+'.png'; document.body.appendChild(a); a.click(); a.remove(); };
+  $('b_dlqr').onclick=()=>{ const c=$('qr').querySelector('canvas'), im=$('qr').querySelector('img'); const url=c?c.toDataURL('image/png'):(im?im.src:''); if(!url) return; const a=document.createElement('a'); a.href=url; a.download='QR-'+ME.ma+'-'+DT_CUR+'.png'; document.body.appendChild(a); a.click(); a.remove(); };
 }
 function renderThu(){
   const d=ME;
