@@ -2,56 +2,82 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>FaCare Life · Cổng CTV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
-  :root{--teal:#0f5f6b;--teal2:#e7f2f3;--navy:#14264d;--ink:#222a36;--muted:#5d6577;--line:#d9e2e5;--gold:#b8862b;--red:#a3402f;--bg:#f5f7f8}
+  :root{--teal:#0f5f6b;--teal2:#e7f2f3;--navy:#14264d;--ink:#222a36;--muted:#5d6577;--line:#d9e2e5;--gold:#b8862b;--gold2:#f7eedb;--red:#a3402f;--red2:#f9e7e3;--green:#2e6b3f;--green2:#e3f1e6;--bg:#f5f7f8;color-scheme:light}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,"Segoe UI",Roboto,Arial,sans-serif}
-  header{background:var(--teal);color:#fff;padding:14px 16px}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Be Vietnam Pro",-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  header{background:var(--teal);color:#fff;padding:14px max(16px,env(safe-area-inset-left,0px)) 12px}
   header b{font-size:18px} header span{display:block;font-size:12px;opacity:.85}
-  nav{display:flex;gap:6px;padding:10px 12px;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto}
+  nav{display:flex;gap:6px;padding:10px 12px;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto;position:sticky;top:0;z-index:4}
   nav a{white-space:nowrap;text-decoration:none;color:var(--teal);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px}
   nav a.on{background:var(--teal);color:#fff;border-color:var(--teal)}
-  main{max-width:560px;margin:0 auto;padding:14px 12px 40px}
-  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}
-  h2{font-size:17px;margin:0 0 10px;color:var(--navy)}
+  main{max-width:600px;margin:0 auto;padding:14px max(12px,env(safe-area-inset-left,0px)) 48px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+  h2{font-size:17px;margin:0 0 10px;color:var(--navy)} h3{font-size:15px;margin:0 0 6px;color:var(--navy)}
   label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
-  input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+  input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
   textarea{min-height:70px}
-  .row{display:flex;gap:8px;align-items:flex-end}
-  .row>*{flex:1;min-width:0}
-  .row .sl{flex:0 0 76px}
-  button{font:inherit;cursor:pointer;border:0;border-radius:8px;padding:12px 14px;background:var(--teal);color:#fff;font-weight:600;width:100%;margin-top:12px}
-  button.ghost{background:#fff;color:var(--teal);border:1px solid var(--teal)}
+  .row{display:flex;gap:8px;align-items:flex-end}.row>*{flex:1;min-width:0}.row .sl{flex:0 0 76px}
+  button,.btn{font:inherit;cursor:pointer;border:0;border-radius:8px;padding:12px 14px;background:var(--teal);color:#fff;font-weight:600;width:100%;margin-top:12px;display:block;text-align:center;text-decoration:none}
+  button.ghost,.btn.ghost{background:#fff;color:var(--teal);border:1px solid var(--teal)}
+  button.sm,.btn.sm{width:auto;display:inline-block;margin:0;padding:8px 12px;font-size:14px}
   button.x{width:auto;margin:0;padding:10px 12px;background:#fff;color:var(--red);border:1px solid var(--line)}
   button:disabled{opacity:.6}
-  .chk{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:14px}
-  .chk input{width:auto;margin-top:4px}
+  button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .chk{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:14px}.chk input{width:auto;margin-top:4px}.chk label{margin:0;color:var(--ink)}
   .total{display:flex;justify-content:space-between;font-weight:700;font-size:17px;margin-top:12px;color:var(--navy)}
   .msg{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
-  .err{background:#f9e7e3;color:var(--red)} .ok{background:var(--teal2);color:var(--teal)}
+  .err{background:var(--red2);color:var(--red)} .ok{background:var(--teal2);color:var(--teal)}
   .muted{color:var(--muted);font-size:13px}
   table{width:100%;border-collapse:collapse;font-size:14px}
   td,th{padding:7px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
   td.r,th.r{text-align:right;white-space:nowrap}
   .kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .kpi div{background:var(--teal2);border-radius:8px;padding:10px}
-  .kpi b{display:block;font-size:18px;color:var(--navy)}
-  .pill{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--teal2);color:var(--teal)}
-  .copy{display:flex;gap:6px;margin-top:6px}.copy input{font-size:13px}.copy button{width:auto;margin:0;padding:8px 12px}
+  .kpi div{background:var(--teal2);border-radius:8px;padding:10px}.kpi b{display:block;font-size:18px;color:var(--navy)}
+  .pill{display:inline-block;font-size:12px;padding:2px 9px;border-radius:999px;background:var(--teal2);color:var(--teal);font-weight:600;white-space:nowrap}
+  .pill.wait{background:var(--gold2);color:#7a5714}
+  .copy{display:flex;gap:6px;margin-top:6px}.copy input{font-size:13px}
   .stars{display:flex;gap:6px}.stars button{width:auto;margin:0;flex:1;background:#fff;color:var(--gold);border:1px solid var(--line);font-size:22px;padding:8px 0}
   .stars button.on{background:var(--gold);color:#fff}
+  .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
+  .tabs button{margin:0;background:#fff;color:var(--teal);border:1px solid var(--line);padding:10px 4px;font-size:14px}
+  .tabs button.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+  .badge{display:inline-block;min-width:20px;padding:0 6px;border-radius:999px;background:var(--red);color:#fff;font-size:12px;margin-left:4px}
+  .banner{border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:14px;background:var(--gold2);color:#5e4410}
+  .task{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;background:#fff}
+  .task .top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+  .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .acts button{flex:1 1 30%;margin:0;padding:9px 6px;font-size:13px}
+  .call{color:var(--teal);font-weight:700;text-decoration:none}
+  .qrbox{display:grid;justify-items:center;gap:8px;padding:10px;background:#fff;border:1px solid var(--line);border-radius:10px}
+  .qrbox #qr{padding:8px;background:#fff}
+  .tpl{white-space:pre-wrap;background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:10px;font-size:14px}
+  .bar{height:10px;background:var(--line);border-radius:999px;overflow:hidden}.bar i{display:block;height:100%;background:var(--teal)}
+  .steps{list-style:none;margin:6px 0 10px;padding:0}
+  .steps li{display:grid;grid-template-columns:28px 1fr;gap:10px;padding-bottom:14px;position:relative}
+  .steps li::before{content:"";width:18px;height:18px;border-radius:50%;border:2px solid var(--line);background:#fff;margin-top:2px;z-index:1}
+  .steps li::after{content:"";position:absolute;left:9px;top:22px;bottom:0;width:2px;background:var(--line)}
+  .steps li:last-child::after{display:none}
+  .steps li.done::before{background:var(--teal);border-color:var(--teal)}
+  .steps li.now::before{box-shadow:0 0 0 4px var(--teal2)}
+  .steps li.done::after{background:var(--teal)}
+  .steps b{display:block} .steps span{font-size:13px;color:var(--muted)}
   [hidden]{display:none!important}
 </style>
 </head>
 <body>
 <header><b>FaCare Life</b><span>Cổng Cộng tác viên · Bác sĩ gia đình tại nhà</span></header>
 <nav>
-  <a data-p="don" href="#">Lên đơn</a>
-  <a data-p="cuatoi" href="#">Của tôi</a>
-  <a data-p="dangky" href="#">Đăng ký CTV</a>
-  <a data-p="danhgia" href="#">Đánh giá</a>
+  <a data-p="cuatoi" href="?p=cuatoi">Trang của tôi</a>
+  <a data-p="don" href="?p=don">Lên đơn</a>
+  <a data-p="tracuu" href="?p=tracuu">Tra cứu đơn</a>
+  <a data-p="dangky" href="?p=dangky">Đăng ký CTV</a>
 </nav>
 <main>
 
@@ -59,35 +85,63 @@
 <section id="dangky" hidden>
   <div class="card">
     <h2>Đăng ký Cộng tác viên</h2>
-    <p class="muted">Sau khi đăng ký, Admin duyệt và mời tham gia buổi giới thiệu và khoá đào tạo. Được duyệt rồi mới lên đơn được.</p>
+    <p class="muted">Admin duyệt và mời bạn tham gia khoá đào tạo. Được duyệt rồi mới lên đơn được. Có email thì bạn được báo khi được duyệt và khi có khách đặt.</p>
     <label for="r_ten">Họ và tên</label><input id="r_ten" autocomplete="name">
     <label for="r_sdt">Số điện thoại</label><input id="r_sdt" inputmode="tel" autocomplete="tel">
-    <label for="r_email">Email (không bắt buộc)</label><input id="r_email" inputmode="email">
+    <label for="r_email">Email (nên có, để nhận thông báo)</label><input id="r_email" inputmode="email" autocomplete="email">
     <label for="r_tinh">Tỉnh, thành</label><input id="r_tinh">
     <label for="r_gt">Mã người giới thiệu (nếu có)</label><input id="r_gt" placeholder="CTV-0001">
     <label for="r_pin">Tự đặt mã PIN (4–6 số) để đăng nhập</label><input id="r_pin" inputmode="numeric" type="password" maxlength="6">
-    <div class="chk"><input type="checkbox" id="r_dongy"><label for="r_dongy" style="margin:0;color:var(--ink)">Tôi đồng ý cộng tác theo chính sách của EFCARE và đồng ý cho EFCARE xử lý thông tin trên để quản lý cộng tác viên (Luật Bảo vệ dữ liệu cá nhân 91/2025).</label></div>
+    <div class="chk"><input type="checkbox" id="r_hien" checked><label for="r_hien">Hiện tên và số điện thoại của tôi trên trang giới thiệu sản phẩm, để khách tôi giới thiệu gọi được cho tôi.</label></div>
+    <div class="chk"><input type="checkbox" id="r_dongy"><label for="r_dongy">Tôi đồng ý cộng tác theo chính sách của EFCARE và đồng ý cho EFCARE xử lý thông tin trên để quản lý cộng tác viên (Luật Bảo vệ dữ liệu cá nhân 91/2025).</label></div>
     <button id="r_btn">Đăng ký</button>
     <div id="r_msg"></div>
   </div>
 </section>
 
+<!-- TRANG CỦA TÔI -->
+<section id="cuatoi" hidden>
+  <div class="card" id="m_login">
+    <h2>Đăng nhập</h2>
+    <div class="row"><div><label for="m_ma">Mã CTV</label><input id="m_ma" placeholder="CTV-0001" autocomplete="username"></div><div><label for="m_pin">Mã PIN</label><input id="m_pin" type="password" inputmode="numeric" maxlength="6" autocomplete="current-password"></div></div>
+    <div class="chk"><input type="checkbox" id="m_nho" checked><label for="m_nho">Ghi nhớ trên máy này 30 ngày (chỉ chọn trên điện thoại của riêng bạn)</label></div>
+    <button id="m_btn">Vào trang của tôi</button>
+    <div id="m_msg"></div>
+  </div>
+  <div id="home" hidden>
+    <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <div><h2 id="h_ten" style="margin:0"></h2><span class="muted" id="h_sub"></span></div>
+      <button class="ghost sm" id="h_out">Đăng xuất</button>
+    </div>
+    <div id="h_banner"></div>
+    <div class="tabs" role="tablist">
+      <button data-t="viec" class="on" role="tab">Việc cần làm<span class="badge" id="h_badge" hidden></span></button>
+      <button data-t="ban" role="tab">Bán hàng</button>
+      <button data-t="thu" role="tab">Thu nhập</button>
+    </div>
+    <div id="t_viec"></div>
+    <div id="t_ban" hidden></div>
+    <div id="t_thu" hidden></div>
+  </div>
+</section>
+
 <!-- LÊN ĐƠN -->
 <section id="don" hidden>
-  <div class="card">
-    <h2>1. Cộng tác viên</h2>
+  <div class="card" id="o_who" hidden></div>
+  <div class="card" id="o_auth">
+    <h2>Cộng tác viên</h2>
     <div class="row"><div><label for="o_ma">Mã CTV</label><input id="o_ma" placeholder="CTV-0001"></div><div><label for="o_pin">Mã PIN</label><input id="o_pin" type="password" inputmode="numeric" maxlength="6"></div></div>
   </div>
   <div class="card">
-    <h2>2. Khách hàng</h2>
+    <h2>Khách hàng</h2>
     <label for="o_ten">Họ tên khách</label><input id="o_ten">
     <label for="o_sdt">Số điện thoại</label><input id="o_sdt" inputmode="tel">
     <label for="o_dc">Địa chỉ giao hàng</label><input id="o_dc">
     <label for="o_tinh">Tỉnh, thành</label><input id="o_tinh">
-    <div class="chk"><input type="checkbox" id="o_dongy"><label for="o_dongy" style="margin:0;color:var(--ink)">Khách đồng ý cho FaCare Life xử lý họ tên, số điện thoại, địa chỉ để giao hàng, hướng dẫn và chăm sóc.</label></div>
+    <div class="chk"><input type="checkbox" id="o_dongy"><label for="o_dongy">Khách đồng ý cho FaCare Life xử lý họ tên, số điện thoại, địa chỉ để giao hàng, hướng dẫn và chăm sóc.</label></div>
   </div>
   <div class="card">
-    <h2>3. Sản phẩm</h2>
+    <h2>Sản phẩm</h2>
     <div id="o_items"></div>
     <button class="ghost" id="o_add">+ Thêm sản phẩm</button>
     <p class="muted" id="o_cocnote" hidden>Thuê Vali: hệ thống tự thêm tiền đặt cọc 5.000.000đ mỗi hợp đồng (hoàn lại khi trả máy nguyên vẹn).</p>
@@ -99,30 +153,17 @@
   <div class="card" id="o_done" hidden></div>
 </section>
 
-<!-- CỦA TÔI -->
-<section id="cuatoi" hidden>
-  <div class="card" id="m_login">
-    <h2>Đăng nhập</h2>
-    <div class="row"><div><label for="m_ma">Mã CTV</label><input id="m_ma" placeholder="CTV-0001"></div><div><label for="m_pin">Mã PIN</label><input id="m_pin" type="password" inputmode="numeric" maxlength="6"></div></div>
-    <button id="m_btn">Xem</button>
-    <div id="m_msg"></div>
+<!-- TRA CỨU ĐƠN (khách) -->
+<section id="tracuu" hidden>
+  <div class="card" id="q_form">
+    <h2>Tra cứu đơn hàng</h2>
+    <p class="muted">Nhập mã đơn và số điện thoại đã dùng khi đặt.</p>
+    <label for="q_don">Mã đơn</label><input id="q_don" placeholder="DH-261021-001" autocapitalize="characters">
+    <label for="q_sdt">Số điện thoại</label><input id="q_sdt" inputmode="tel">
+    <button id="q_btn">Xem đơn</button>
+    <div id="q_msg"></div>
   </div>
-  <div id="m_out" hidden></div>
-</section>
-
-<!-- ĐÁNH GIÁ -->
-<section id="danhgia" hidden>
-  <div class="card">
-    <h2>Đánh giá cộng tác viên</h2>
-    <p class="muted">Cảm ơn anh/chị đã dùng dịch vụ FaCare Life. Đánh giá giúp chúng tôi phục vụ tốt hơn.</p>
-    <label for="g_don">Mã đơn hàng</label><input id="g_don" placeholder="DH-...">
-    <label for="g_sdt">Số điện thoại đặt hàng</label><input id="g_sdt" inputmode="tel">
-    <label>Mức hài lòng</label>
-    <div class="stars" id="g_stars"></div>
-    <label for="g_nx">Nhận xét</label><textarea id="g_nx"></textarea>
-    <button id="g_btn">Gửi đánh giá</button>
-    <div id="g_msg"></div>
-  </div>
+  <div id="q_out" hidden></div>
 </section>
 
 </main>
@@ -130,102 +171,211 @@
 const API = 'https://script.google.com/macros/s/AKfycbwQLJWWakj_8im-O4n6kAm9AlWtaLTtojXj_xAkHrQEPVqJwAb8nByzlO1rhJXg61ob/exec';
 const QS = new URLSearchParams(location.search);
 const clean = s => String(s||'').trim().replace(/[<>]/g,'').toUpperCase();
-const PAGE = ['dangky','don','cuatoi','danhgia'].indexOf(QS.get('p'))>=0 ? QS.get('p') : 'don';
-const CTV = clean(QS.get('ctv')), GT = clean(QS.get('gt')), DON = clean(QS.get('don'));
-const URL = location.origin + location.pathname;
+let PAGE = QS.get('p'); if(PAGE==='danhgia') PAGE='tracuu';
+if(['dangky','don','cuatoi','tracuu'].indexOf(PAGE)<0) PAGE='cuatoi';
+const CTVQ = clean(QS.get('ctv')), GT = clean(QS.get('gt')), DON = clean(QS.get('don'));
+const BASE = location.origin + location.pathname;
+const SHOP = BASE + 'mua/';
 const $ = id => document.getElementById(id);
 const vnd = n => (Math.round(n)||0).toLocaleString('vi-VN') + 'đ';
 const pct = x => Math.round(x*100) + '%';
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function msg(id, text, ok){ $(id).innerHTML = text ? '<div class="msg '+(ok?'ok':'err')+'">'+text+'</div>' : ''; }
 function api(fn, args){
-  return fetch(API, {method:'POST', credentials:'omit', redirect:'follow', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify({fn:fn, args:args})})
+  return fetch(API,{method:'POST',credentials:'omit',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn:fn,args:args})})
     .then(r=>{ if(!r.ok) throw new Error('Không kết nối được máy chủ (mã '+r.status+'). Vui lòng thử lại.'); return r.json(); })
     .then(j=>{ if(!j.ok) throw new Error(j.error); return j.data; });
 }
-function call(fn, args, done, btn, msgId){
-  if(btn){btn.disabled=true;} if(msgId) msg(msgId,'');
-  api(fn,args).then(r=>{ if(btn)btn.disabled=false; done(r); })
-    .catch(e=>{ if(btn)btn.disabled=false; msg(msgId, esc(e.message||e)); });
+function call(fn,args,done,btn,msgId){
+  if(btn) btn.disabled=true; if(msgId) msg(msgId,'');
+  api(fn,args).then(r=>{ if(btn) btn.disabled=false; done(r); }).catch(e=>{ if(btn) btn.disabled=false; if(msgId) msg(msgId, esc(e.message||e)); });
 }
+function copyText(t, btn){
+  const done=()=>{ if(btn){ const o=btn.textContent; btn.textContent='Đã chép'; setTimeout(()=>btn.textContent=o,1500);} };
+  const fallback=()=>{ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');done();}catch(e){} ta.remove(); };
+  try{ navigator.clipboard.writeText(t).then(done).catch(fallback); }catch(e){ fallback(); }
+}
+function shareText(t, btn){ if(navigator.share){ navigator.share({text:t}).catch(()=>{}); } else copyText(t, btn); }
+function copyBox(v){ return '<div class="copy"><input readonly value="'+esc(v)+'" aria-label="Link"><button type="button" class="sm" data-copy="'+esc(v)+'">Chép</button></div>'; }
+document.addEventListener('click', e=>{
+  const c=e.target.closest('[data-copy]'); if(c){ e.preventDefault(); copyText(c.getAttribute('data-copy'), c); return; }
+  const s=e.target.closest('[data-share]'); if(s){ e.preventDefault(); shareText(s.getAttribute('data-share'), s); }
+});
 function show(p){
   document.querySelectorAll('main>section').forEach(s=>s.hidden = s.id!==p);
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on', a.dataset.p===p));
 }
-document.querySelectorAll('nav a').forEach(a=>a.onclick=e=>{e.preventDefault();show(a.dataset.p);});
-function copyBox(v){ return '<div class="copy"><input readonly value="'+esc(v)+'"><button type="button" onclick="this.previousSibling.select();try{navigator.clipboard.writeText(this.previousSibling.value)}catch(e){}">Chép</button></div>'; }
-try{ const s = localStorage.getItem('fcl_ma'); if(s && !CTV){ $('o_ma').value=s; $('m_ma').value=s; } }catch(e){}
-if(CTV){ $('o_ma').value=CTV; $('m_ma').value=CTV; }
+// ---- phiên đăng nhập (ghi nhớ 30 ngày)
+const SESSION = {
+  get(){ try{ return JSON.parse(localStorage.getItem('fcl_ses')||'null'); }catch(e){ return null; } },
+  set(ma,tok){ try{ localStorage.setItem('fcl_ses', JSON.stringify({ma:ma,tok:tok})); localStorage.setItem('fcl_ma',ma);}catch(e){} },
+  clear(){ try{ localStorage.removeItem('fcl_ses'); }catch(e){} }
+};
+let ME = null, CRED = null; // CRED = {ma, pin} với pin là PIN hoặc phiên t1.…
+(function(){ const s=SESSION.get(); if(s&&s.tok) CRED={ma:s.ma,pin:s.tok}; let m=''; try{m=localStorage.getItem('fcl_ma')||'';}catch(e){} $('m_ma').value=CTVQ||m; $('o_ma').value=CTVQ||m; })();
 if(GT) $('r_gt').value=GT;
-if(DON) $('g_don').value=DON;
+if(DON) $('q_don').value=DON;
 show(PAGE);
 
-// ---- đăng ký
-$('r_btn').onclick = ()=> call('registerCTV',[{ten:$('r_ten').value,sdt:$('r_sdt').value,email:$('r_email').value,tinh:$('r_tinh').value,gt:$('r_gt').value,pin:$('r_pin').value,dongy:$('r_dongy').checked}], r=>{
+// ===== ĐĂNG KÝ
+$('r_btn').onclick = ()=> call('registerCTV',[{ten:$('r_ten').value,sdt:$('r_sdt').value,email:$('r_email').value,tinh:$('r_tinh').value,gt:$('r_gt').value,pin:$('r_pin').value,dongy:$('r_dongy').checked,hienSdt:$('r_hien').checked}], r=>{
   try{localStorage.setItem('fcl_ma',r.ma)}catch(e){}
-  msg('r_msg','Đăng ký thành công. Mã CTV của anh/chị: <b>'+esc(r.ma)+'</b>. Hãy ghi nhớ mã PIN. Admin sẽ liên hệ để duyệt và mời đào tạo.'
-    +'<div style="margin-top:8px">Link lên đơn của anh/chị:</div>'+copyBox(URL+'?p=don&ctv='+r.ma)
-    +'<div style="margin-top:8px">Link mời người khác đăng ký CTV:</div>'+copyBox(URL+'?p=dangky&gt='+r.ma)+'<div style="margin-top:8px">Link trang giới thiệu sản phẩm (khách tự đặt mua, đơn ghi cho bạn sau khi được duyệt):</div>'+copyBox(URL+'mua/?ctv='+r.ma), true);
+  msg('r_msg','Đăng ký thành công. Mã CTV của bạn: <b>'+esc(r.ma)+'</b>. Hãy ghi nhớ mã PIN. Admin sẽ liên hệ để duyệt và mời đào tạo.<br><br>Từ nay bạn chỉ cần mở <b>Trang của tôi</b>: link, mã QR, việc cần làm, thu nhập đều ở đó.', true);
+  $('r_btn').hidden=true;
+  const b=document.createElement('a'); b.className='btn'; b.href='?p=cuatoi'; b.textContent='Vào Trang của tôi'; $('r_msg').appendChild(b);
 }, $('r_btn'), 'r_msg');
 
-// ---- lên đơn
-let CAT = null;
+// ===== TRANG CỦA TÔI
+function loadHome(){
+  if(!CRED){ $('m_login').hidden=false; $('home').hidden=true; return; }
+  $('m_login').hidden=true; $('home').hidden=false; $('t_viec').innerHTML='<p class="muted">Đang tải…</p>';
+  api('myData',[CRED.ma, CRED.pin]).then(d=>{ ME=d; renderHome(); })
+    .catch(e=>{ SESSION.clear(); CRED=null; $('m_login').hidden=false; $('home').hidden=true; msg('m_msg', esc(e.message)); });
+}
+$('m_btn').onclick = ()=> call('login',[$('m_ma').value,$('m_pin').value,$('m_nho').checked], r=>{
+  ME=r.data; CRED={ma:ME.ma,pin:r.token||$('m_pin').value};
+  if(r.token) SESSION.set(ME.ma, r.token); else { try{localStorage.setItem('fcl_ma',ME.ma)}catch(e){} }
+  $('m_pin').value=''; renderHome();
+}, $('m_btn'), 'm_msg');
+$('h_out').onclick = ()=>{ SESSION.clear(); CRED=null; ME=null; $('home').hidden=true; $('m_login').hidden=false; };
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
+function tab(t){ document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t)); ['viec','ban','thu'].forEach(k=>$('t_'+k).hidden=k!==t); }
+function renderHome(){
+  const d=ME; $('m_login').hidden=true; $('home').hidden=false;
+  $('h_ten').textContent=d.ten; $('h_sub').textContent=d.ma+' · Đào tạo: '+d.dt;
+  const active=d.tt==='Hoạt động';
+  $('h_banner').innerHTML = active ? '' : '<div class="banner"><b>'+(d.tt==='Tạm dừng'?'Tài khoản đang tạm dừng.':'Đang chờ Admin duyệt.')+'</b> '
+    +(d.tt==='Tạm dừng'?'Vui lòng liên hệ Admin.':'Admin sẽ liên hệ và mời bạn tham gia khoá đào tạo. Sau khi được duyệt, bạn lên đơn và chia sẻ trang giới thiệu được ngay'+(d.email?'; chúng tôi sẽ báo qua email '+esc(d.email)+'.':'.'))+'</div>';
+  const n=d.viec.length; $('h_badge').hidden=!n; $('h_badge').textContent=n;
+  renderViec(); renderBan(); renderThu();
+  tab(n ? 'viec' : (active ? 'ban' : 'viec'));
+}
+function payText(x){
+  const tk=ME.taikhoan;
+  return 'Đơn '+x.ma+' · Tổng '+vnd(x.tong)+'.\n'+(tk?'Anh/chị chuyển khoản vào: '+tk+'\nNội dung chuyển khoản: '+x.ma:'Em gửi anh/chị thông tin tài khoản công ty ngay sau đây. Nội dung chuyển khoản: '+x.ma)+'\nTheo dõi đơn: '+BASE+'?p=tracuu&don='+x.ma;
+}
+function renderViec(){
+  const d=ME, v=d.viec;
+  let h='';
+  if(!v.length) h='<div class="card"><h3>Không có việc cần làm</h3><p class="muted">Khi khách đặt qua link của bạn, hoặc đơn đã giao cần xin đánh giá, việc sẽ hiện ở đây.</p>'+(d.tt==='Hoạt động'?'<button class="ghost" data-goto="ban">Chia sẻ trang giới thiệu</button>':'')+'</div>';
+  v.forEach(x=>{
+    if(x.loai==='goi'){
+      h+='<div class="task"><div class="top"><b>Gọi xác nhận đơn '+esc(x.ma)+'</b><span class="pill wait">'+(x.tuDat?'Khách tự đặt':'Chờ thanh toán')+'</span></div>'
+       +'<div>'+esc(x.kh||'')+' · <a class="call" href="tel:'+esc(x.sdt)+'">'+esc(x.sdt)+'</a></div>'
+       +'<div class="muted">'+esc(x.sp.join(', '))+' · '+vnd(x.tong)+' · đặt '+esc(x.ngay)+'</div>'
+       +'<div class="acts"><button class="sm" data-kq="dongy" data-don="'+esc(x.ma)+'">Khách đồng ý</button><button class="sm ghost" data-kq="chualienlac" data-don="'+esc(x.ma)+'">Chưa liên lạc được</button><button class="sm ghost" data-kq="huy" data-don="'+esc(x.ma)+'">Khách huỷ</button></div>'
+       +'<div class="acts"><button class="sm ghost" data-share="'+esc(payText(x))+'">Gửi thông tin thanh toán cho khách</button></div>'
+       +(x.tuDat?'<p class="muted" style="margin:8px 0 0">Quá 24 giờ chưa ghi kết quả, Admin sẽ gọi khách thay bạn.</p>':'')+'<div class="kqmsg"></div></div>';
+    } else {
+      const link=BASE+'?p=tracuu&don='+x.ma;
+      h+='<div class="task"><div class="top"><b>Xin đánh giá đơn '+esc(x.ma)+'</b><span class="pill">Đã giao</span></div><div>'+esc(x.kh||'')+' · <a class="call" href="tel:'+esc(x.sdt)+'">'+esc(x.sdt)+'</a></div>'
+       +'<div class="acts"><button class="sm" data-share="'+esc('Cảm ơn anh/chị đã tin dùng Vali Y tế FaCare. Anh/chị dành 1 phút đánh giá giúp em nhé: '+link)+'">Gửi link đánh giá</button><button class="sm ghost" data-copy="'+esc(link)+'">Chép link</button></div></div>';
+    }
+  });
+  $('t_viec').innerHTML=h;
+  $('t_viec').querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>tab(b.dataset.goto));
+  $('t_viec').querySelectorAll('[data-kq]').forEach(b=>b.onclick=()=>{
+    const box=b.closest('.task'); box.querySelectorAll('button').forEach(x=>x.disabled=true);
+    api('ctvXacNhan',[CRED.ma,CRED.pin,b.dataset.don,b.dataset.kq]).then(r=>{ box.querySelector('.kqmsg').innerHTML='<div class="msg ok">Đã ghi: '+esc(r.ghi)+'</div>'; setTimeout(loadHome,1200); })
+      .catch(e=>{ box.querySelectorAll('button').forEach(x=>x.disabled=false); box.querySelector('.kqmsg').innerHTML='<div class="msg err">'+esc(e.message)+'</div>'; });
+  });
+}
+function shareMsg(){
+  const link=SHOP+'?ctv='+ME.ma;
+  return 'Chào anh/chị, em là '+ME.ten+', cộng tác viên FaCare Life.\nBên em có Vali Y tế Gia Đình để đo huyết áp, đường huyết, mỡ máu, axit uric, nhiệt độ, cân nặng ngay tại nhà. Chỉ số tự lưu vào điện thoại, con cháu ở xa vẫn theo dõi được.\nCó thể mua trọn bộ hoặc thuê từ 400.000đ/tháng, giao tận nhà, hướng dẫn miễn phí.\nAnh/chị xem chi tiết và đặt tại đây: '+link+'\nCần em tư vấn thêm, anh/chị cứ nhắn em nhé.';
+}
+function renderBan(){
+  const d=ME, active=d.tt==='Hoạt động', link=SHOP+'?ctv='+d.ma;
+  if(!active){ $('t_ban').innerHTML='<div class="card"><h3>Chưa mở bán</h3><p class="muted">Bộ chia sẻ và chức năng lên đơn mở sau khi bạn được Admin duyệt.</p></div>'; return; }
+  $('t_ban').innerHTML =
+    '<div class="card"><h2>Trang giới thiệu của bạn</h2><p class="muted">Khách đặt qua link hoặc mã QR này thì đơn ghi cho bạn và bạn được báo. Trang hiện '+(d.hienSdt?'tên và số điện thoại':'tên')+' của bạn.</p>'
+    +'<div class="qrbox"><div id="qr"></div><span class="muted">Khách quét bằng camera điện thoại</span></div>'
+    +'<button id="b_share">Chia sẻ qua Zalo, Messenger…</button>'
+    +'<div class="acts"><button class="sm ghost" id="b_cpmsg">Chép tin nhắn</button><button class="sm ghost" data-copy="'+esc(link)+'">Chép link</button><button class="sm ghost" id="b_dlqr">Tải mã QR</button></div>'
+    +'<label>Tin nhắn soạn sẵn</label><div class="tpl" id="b_tpl"></div><a class="btn ghost" href="'+esc(link)+'" target="_blank" rel="noopener">Xem trang khách sẽ thấy</a></div>'
+    +'<div class="card"><h2>Lên đơn hộ khách</h2><p class="muted">Khi khách nhờ bạn đặt giúp, hoặc mua nhiều sản phẩm một lúc.</p><a class="btn" href="?p=don">Lên đơn mới</a></div>'
+    +'<div class="card"><h2>Mời người làm CTV</h2><p class="muted">Đã có '+d.gioiThieu+' người đăng ký qua link của bạn. Link chỉ ghi nguồn giới thiệu; hoa hồng tính trên doanh số của chính mỗi người (QĐ09).</p>'+copyBox(BASE+'?p=dangky&gt='+d.ma)+'</div>';
+  $('b_tpl').textContent=shareMsg();
+  try{ new QRCode($('qr'),{text:link,width:200,height:200,colorDark:'#0f5f6b',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M}); }catch(e){ $('qr').textContent='Không tạo được mã QR. Dùng nút Chép link.'; }
+  $('b_cpmsg').onclick=e=>copyText(shareMsg(), e.target);
+  $('b_share').onclick=()=>{ if(navigator.share){ navigator.share({text:shareMsg()}).catch(()=>{}); } else { copyText(shareMsg()); $('b_share').textContent='Đã chép tin nhắn, dán vào Zalo'; } };
+  $('b_dlqr').onclick=()=>{ const c=$('qr').querySelector('canvas'), im=$('qr').querySelector('img'); const url=c?c.toDataURL('image/png'):(im?im.src:''); if(!url) return; const a=document.createElement('a'); a.href=url; a.download='QR-'+ME.ma+'.png'; document.body.appendChild(a); a.click(); a.remove(); };
+}
+function renderThu(){
+  const d=ME;
+  const tiep = d.tiep ? 'Còn <b>'+vnd(d.tiep.moc-d.dsKy)+'</b> doanh số nữa để lên bậc '+pct(d.tiep.tyle)+'.' : 'Bạn đang ở bậc cao nhất.';
+  const tienDo = d.tiep ? Math.max(3, Math.min(100, Math.round(d.dsKy/d.tiep.moc*100))) : 100;
+  let h='<div class="card"><h2>Tháng '+esc(d.ky)+'</h2><div class="kpi"><div>Doanh số<b>'+vnd(d.dsKy)+'</b></div><div>Bậc hiện tại<b>'+pct(d.tyle)+'</b></div><div>Hoa hồng tạm tính<b>'+vnd(d.hhKy)+'</b></div><div>Số sao<b>'+(d.sao? d.sao+' ★ ('+d.soDanhGia+')':'Chưa có')+'</b></div></div>'
+   +'<div style="margin-top:12px" class="bar" aria-label="Tiến độ lên bậc"><i style="width:'+tienDo+'%"></i></div><p class="muted" style="margin:6px 0 0">'+tiep+' Hoa hồng tính khi khách đã thanh toán đủ, chốt trước ngày 05, trả chậm nhất cuối tháng sau.</p></div>';
+  h+='<div class="card"><h2>Đơn hàng</h2>'+(d.don.length?'<table><tr><th>Đơn</th><th>Trạng thái</th><th class="r">Tiền</th></tr>'+d.don.map(o=>'<tr><td>'+esc(o.ma)+'<br><span class="muted">'+esc(o.ngay)+' · '+esc(o.sp.join(', '))+'</span></td><td>'+esc(o.tt)+'</td><td class="r">'+vnd(o.tong)+'</td></tr>').join('')+'</table>':'<p class="muted">Chưa có đơn.</p>')+'</div>';
+  h+='<div class="card"><h2>Khách hàng của tôi ('+d.khach.length+')</h2>'+(d.khach.length?'<table>'+d.khach.map(k=>'<tr><td>'+esc(k.ma)+'</td><td>'+esc(k.ten)+'</td><td class="r">'+esc(k.sdt)+'</td></tr>').join('')+'</table>':'<p class="muted">Chưa có khách.</p>')+'</div>';
+  $('t_thu').innerHTML=h;
+}
+if(PAGE==='cuatoi') loadHome();
+
+// ===== LÊN ĐƠN
+function whoBox(){
+  if(CRED && String(CRED.pin).indexOf('t1.')===0){
+    $('o_auth').hidden=true; $('o_who').hidden=false;
+    $('o_who').innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span>Lên đơn với mã <b>'+esc(CRED.ma)+'</b></span><button class="ghost sm" id="o_swap">Dùng mã khác</button></div>';
+    $('o_swap').onclick=()=>{ $('o_auth').hidden=false; $('o_who').hidden=true; };
+  }
+}
+whoBox();
+let CAT=null;
 function itemRow(){
-  const d = document.createElement('div'); d.className='row'; d.style.marginTop='8px';
-  d.innerHTML = '<div><select class="sp"><option value="">Chọn sản phẩm</option>'
-    + (CAT? groups(): '') + '</select></div><div class="sl"><input class="qty" type="number" min="1" value="1" inputmode="numeric" aria-label="Số lượng"></div>'
-    + '<button type="button" class="x" aria-label="Xoá">✕</button>';
-  d.querySelector('.x').onclick=()=>{d.remove();calc();};
-  d.querySelector('.sp').onchange=calc; d.querySelector('.qty').oninput=calc;
+  const d=document.createElement('div'); d.className='row'; d.style.marginTop='8px';
+  d.innerHTML='<div><select class="sp" aria-label="Sản phẩm"><option value="">Chọn sản phẩm</option>'+(CAT?groups():'')+'</select></div><div class="sl"><input class="qty" type="number" min="1" value="1" inputmode="numeric" aria-label="Số lượng"></div><button type="button" class="x" aria-label="Xoá">✕</button>';
+  d.querySelector('.x').onclick=()=>{d.remove();calc();}; d.querySelector('.sp').onchange=calc; d.querySelector('.qty').oninput=calc;
   $('o_items').appendChild(d);
 }
-function groups(){
-  const by = {}; CAT.items.forEach(x=>{(by[x.loai]=by[x.loai]||[]).push(x);});
-  return Object.keys(by).map(g=>'<optgroup label="'+esc(g)+'">'+by[g].map(x=>'<option value="'+esc(x.ma)+'">'+esc(x.ten)+' · '+vnd(x.gia)+'</option>').join('')+'</optgroup>').join('');
-}
-function items(){ return [...document.querySelectorAll('#o_items .row')].map(r=>({sp:r.querySelector('.sp').value, sl:r.querySelector('.qty').value})).filter(x=>x.sp); }
-function calc(){
-  if(!CAT) return; const p={}; CAT.items.forEach(x=>p[x.ma]=x.gia);
-  let t=0, thue=0; items().forEach(x=>{ t+=(p[x.sp]||0)*(+x.sl||0); if(x.sp.indexOf('THUE-')===0) thue+=(+x.sl||0); });
-  t += thue*CAT.coc; $('o_cocnote').hidden = !thue; $('o_total').textContent=vnd(t);
-}
-api('getCatalog',[]).then(c=>{ CAT=c; $('o_items').innerHTML=''; itemRow(); }).catch(e=>msg('o_msg',esc(e.message)));
+function groups(){ const by={}; CAT.items.forEach(x=>{(by[x.loai]=by[x.loai]||[]).push(x);}); return Object.keys(by).map(g=>'<optgroup label="'+esc(g)+'">'+by[g].map(x=>'<option value="'+esc(x.ma)+'">'+esc(x.ten)+' · '+vnd(x.gia)+'</option>').join('')+'</optgroup>').join(''); }
+function items(){ return [...document.querySelectorAll('#o_items .row')].map(r=>({sp:r.querySelector('.sp').value,sl:r.querySelector('.qty').value})).filter(x=>x.sp); }
+function calc(){ if(!CAT) return; const p={}; CAT.items.forEach(x=>p[x.ma]=x.gia); let t=0,thue=0; items().forEach(x=>{t+=(p[x.sp]||0)*(+x.sl||0); if(x.sp.indexOf('THUE-')===0) thue+=(+x.sl||0);}); t+=thue*CAT.coc; $('o_cocnote').hidden=!thue; $('o_total').textContent=vnd(t); }
+if(PAGE==='don') api('getCatalog',[]).then(c=>{ CAT=c; $('o_items').innerHTML=''; itemRow(); }).catch(e=>msg('o_msg',esc(e.message)));
 $('o_add').onclick=()=>itemRow();
-$('o_btn').onclick = ()=> call('createOrder',[{ma:$('o_ma').value,pin:$('o_pin').value,kh:{ten:$('o_ten').value,sdt:$('o_sdt').value,diachi:$('o_dc').value,tinh:$('o_tinh').value,dongy:$('o_dongy').checked},items:items(),ghichu:$('o_note').value}], r=>{
-  try{localStorage.setItem('fcl_ma',$('o_ma').value.trim().toUpperCase())}catch(e){}
-  const rows = r.lines.map(l=>'<tr><td>'+esc(l.ten)+' × '+l.sl+'</td><td class="r">'+vnd(l.tien)+'</td></tr>').join('');
-  $('o_done').innerHTML = '<h2>Đã tạo đơn '+esc(r.madon)+'</h2><table>'+rows+'<tr><th>Tổng khách cần chuyển</th><th class="r">'+vnd(r.total)+'</th></tr></table>'
-   + '<p><b>Gửi khách thông tin chuyển khoản:</b></p><p>'+esc(r.taikhoan)+'<br>Nội dung chuyển khoản: <b>'+esc(r.madon)+'</b><br>Thanh toán trong 24 giờ. Không thu tiền mặt.</p>'
-   + (r.flag?'<div class="msg err">'+esc(r.flag)+'</div>':'')
-   + '<p class="muted">Sau khi giao hàng, gửi khách link đánh giá:</p>'+copyBox(URL+'?p=danhgia&don='+r.madon)
-   + '<button type="button" class="ghost" onclick="location.reload()">Lên đơn mới</button>';
-  $('o_done').hidden=false; $('o_done').scrollIntoView({behavior:'smooth'});
-  ['o_ten','o_sdt','o_dc','o_tinh','o_note'].forEach(i=>$(i).value=''); $('o_dongy').checked=false;
-}, $('o_btn'), 'o_msg');
+$('o_btn').onclick=()=>{
+  const useSes = $('o_auth').hidden && CRED;
+  const ma = useSes ? CRED.ma : $('o_ma').value, pin = useSes ? CRED.pin : $('o_pin').value;
+  call('createOrder',[{ma:ma,pin:pin,kh:{ten:$('o_ten').value,sdt:$('o_sdt').value,diachi:$('o_dc').value,tinh:$('o_tinh').value,dongy:$('o_dongy').checked},items:items(),ghichu:$('o_note').value}], r=>{
+    const rows=r.lines.map(l=>'<tr><td>'+esc(l.ten)+' × '+l.sl+'</td><td class="r">'+vnd(l.tien)+'</td></tr>').join('');
+    const tk = String(r.taikhoan||''); const coTk = tk && tk.indexOf('[')<0;
+    const pay = 'Đơn '+r.madon+' · Tổng '+vnd(r.total)+'.\n'+(coTk?'Chuyển khoản vào: '+tk+'\nNội dung: '+r.madon:'Nội dung chuyển khoản: '+r.madon)+'\nTheo dõi đơn: '+BASE+'?p=tracuu&don='+r.madon;
+    $('o_done').innerHTML='<h2>Đã tạo đơn '+esc(r.madon)+'</h2><table>'+rows+'<tr><th>Tổng khách cần chuyển</th><th class="r">'+vnd(r.total)+'</th></tr></table>'
+      +(coTk?'<p>Chuyển khoản vào: '+esc(tk)+'<br>Nội dung chuyển khoản: <b>'+esc(r.madon)+'</b></p>':'<p>Nội dung chuyển khoản: <b>'+esc(r.madon)+'</b>. Không thu tiền mặt.</p>')
+      +(r.flag?'<div class="msg err">'+esc(r.flag)+'</div>':'')
+      +'<button data-share="'+esc(pay)+'">Gửi thông tin cho khách</button><button class="ghost" onclick="location.reload()">Lên đơn mới</button>';
+    $('o_done').hidden=false; $('o_done').scrollIntoView({behavior:'smooth'});
+    ['o_ten','o_sdt','o_dc','o_tinh','o_note'].forEach(i=>$(i).value=''); $('o_dongy').checked=false;
+  }, $('o_btn'), 'o_msg');
+};
 
-// ---- của tôi
-$('m_btn').onclick = ()=> call('myData',[$('m_ma').value,$('m_pin').value], d=>{
-  try{localStorage.setItem('fcl_ma',d.ma)}catch(e){}
-  const tiep = d.tiep ? 'Còn '+vnd(d.tiep.moc-d.dsKy)+' doanh số nữa để lên bậc '+pct(d.tiep.tyle)+'.' : 'Đang ở bậc cao nhất.';
-  let h = '<div class="card"><h2>'+esc(d.ten)+' · '+esc(d.ma)+'</h2><span class="pill">'+esc(d.tt)+'</span> <span class="pill">Đào tạo: '+esc(d.dt)+'</span>'
-   + '<div class="kpi" style="margin-top:10px"><div>Doanh số tháng '+esc(d.ky)+'<b>'+vnd(d.dsKy)+'</b></div><div>Bậc hiện tại<b>'+pct(d.tyle)+'</b></div>'
-   + '<div>Hoa hồng tạm tính tháng<b>'+vnd(d.hhKy)+'</b></div><div>Số sao<b>'+(d.sao? d.sao+' ★ ('+d.soDanhGia+')':'Chưa có')+'</b></div></div>'
-   + '<p class="muted">'+tiep+' Hoa hồng chỉ tính khi khách đã thanh toán đủ; chi trả theo lịch của công ty.</p>'
-   + '<p class="muted" style="margin-bottom:4px">Link lên đơn của tôi:</p>'+copyBox(URL+'?p=don&ctv='+d.ma)
-   + '<p class="muted" style="margin-bottom:4px">Link trang giới thiệu sản phẩm của tôi (gửi khách tự đặt mua):</p>'+copyBox(URL+'mua/?ctv='+d.ma)
-   + '<p class="muted" style="margin-bottom:4px">Link mời đăng ký CTV (đã có '+d.gioiThieu+' người):</p>'+copyBox(URL+'?p=dangky&gt='+d.ma)+'</div>';
-  h += '<div class="card"><h2>Đơn hàng</h2>' + (d.don.length? '<table><tr><th>Đơn</th><th>Trạng thái</th><th class="r">Tiền</th></tr>'+d.don.map(o=>'<tr><td>'+esc(o.ma)+'<br><span class="muted">'+esc(o.ngay)+' · '+esc(o.sp.join(', '))+'</span></td><td>'+esc(o.tt)+'</td><td class="r">'+vnd(o.tong)+'</td></tr>').join('')+'</table>' : '<p class="muted">Chưa có đơn.</p>') + '</div>';
-  h += '<div class="card"><h2>Khách hàng của tôi ('+d.khach.length+')</h2>' + (d.khach.length? '<table>'+d.khach.map(k=>'<tr><td>'+esc(k.ma)+'</td><td>'+esc(k.ten)+'</td><td class="r">'+esc(k.sdt)+'</td></tr>').join('')+'</table>' : '<p class="muted">Chưa có khách.</p>') + '</div>';
-  $('m_out').innerHTML=h; $('m_out').hidden=false;
-}, $('m_btn'), 'm_msg');
-
-// ---- đánh giá
-let SAO = 0;
-$('g_stars').innerHTML = [1,2,3,4,5].map(i=>'<button type="button" data-s="'+i+'" aria-label="'+i+' sao">★</button>').join('');
-$('g_stars').querySelectorAll('button').forEach(b=>b.onclick=()=>{SAO=+b.dataset.s; $('g_stars').querySelectorAll('button').forEach(x=>x.classList.toggle('on', +x.dataset.s<=SAO));});
-$('g_btn').onclick = ()=> call('rate',[{madon:$('g_don').value,sdt:$('g_sdt').value,sao:SAO,nhanxet:$('g_nx').value}], ()=>{
-  msg('g_msg','Cảm ơn anh/chị đã đánh giá.', true); $('g_btn').disabled=true;
-}, $('g_btn'), 'g_msg');
+// ===== TRA CỨU ĐƠN
+const STEPS=[['Mới','Đã đặt','Tư vấn viên hoặc nhân viên gọi xác nhận, gửi thông tin thanh toán'],['Đã thu','Đã thanh toán','Công ty đã nhận đủ tiền'],['Đã giao','Đã giao hàng','Vali đã đến tay anh/chị'],['Đã kích hoạt','Đã kích hoạt','Thiết bị đã kết nối ứng dụng FaCare']];
+let SAO=0;
+function traCuu(){
+  call('traCuu',[$('q_don').value,$('q_sdt').value], d=>{
+    const idx = STEPS.findIndex(s=>s[0]===d.tt);
+    const huy = d.tt==='Huỷ'||d.tt==='Trả lại';
+    let h='<div class="card"><h2>Đơn '+esc(d.madon)+'</h2><p class="muted">Đặt ngày '+esc(d.ngay)+'</p>';
+    if(huy) h+='<div class="msg err">Đơn đã '+(d.tt==='Huỷ'?'huỷ':'trả lại')+'.</div>';
+    else h+='<ol class="steps">'+STEPS.map((s,i)=>'<li class="'+(i<idx?'done':i===idx?'done now':'')+'"><div><b>'+s[1]+'</b><span>'+(i===1&&d.ngayThu?d.ngayThu+' · ':'')+(i===2&&d.ngayGiao?d.ngayGiao+' · ':'')+s[2]+'</span></div></li>').join('')+'</ol>';
+    h+='<table>'+d.items.map(x=>'<tr><td>'+esc(x.ten)+' × '+x.sl+'</td><td class="r">'+vnd(x.tien)+'</td></tr>').join('')+'<tr><th>Tổng</th><th class="r">'+vnd(d.tong)+'</th></tr></table>';
+    if(d.taikhoan) h+='<p><b>Thanh toán:</b> '+esc(d.taikhoan)+'<br>Nội dung chuyển khoản: <b>'+esc(d.madon)+'</b></p>';
+    if(d.ctv) h+='<p>Tư vấn viên của anh/chị: <b>'+esc(d.ctv.ten)+'</b>'+(d.ctv.sdt?' · <a class="call" href="tel:'+esc(d.ctv.sdt)+'">'+esc(d.ctv.sdt)+'</a>':'')+'</p>';
+    h+='</div>';
+    if(d.coTheDanhGia) h+='<div class="card" id="rate"><h2>Đánh giá tư vấn viên</h2><div class="stars" id="g_stars">'+[1,2,3,4,5].map(i=>'<button type="button" data-s="'+i+'" aria-label="'+i+' sao">★</button>').join('')+'</div><label for="g_nx">Nhận xét</label><textarea id="g_nx"></textarea><button id="g_btn">Gửi đánh giá</button><div id="g_msg"></div></div>';
+    else if(d.daDanhGia) h+='<div class="card"><p class="muted" style="margin:0">Cảm ơn anh/chị đã đánh giá.</p></div>';
+    $('q_out').innerHTML=h; $('q_out').hidden=false;
+    if(d.coTheDanhGia){
+      $('g_stars').querySelectorAll('button').forEach(b=>b.onclick=()=>{SAO=+b.dataset.s; $('g_stars').querySelectorAll('button').forEach(x=>x.classList.toggle('on',+x.dataset.s<=SAO));});
+      $('g_btn').onclick=()=>call('rate',[{madon:d.madon,sdt:$('q_sdt').value,sao:SAO,nhanxet:$('g_nx').value}],()=>{ $('rate').innerHTML='<p class="muted" style="margin:0">Cảm ơn anh/chị đã đánh giá.</p>'; }, $('g_btn'), 'g_msg');
+    }
+    try{ localStorage.setItem('fcl_tc', JSON.stringify({don:d.madon,sdt:$('q_sdt').value})); }catch(e){}
+  }, $('q_btn'), 'q_msg');
+}
+$('q_btn').onclick=traCuu;
+(function(){ try{ const s=JSON.parse(localStorage.getItem('fcl_tc')||'null'); if(s && (!DON || s.don===DON)){ $('q_don').value=s.don; $('q_sdt').value=s.sdt; if(PAGE==='tracuu') traCuu(); } }catch(e){} })();
 </script>
 </body>
 </html>

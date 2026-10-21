@@ -283,7 +283,15 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','
 const QS = new URLSearchParams(location.search);
 let CTV = (QS.get('ctv')||'').trim().toUpperCase().replace(/[^A-Z0-9-]/g,'');
 try{ if(CTV) localStorage.setItem('fcl_ref', CTV); else CTV = localStorage.getItem('fcl_ref') || ''; }catch(e){}
-if(CTV){ $('refnote').hidden=false; $('refnote').textContent='Cộng tác viên giới thiệu: '+CTV+'. Cộng tác viên sẽ liên hệ và hướng dẫn anh/chị.'; }
+if(CTV){
+  $('refnote').hidden=false; $('refnote').textContent='Tư vấn viên của anh/chị: '+CTV+'. Tư vấn viên sẽ gọi xác nhận và hướng dẫn anh/chị.';
+  fetch(API,{method:'POST',credentials:'omit',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn:'getRef',args:[CTV]})})
+    .then(r=>r.json()).then(j=>{
+      if(!j.ok || !j.data){ return; }
+      const d=j.data;
+      $('refnote').innerHTML='Tư vấn viên của anh/chị: <b>'+esc(d.ten)+'</b>'+(d.sdt?' · <a href="tel:'+esc(d.sdt)+'">'+esc(d.sdt)+'</a>':'')+'. Tư vấn viên sẽ gọi xác nhận và hướng dẫn anh/chị.';
+    }).catch(()=>{});
+}
 
 function calc(){
   const o = $('sp').selectedOptions[0], sl = Math.max(1, +$('sl').value||1);
@@ -307,7 +315,9 @@ $('f').addEventListener('submit', e=>{
       const rows = d.lines.map(l=>'<tr><td>'+esc(l.ten)+' × '+l.sl+'</td><td class="r">'+vnd(l.tien)+'</td></tr>').join('');
       $('done').innerHTML = '<h3>Đã nhận đơn '+esc(d.madon)+'</h3><p>Cảm ơn anh/chị. Chúng tôi sẽ gọi xác nhận trong 24 giờ.</p><table>'+rows+'<tr><td><b>Tổng</b></td><td class="r"><b>'+vnd(d.total)+'</b></td></tr></table>'
         + (d.taikhoan ? '<p><b>Thanh toán:</b> '+esc(d.taikhoan)+'<br>Nội dung chuyển khoản: <b>'+esc(d.madon)+'</b></p>' : '<p>Thông tin thanh toán sẽ được gửi khi gọi xác nhận. Vui lòng chỉ chuyển khoản vào tài khoản công ty, nội dung là mã đơn <b>'+esc(d.madon)+'</b>.</p>')
-        + '<p class="ref">Vui lòng lưu lại mã đơn để tra cứu.</p>';
+        + '<p class="ref">Vui lòng lưu lại mã đơn. Anh/chị theo dõi đơn và đánh giá tư vấn viên tại trang tra cứu.</p>'
+        + '<a class="btn btn-main" href="../?p=tracuu&don='+encodeURIComponent(d.madon)+'">Theo dõi đơn hàng</a>';
+      try{ localStorage.setItem('fcl_tc', JSON.stringify({don:d.madon, sdt:$('sdt').value})); }catch(e){}
       $('f').hidden = true; $('done').hidden = false; $('done').scrollIntoView({behavior:'smooth',block:'start'});
     })
     .catch(err=>{ $('msg').innerHTML='<div class="msg err">'+esc(err.message||err)+'</div>'; b.disabled=false; b.textContent='Gửi đơn đặt mua'; });
