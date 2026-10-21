@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Đối tác Vali Y tế FaCare</title>
+<meta name="description" content="Chính sách Đối tác phân phối Vali Y tế FaCare: chiết khấu 20% đến 30% theo doanh số cho nhà thuốc, phòng khám, cửa hàng thiết bị y tế. Mua số lượng lớn cho trường học, doanh nghiệp. Kiosk sức khỏe thông minh.">
+<meta property="og:title" content="Trở thành Đối tác Vali Y tế FaCare">
+<meta property="og:description" content="Chiết khấu 20% đến 30% theo doanh số. Giá bán lẻ thống nhất, EFCARE bảo hành cho khách cuối.">
+<meta property="og:image" content="../mua/img/vali.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<style>
+/* Trang cho tổ chức. Thứ tự: ai phù hợp → sản phẩm, giá bán lẻ → chiết khấu → điều kiện → quy trình → đăng ký tư vấn */
+:root{
+  --bg:#f6f8f8; --paper:#ffffff; --ink:#18222e; --muted:#566271; --line:#dbe4e6;
+  --teal:#0f5f6b; --teal-2:#0a7b86; --teal-soft:#e4f1f2; --navy:#14264d; --gold:#b8862b; --gold-soft:#f6ecd8; --warn:#9a3b2b; --warn-soft:#f7e6e1;
+  --f:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--f)}
+img{max-width:100%;display:block}
+a{color:var(--teal-2)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{color:var(--navy);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,5.5vw,44px);line-height:1.15;font-weight:800;letter-spacing:-.5px}
+h2{font-size:clamp(23px,4vw,30px);line-height:1.2;font-weight:800}
+h3{font-size:18px}
+p{margin:0}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.lead{font-size:18px;color:var(--muted);max-width:36em}
+.muted{color:var(--muted);font-size:15px}
+.btn{display:inline-block;text-decoration:none;font:inherit;font-weight:700;border:0;border-radius:10px;padding:14px 22px;cursor:pointer;text-align:center}
+.btn-main{background:var(--teal);color:#fff}
+.btn-main:hover{background:var(--teal-2)}
+.btn-line{background:transparent;color:var(--teal);border:1.5px solid var(--teal)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+section{padding-block:44px}
+.stack{display:grid;gap:14px}
+
+.top{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;padding-block:10px;gap:12px}
+.brand{font-weight:800;color:var(--teal);font-size:20px;text-decoration:none}
+.brand small{display:block;font-size:12px;color:var(--muted);font-weight:500}
+.top .btn{padding:10px 16px;font-size:14px}
+
+.hero{background:linear-gradient(180deg,var(--paper),var(--bg))}
+.hero .wrap{display:grid;gap:28px;align-items:center;grid-template-columns:1fr}
+.hero .txt{display:grid;gap:16px}
+.hero .cta{display:flex;flex-wrap:wrap;gap:10px}
+.hero img{border-radius:16px;box-shadow:0 18px 40px rgba(20,38,77,.16);max-height:460px;object-fit:cover;width:100%}
+@media(min-width:860px){.hero .wrap{grid-template-columns:1.1fr .9fr}}
+.ref{font-size:14px;color:var(--muted)}
+
+.who{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:20px}
+.who div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px}
+.who b{display:block;color:var(--navy);margin-bottom:4px}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px;min-width:0}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px}
+td,th{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:14px}
+td.r,th.r{text-align:right;white-space:nowrap}
+.tier td:nth-child(2),.tier td:nth-child(3){font-weight:800;color:var(--teal)}
+.two{display:grid;gap:14px;grid-template-columns:1fr;margin-top:20px}
+@media(min-width:860px){.two{grid-template-columns:1fr 1fr}}
+
+.ex{background:var(--gold-soft);border-radius:14px;padding:18px;display:grid;gap:8px}
+.ex .calc{display:grid;grid-template-columns:1fr auto;gap:4px 14px;font-variant-numeric:tabular-nums}
+.ex .calc span:nth-child(even){text-align:right;font-weight:700}
+.ex .calc .tot{border-top:1px solid rgba(0,0,0,.12);padding-top:6px;color:var(--navy)}
+
+.rules{margin:0;padding-left:20px;display:grid;gap:8px}
+.steps{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:12px;grid-template-columns:1fr;counter-reset:s}
+@media(min-width:860px){.steps{grid-template-columns:repeat(4,1fr)}}
+.steps li{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:6px}
+.steps li::before{counter-increment:s;content:counter(s);width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:700}
+
+.order{background:var(--paper)}
+.form{display:grid;gap:14px;max-width:640px;margin-top:20px}
+label{display:block;font-size:14px;color:var(--muted);margin-bottom:4px;font-weight:600}
+input,select,textarea{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+textarea{min-height:90px}
+.row2{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:560px){.row2{grid-template-columns:1fr 1fr}}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.chk input{width:auto;margin-top:5px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.msg{padding:12px 14px;border-radius:10px;font-size:15px}
+.err{background:var(--warn-soft);color:var(--warn)}
+.done{background:var(--teal-soft);border-radius:14px;padding:18px;display:grid;gap:10px}
+
+footer{background:var(--navy);color:#dfe6f2;padding-block:28px;font-size:14px}
+footer .wrap{display:grid;gap:8px}
+footer b{color:#fff}
+footer a{color:#fff}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../mua/" id="home-link">FaCare Life<small>Đối tác và tổ chức</small></a>
+    <a class="btn btn-main" href="#dang-ky">Đăng ký tư vấn</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="txt">
+      <div class="eyebrow">Nhà thuốc · Phòng khám · Cửa hàng thiết bị y tế</div>
+      <h1>Phân phối Vali Y tế FaCare, chiết khấu 20% đến 30%</h1>
+      <p class="lead">Đưa bộ thiết bị đo sức khỏe tại nhà đến khách hàng của anh/chị. Giá bán lẻ thống nhất toàn quốc, EFCARE bảo hành cho khách cuối, thiết bị kết nối ứng dụng FaCare để gia đình cùng theo dõi.</p>
+      <div class="cta"><a class="btn btn-main" href="#dang-ky">Đăng ký tư vấn</a><a class="btn btn-line" href="#chiet-khau">Xem chiết khấu</a></div>
+      <p class="ref" id="refnote" hidden></p>
+    </div>
+    <img src="../mua/img/vali.jpg" alt="Vali Y tế Gia Đình FaCare mở nắp, các thiết bị đo xếp trong từng ngăn" width="900" height="900">
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Phù hợp với</div>
+    <h2>Bốn cách hợp tác</h2>
+    <div class="who">
+      <div><b>Đối tác phân phối</b>Nhà thuốc, phòng khám, cửa hàng thiết bị y tế mua để bán lại hoặc cho thuê lại. Hưởng chiết khấu theo doanh số, trừ thẳng trên hoá đơn.</div>
+      <div><b>Tổ chức mua để dùng</b>Trường học, doanh nghiệp, câu lạc bộ, hội người cao tuổi trang bị Vali cho nhân viên, hội viên. Bộ phận Kinh doanh dự án tư vấn và báo giá.</div>
+      <div><b>Kiosk sức khỏe thông minh</b>FaCare AIoT Health Kiosk đặt tại sảnh, phòng khám, khu dân cư để người dân tự đo chỉ số.</div>
+      <div><b>Gói An toàn doanh nghiệp</b>Chăm sóc sức khỏe nhân viên trọn gói: Kiosk đặt tại công ty, hồ sơ sức khỏe từng người, bác sĩ theo dõi, báo cáo định kỳ. <a href="#doanh-nghiep">Xem gói</a></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--paper)">
+  <div class="wrap">
+    <div class="eyebrow">Giá bán lẻ khuyến nghị, đã gồm VAT</div>
+    <h2>Sản phẩm</h2>
+    <div class="two">
+      <div class="card">
+        <h3>Vali Y tế trọn bộ</h3>
+        <div class="tbl"><table>
+          <tr><th>Sản phẩm</th><th class="r">Giá bán lẻ</th></tr>
+          <tr><td>Vali Gia Đình 1 (máy sinh hoá 5in1)</td><td class="r">7.624.500đ</td></tr>
+          <tr><td>Vali Gia Đình 2 (máy đo đường huyết)</td><td class="r">6.700.500đ</td></tr>
+          <tr><td>Vali Huấn luyện viên (máy 7in1 và máy đường huyết)</td><td class="r">9.483.000đ</td></tr>
+          <tr><td>Thuê Vali Gia Đình 1: 3 / 6 / 9 / 12 tháng</td><td class="r">1,77 / 3,12 / 4,05 / 4,8 triệu</td></tr>
+        </table></div>
+        <p class="muted">Thiết bị lẻ, phụ kiện, que thử và kim theo bảng giá của công ty. Thiết bị bảo hành 24 tháng, máy sinh hoá bảo hành trọn đời.</p>
+        <a class="btn btn-line" id="see-vali" href="../mua/#gia">Xem chi tiết Vali</a>
+      </div>
+      <div class="card">
+        <h3>Kiosk sức khỏe thông minh</h3>
+        <div class="tbl"><table>
+          <tr><th>Hình thức</th><th class="r">Giá</th></tr>
+          <tr><td>Bán lẻ (đơn vị mua để dùng)</td><td class="r">279.000.000đ</td></tr>
+          <tr><td>Bán buôn (đại lý, đối tác phân phối theo hợp đồng)</td><td class="r">190.000.000đ</td></tr>
+        </table></div>
+        <p class="muted">Kiosk áp dụng giá bán buôn riêng, không cộng chiết khấu theo bậc bên dưới.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="doanh-nghiep" style="background:var(--paper)">
+  <div class="wrap">
+    <div class="eyebrow">EFCARE for Business</div>
+    <h2>Gói An toàn doanh nghiệp</h2>
+    <p class="lead" style="margin-top:8px">Mỗi nhân viên một hồ sơ sức khỏe, một kế hoạch chăm sóc. EFCARE lắp Kiosk sức khỏe tại trụ sở trong tối đa 10 ngày làm việc, không tính phí lắp đặt, bảo trì.</p>
+    <div class="two">
+      <div class="card">
+        <h3>Ba nhóm đặc quyền cho nhân viên</h3>
+        <ul class="rules">
+          <li><b>Quản lý:</b> hồ sơ sức khỏe điện tử, kế hoạch chăm sóc theo tuổi và yếu tố nguy cơ, ngưỡng cảnh báo riêng từng người, người thân được theo dõi. Ban Giám đốc nhận báo cáo sức khỏe ẩn danh theo quý, năm.</li>
+          <li><b>Chăm sóc:</b> Kiosk đo chỉ số tại công ty; bác sĩ nhắn tư vấn khi có chỉ số bất thường; theo dõi bệnh mạn tính, bệnh nghề nghiệp; phối hợp y tế doanh nghiệp xử trí ban đầu; đánh giá nguy cơ môi trường lao động, workshop sức khỏe mỗi năm.</li>
+          <li><b>Đồng hành:</b> 2 buổi Lớp học sức khỏe EFCARE trực tiếp mỗi năm, chương trình "Tam Khí Cân Bằng" tại nơi làm việc, cộng đồng hội viên và bản tin sức khỏe.</li>
+        </ul>
+        <p class="muted">Không thay thế cấp cứu 115 hay khám chữa bệnh trực tiếp; khi cần, EFCARE đề xuất khám chuyên sâu tại cơ sở y tế.</p>
+      </div>
+      <div class="card">
+        <h3>Giá theo số nhân viên đăng ký</h3>
+        <div class="tbl"><table>
+          <tr><th>Số nhân viên</th><th class="r">Đơn giá / người / tháng</th></tr>
+          <tr><td>Dưới 300</td><td class="r">120.000đ</td></tr>
+          <tr><td>300 đến dưới 500</td><td class="r">110.000đ</td></tr>
+          <tr><td>500 đến dưới 1.000</td><td class="r">100.000đ</td></tr>
+          <tr><td>Từ 1.000</td><td class="r">90.000đ</td></tr>
+        </table></div>
+        <div class="ex" style="padding:14px">
+          <label for="dn_nv" style="margin:0">Tính thử: số nhân viên</label>
+          <input id="dn_nv" type="number" min="1" value="150" inputmode="numeric">
+          <div style="display:flex;gap:8px"><button type="button" class="btn btn-line" data-ky="6" style="flex:1;padding:10px">Gói 6 tháng</button><button type="button" class="btn btn-main" data-ky="12" style="flex:1;padding:10px">Gói 12 tháng</button></div>
+          <div class="calc"><span>Đơn giá</span><span id="dn_dg">120.000đ</span><span class="tot">Tổng giá trị gói</span><span class="tot" id="dn_tong">216.000.000đ</span></div>
+        </div>
+        <ul class="rules">
+          <li>Chọn Gói 6 tháng hoặc 12 tháng, thanh toán trọn kỳ trong 24 giờ sau khi ký hợp đồng; tự gia hạn theo kỳ đã chọn.</li>
+          <li>Muốn dừng, báo trước 15 ngày trước kỳ gia hạn. Không chấm dứt giữa kỳ đã thanh toán.</li>
+          <li>Danh sách nhân viên chốt đầu mỗi kỳ; đổi số lượng khi gia hạn thì áp đơn giá bậc mới.</li>
+        </ul>
+        <a class="btn btn-main" href="#dang-ky" id="dn_dk">Đăng ký tư vấn gói doanh nghiệp</a>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:12px">Theo Quyết định 01/2026/QĐ-EFCARE ngày 25/8/2026.</p>
+  </div>
+</section>
+
+<section id="chiet-khau">
+  <div class="wrap">
+    <div class="eyebrow">Chính sách chiết khấu cho Đối tác</div>
+    <h2>Chiết khấu theo doanh số</h2>
+    <div class="two">
+      <div class="card">
+        <div class="tbl"><table class="tier">
+          <tr><th>Doanh số đơn nhập hoặc tích luỹ trong tháng</th><th class="r">Vali, thiết bị, gói thuê</th><th class="r">Que thử, kim</th></tr>
+          <tr><td>Dưới 40 triệu</td><td class="r">20%</td><td class="r">5%</td></tr>
+          <tr><td>40 đến dưới 150 triệu</td><td class="r">24%</td><td class="r">5%</td></tr>
+          <tr><td>150 đến 500 triệu</td><td class="r">27%</td><td class="r">5%</td></tr>
+          <tr><td>Trên 500 triệu</td><td class="r">30%</td><td class="r">5%</td></tr>
+        </table></div>
+        <p class="muted">Bậc lấy mức cao hơn giữa giá trị chính đơn nhập và doanh số tích luỹ trong tháng (tính cả đơn đó), theo giá bán lẻ trước chiết khấu, không gồm tiền cọc. Doanh số tích luỹ tính lại từ ngày 01 hằng tháng.</p>
+      </div>
+      <div class="ex">
+        <h3>Ví dụ một đơn nhập</h3>
+        <div class="calc">
+          <span>20 bộ Vali Gia Đình 1 theo giá bán lẻ</span><span>152.490.000đ</span>
+          <span>Bậc 150 đến 500 triệu, chiết khấu 27%</span><span>−41.172.300đ</span>
+          <span class="tot">Đối tác thanh toán</span><span class="tot">111.317.700đ</span>
+        </div>
+        <p class="muted">Tương đương 5.565.885đ một bộ. Bán lại đúng giá niêm yết 7.624.500đ, mỗi bộ còn 2.058.615đ chênh lệch. Cùng đơn, 10 hộp que thử TD-4370 (2.100.000đ) được chiết khấu 5% là 105.000đ.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--paper)">
+  <div class="wrap">
+    <div class="eyebrow">Điều kiện hợp tác</div>
+    <h2>Rõ ràng từ đầu</h2>
+    <div class="two">
+      <div class="card">
+        <h3>Đối tác</h3>
+        <ul class="rules">
+          <li>Là tổ chức hoặc hộ kinh doanh, mua đứt hàng để bán lại, cho thuê lại theo hợp đồng mua bán hoặc hợp đồng phân phối.</li>
+          <li>Không bán lại, cho thuê lại cao hơn giá bán lẻ, giá thuê niêm yết của công ty.</li>
+          <li>Thanh toán trước 100% giá trị đơn nhập. Hạn mức công nợ chỉ áp dụng khi được Tổng Giám đốc phê duyệt trong hợp đồng.</li>
+          <li>Hàng đã nhận không trả lại, trừ lỗi do nhà sản xuất.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>EFCARE</h3>
+        <ul class="rules">
+          <li>Chiết khấu trừ thẳng trên hoá đơn từng đơn nhập.</li>
+          <li>Bảo hành thiết bị cho khách cuối theo chính sách bảo hành chính hãng.</li>
+          <li>Không chia vùng độc quyền; mọi Đối tác bán cùng một giá niêm yết.</li>
+          <li>Thay đổi chính sách được báo trước tối thiểu 15 ngày và không áp cho đơn đã thanh toán.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:14px">Chiết khấu không cộng dồn với chương trình khuyến mại khác, trừ khi được Tổng Giám đốc phê duyệt. Theo Quyết định 11/2026/QĐ-EFCARE ngày 21/10/2026.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Quy trình</div>
+    <h2>Từ đăng ký đến đơn hàng đầu tiên</h2>
+    <ol class="steps">
+      <li><b>Đăng ký tư vấn</b><span class="muted">Điền thông tin đơn vị bên dưới.</span></li>
+      <li><b>Kinh doanh dự án liên hệ</b><span class="muted">Trong 24 giờ làm việc, tư vấn sản phẩm và báo giá theo nhu cầu.</span></li>
+      <li><b>Ký hợp đồng</b><span class="muted">Hợp đồng mua bán hoặc phân phối, ghi doanh số cam kết nếu có.</span></li>
+      <li><b>Nhập hàng và bán</b><span class="muted">Thanh toán, nhận hàng, được hướng dẫn sản phẩm và tài liệu bán hàng.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="dang-ky" class="order">
+  <div class="wrap">
+    <div class="eyebrow">Đăng ký tư vấn</div>
+    <h2>Để lại thông tin đơn vị</h2>
+    <p class="muted" style="margin-top:6px">Bộ phận Kinh doanh dự án của EFCARE liên hệ trong 24 giờ làm việc.</p>
+    <form class="form" id="f" novalidate>
+      <div><label for="loai">Đơn vị muốn</label>
+        <select id="loai">
+          <option value="phanphoi">Làm Đối tác phân phối (mua để bán lại, cho thuê lại)</option>
+          <option value="dung">Mua Vali số lượng lớn để dùng</option>
+          <option value="kiosk">Tìm hiểu Kiosk sức khỏe thông minh</option>
+          <option value="doanhnghiep">Gói An toàn doanh nghiệp (chăm sóc sức khỏe nhân viên)</option>
+        </select></div>
+      <div><label for="ten">Tên đơn vị</label><input id="ten" autocomplete="organization" placeholder="Nhà thuốc, phòng khám, trường học…"></div>
+      <div class="row2">
+        <div><label for="lh">Người liên hệ</label><input id="lh" autocomplete="name"></div>
+        <div><label for="sdt">Số điện thoại</label><input id="sdt" inputmode="tel" autocomplete="tel"></div>
+      </div>
+      <div><label for="tinh">Tỉnh, thành</label><input id="tinh"></div>
+      <div><label for="nc">Nhu cầu (sản phẩm, số lượng dự kiến, thời gian)</label><textarea id="nc"></textarea></div>
+      <div class="hp" aria-hidden="true"><label for="web">Website</label><input id="web" tabindex="-1" autocomplete="off"></div>
+      <div class="chk"><input type="checkbox" id="dongy"><label for="dongy" style="margin:0;color:var(--ink);font-weight:500">Tôi đồng ý để EFCARE, FaCare Life dùng thông tin trên để liên hệ tư vấn hợp tác.</label></div>
+      <button class="btn btn-main" id="gui" type="submit">Gửi đăng ký</button>
+      <div id="msg"></div>
+    </form>
+    <div class="done" id="done" hidden></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>EFCARE · FaCare Life · Bác sĩ gia đình tại nhà</b>
+    <span>Gia đình mua lẻ: <a id="foot-mua" href="../mua/">trang Vali Y tế</a></span>
+    <span>Thiết bị dùng để theo dõi chỉ số sức khỏe tại nhà, không thay thế việc khám và điều trị tại cơ sở y tế.</span>
+  </div>
+</footer>
+
+<script>
+const API = 'https://script.google.com/macros/s/AKfycbx99ftRRaloqf7q3AV7ksrYeYfR_qswmgLolqyHNPrUVxP3LONbr0lYIg-vom3x0sQ/exec';
+const $ = id => document.getElementById(id);
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+const QS = new URLSearchParams(location.search);
+let CTV = (QS.get('ctv')||'').trim().toUpperCase().replace(/[^A-Z0-9-]/g,'');
+try{ if(CTV) localStorage.setItem('fcl_ref', CTV); else CTV = localStorage.getItem('fcl_ref') || ''; }catch(e){}
+const loaiQ = QS.get('loai'); if(['phanphoi','dung','kiosk','doanhnghiep'].indexOf(loaiQ)>=0) $('loai').value = loaiQ;
+if(CTV){
+  ['home-link','see-vali','foot-mua'].forEach(id=>{ const a=$(id); a.href = a.getAttribute('href').replace(/(#.*)?$/, m => '?ctv='+encodeURIComponent(CTV)+m); });
+  fetch(API,{method:'POST',credentials:'omit',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn:'getRef',args:[CTV]})})
+    .then(r=>r.json()).then(j=>{ if(!j.ok||!j.data) return; const d=j.data;
+      $('refnote').hidden=false;
+      $('refnote').innerHTML='Người giới thiệu: <b>'+esc(d.ten)+'</b>'+(d.sdt?' · <a href="tel:'+esc(d.sdt)+'">'+esc(d.sdt)+'</a>':'')+'. Bộ phận Kinh doanh dự án sẽ trực tiếp tư vấn.';
+    }).catch(()=>{});
+}
+let KY=12;
+function dnCalc(){ const n=Math.max(1,+$('dn_nv').value||0), dg=n>=1000?90000:n>=500?100000:n>=300?110000:120000;
+  $('dn_dg').textContent=dg.toLocaleString('vi-VN')+'đ'; $('dn_tong').textContent=(dg*n*KY).toLocaleString('vi-VN')+'đ';
+  document.querySelectorAll('[data-ky]').forEach(b=>b.className='btn '+(+b.dataset.ky===KY?'btn-main':'btn-line')); }
+$('dn_nv').oninput=dnCalc; document.querySelectorAll('[data-ky]').forEach(b=>b.onclick=()=>{KY=+b.dataset.ky;dnCalc();});
+$('dn_dk').onclick=()=>{ $('loai').value='doanhnghiep'; if(!$('nc').value) $('nc').value='Khoảng '+$('dn_nv').value+' nhân viên, Gói '+KY+' tháng'; };
+dnCalc();
+$('f').addEventListener('submit', e=>{
+  e.preventDefault();
+  const b=$('gui'); b.disabled=true; b.textContent='Đang gửi...'; $('msg').innerHTML='';
+  const v=$('loai').value, nhan={phanphoi:'Đối tác phân phối',dung:'Mua số lượng lớn để dùng',kiosk:'Kiosk sức khỏe',doanhnghiep:'Gói An toàn doanh nghiệp'}[v];
+  const body={fn:'dangKyHopTac',args:[{loai: v==='phanphoi'?'Đối tác':'Khách hàng', ten:$('ten').value, lienhe:$('lh').value, sdt:$('sdt').value, tinh:$('tinh').value,
+    nhucau:'['+nhan+'] '+$('nc').value, dongy:$('dongy').checked, ctv:CTV, web:$('web').value}]};
+  fetch(API,{method:'POST',credentials:'omit',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)})
+    .then(r=>{ if(!r.ok) throw new Error('Không kết nối được máy chủ. Vui lòng thử lại.'); return r.json(); })
+    .then(j=>{
+      if(!j.ok) throw new Error(j.error);
+      $('done').innerHTML='<h3>Đã nhận đăng ký</h3><p>Cảm ơn anh/chị. Bộ phận Kinh doanh dự án của EFCARE sẽ liên hệ số '+esc($('sdt').value)+' trong 24 giờ làm việc. Mã ghi nhận: <b>'+esc(j.data.ma)+'</b>.</p>';
+      $('f').hidden=true; $('done').hidden=false; $('done').scrollIntoView({behavior:'smooth',block:'start'});
+    })
+    .catch(err=>{ $('msg').innerHTML='<div class="msg err">'+esc(err.message||err)+'</div>'; b.disabled=false; b.textContent='Gửi đăng ký'; });
+});
+</script>
+</body>
+</html>

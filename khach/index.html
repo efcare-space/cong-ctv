@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FaCare Life · Của tôi</title>
+<meta name="description" content="Khách hàng FaCare Life xem sản phẩm đã mua, thiết bị và hạn bảo hành, kỳ thuê, quyền lợi và tư vấn viên của mình.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<style>
+/* Trang của khách: đăng nhập bằng SĐT + mã đơn. Thứ tự: tư vấn viên → đang thuê → thiết bị, bảo hành → quyền lợi → đơn hàng → gói dịch vụ */
+:root{--teal:#0f5f6b;--teal2:#e7f2f3;--navy:#14264d;--ink:#222a36;--muted:#5d6577;--line:#d9e2e5;--gold:#b8862b;--gold2:#f7eedb;--red:#a3402f;--red2:#f9e7e3;--green:#2e6b3f;--green2:#e3f1e6;--bg:#f5f7f8;--paper:#fff;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Be Vietnam Pro",-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:var(--teal);color:#fff;padding:14px max(16px,env(safe-area-inset-left,0px)) 12px}
+header b{font-size:18px} header span{display:block;font-size:12px;opacity:.85}
+main{max-width:640px;margin:0 auto;padding:14px max(12px,env(safe-area-inset-left,0px)) 48px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;min-width:0}
+h2{font-size:17px;margin:0 0 10px;color:var(--navy);text-wrap:balance} h3{font-size:15px;margin:0 0 4px;color:var(--navy)}
+label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+input{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+button,.btn{font:inherit;cursor:pointer;border:0;border-radius:8px;padding:12px 14px;background:var(--teal);color:#fff;font-weight:600;width:100%;margin-top:12px;display:block;text-align:center;text-decoration:none}
+.btn.ghost,button.ghost{background:#fff;color:var(--teal);border:1px solid var(--teal)}
+button:disabled{opacity:.6}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.chk{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:14px}.chk input{width:auto;margin-top:4px}.chk label{margin:0;color:var(--ink)}
+.msg{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}.err{background:var(--red2);color:var(--red)}
+.muted{color:var(--muted);font-size:13px}
+.pill{display:inline-block;font-size:12px;padding:2px 9px;border-radius:999px;background:var(--teal2);color:var(--teal);font-weight:600;white-space:nowrap}
+.pill.ok{background:var(--green2);color:var(--green)}.pill.warn{background:var(--gold2);color:#7a5714}.pill.off{background:var(--red2);color:var(--red)}
+.list{display:grid;gap:0}
+.it{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.it:last-child{border-bottom:0}
+.it .r{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.rent{background:var(--teal2);border-radius:10px;padding:12px;display:grid;gap:6px;margin-bottom:8px}
+.bar{height:8px;background:#fff;border-radius:999px;overflow:hidden}.bar i{display:block;height:100%;background:var(--teal)}
+.big{font-size:22px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+.perks{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.perks li{display:grid;grid-template-columns:22px 1fr;gap:8px}
+.perks li::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--teal);margin-top:3px;box-shadow:inset 0 0 0 4px var(--teal2)}
+.call{color:var(--teal);font-weight:700;text-decoration:none}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.top button{width:auto;margin:0;padding:8px 12px;font-size:14px}
+.cta{background:var(--gold2);border-color:transparent}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header><b>FaCare Life</b><span>Của tôi · Thiết bị, bảo hành và quyền lợi của gia đình</span></header>
+<main>
+  <div class="card" id="login">
+    <h2>Xem sản phẩm và quyền lợi của tôi</h2>
+    <p class="muted">Nhập số điện thoại đặt hàng và một mã đơn bất kỳ của anh/chị (có trong tin nhắn xác nhận, dạng DH-261021-001).</p>
+    <label for="sdt">Số điện thoại</label><input id="sdt" inputmode="tel" autocomplete="tel">
+    <label for="don">Mã đơn</label><input id="don" autocapitalize="characters" placeholder="DH-261021-001">
+    <div class="chk"><input type="checkbox" id="nho" checked><label for="nho">Ghi nhớ trên máy này</label></div>
+    <button id="btn">Xem</button>
+    <div id="msg"></div>
+  </div>
+  <div id="out" hidden></div>
+</main>
+<script>
+const API='https://script.google.com/macros/s/AKfycbx99ftRRaloqf7q3AV7ksrYeYfR_qswmgLolqyHNPrUVxP3LONbr0lYIg-vom3x0sQ/exec';
+const ROOT=location.pathname.replace(/khach\/?(index\.html)?$/,'');
+const $=id=>document.getElementById(id);
+const vnd=n=>(Math.round(n)||0).toLocaleString('vi-VN')+'đ';
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+const QS=new URLSearchParams(location.search);
+function store(k,v){try{ if(v===null) localStorage.removeItem(k); else localStorage.setItem(k,JSON.stringify(v)); }catch(e){}}
+function load(k){try{return JSON.parse(localStorage.getItem(k)||'null');}catch(e){return null;}}
+function api(fn,args){return fetch(API,{method:'POST',credentials:'omit',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn:fn,args:args})})
+  .then(r=>{if(!r.ok)throw new Error('Không kết nối được máy chủ. Vui lòng thử lại.');return r.json();}).then(j=>{if(!j.ok)throw new Error(j.error);return j.data;});}
+const TT={'Mới':['Chờ xác nhận','warn'],'Đã thu':['Đã thanh toán',''],'Đã giao':['Đã giao','ok'],'Đã kích hoạt':['Đã kích hoạt','ok'],'Huỷ':['Đã huỷ','off'],'Trả lại':['Đã trả lại','off']};
+let CUR=null;
+function go(sdt,don,remember){
+  $('btn').disabled=true; $('msg').innerHTML='';
+  api('khachData',[sdt,don]).then(d=>{
+    $('btn').disabled=false; CUR={sdt:sdt,don:don};
+    if(remember) store('fcl_kh',CUR);
+    render(d);
+  }).catch(e=>{ $('btn').disabled=false; $('login').hidden=false; $('out').hidden=true; $('msg').innerHTML='<div class="msg err">'+esc(e.message)+'</div>'; });
+}
+function render(d){
+  $('login').hidden=true; $('out').hidden=false;
+  const ref=d.ctv?d.ctv.ma:'';
+  const mua=ROOT+'mua/'+(ref?'?ctv='+encodeURIComponent(ref):'');
+  let h='<div class="card"><div class="top"><div><h2 style="margin:0">Chào '+esc(d.ten||'anh/chị')+'</h2><span class="muted">'+esc(d.sdt)+'</span></div><button class="ghost" id="out_btn">Thoát</button></div></div>';
+  if(d.ctv) h+='<div class="card"><h3>Tư vấn viên của gia đình</h3><p><b>'+esc(d.ctv.ten)+'</b>'+(d.ctv.sdt?' · <a class="call" href="tel:'+esc(d.ctv.sdt)+'">'+esc(d.ctv.sdt)+'</a>':'')+'</p><p class="muted">Gọi khi cần hướng dẫn đo, cài ứng dụng, gia hạn thuê hay mua thêm que thử.</p></div>';
+  if(d.thue.length){
+    h+='<div class="card"><h2>Đang thuê</h2>'+d.thue.map(x=>{
+      let st='', pct=0;
+      if(x.conNgay==null) st='<span class="pill warn">Bắt đầu tính khi giao máy</span>';
+      else if(x.conNgay<0) st='<span class="pill off">Đã hết kỳ</span>';
+      else if(x.conNgay<=30) st='<span class="pill warn">Còn '+x.conNgay+' ngày</span>';
+      else st='<span class="pill ok">Còn '+x.conNgay+' ngày</span>';
+      return '<div class="rent"><div class="top"><b>'+esc(x.ten)+'</b>'+st+'</div><span class="muted">Đơn '+esc(x.don)+(x.batDau?' · từ '+esc(x.batDau)+' đến '+esc(x.ketThuc):'')+'</span></div>';
+    }).join('')+(d.coc?'<p class="muted">Tiền đặt cọc '+vnd(d.coc)+' được hoàn trong 7 ngày làm việc khi trả thiết bị nguyên vẹn. Muốn gia hạn, gọi tư vấn viên trước khi hết kỳ.</p>':'')+'</div>';
+  }
+  if(d.thietBi.length){
+    h+='<div class="card"><h2>Thiết bị và bảo hành</h2><div class="list">'+d.thietBi.map(x=>{
+      const st=x.chuaGiao?'<span class="pill warn">Chưa giao</span>':(x.conHan===false?'<span class="pill off">Hết bảo hành</span>':'<span class="pill ok">Còn bảo hành</span>');
+      return '<div class="it"><div><b>'+esc(x.ten)+'</b><br><span class="muted">'+(x.tu?esc(x.tu)+' · ':'')+'Đơn '+esc(x.don)+'</span></div><div class="r">'+st+'<br><span class="muted">'+(x.chuaGiao?'Bảo hành '+esc(x.baoHanh):(x.den==='Trọn đời'?'Trọn đời':'đến '+esc(x.den)))+'</span></div></div>';
+    }).join('')+'</div><p class="muted" style="margin-top:8px">Bảo hành tính từ ngày giao. Thiết bị lỗi, gọi tư vấn viên hoặc FaCare để được bảo hành chính hãng.</p></div>';
+  }
+  const coVali=d.thietBi.length>0, coThue=d.thue.length>0;
+  h+='<div class="card"><h2>Quyền lợi của gia đình</h2><ul class="perks">'
+   +'<li><span><b>Giao tận nhà, hướng dẫn miễn phí</b><br><span class="muted">Hướng dẫn cách đo và cài ứng dụng FaCare để con cháu ở xa cùng xem chỉ số.</span></span></li>'
+   +(coVali?'<li><span><b>Bảo hành chính hãng</b><br><span class="muted">Máy đo huyết áp, nhiệt kế, cân: 24 tháng. Máy sinh hoá, máy đường huyết: trọn đời.</span></span></li>':'')
+   +(coThue?'<li><span><b>Thuê linh hoạt</b><br><span class="muted">Gia hạn theo kỳ 3, 6, 9, 12 tháng. Hoàn cọc trong 7 ngày làm việc khi trả máy nguyên vẹn.</span></span></li>':'')
+   +'<li><span><b>Que thử, kim đúng loại, giao tận nhà</b><br><span class="muted">'+(d.queThu?'Anh/chị đã mua '+d.queThu+' hộp. ':'')+'Giá niêm yết như nhau ở mọi nơi bán.</span></span></li>'
+   +'<li><span><b>Tư vấn viên đồng hành</b><br><span class="muted">Một người phụ trách gia đình, hỏi bất cứ khi nào cần.</span></span></li>'
+   +'</ul></div>';
+  h+='<div class="card"><h2>Gói dịch vụ</h2><p class="muted">Gia đình chưa đăng ký gói dịch vụ nào. Gói Bác sĩ gia đình đồng hành sẽ hiện ở đây khi FaCare Life mở bán, kèm quyền lợi và thời hạn của từng gói.</p></div>';
+  h+='<div class="card"><h2>Đơn hàng ('+d.don.length+')</h2><div class="list">'+d.don.map(o=>{
+    const t=TT[o.tt]||[o.tt,''];
+    return '<div class="it"><div><b>'+esc(o.ma)+'</b> <span class="pill '+t[1]+'">'+esc(t[0])+'</span><br><span class="muted">'+esc(o.ngay)+' · '+o.items.map(i=>esc(i.ten)+' × '+i.sl).join(', ')+'</span></div><div class="r"><b>'+vnd(o.tong)+'</b><br><a class="muted" href="'+ROOT+'?p=tracuu&don='+encodeURIComponent(o.ma)+'">Chi tiết</a></div></div>';
+  }).join('')+'</div></div>';
+  h+='<a class="btn" href="'+mua+'#que-thu">Mua thêm que thử, kim</a><a class="btn ghost" href="'+mua+'#gia">Xem Vali, thuê thêm cho người thân</a>';
+  h+='<div class="card cta" style="margin-top:12px"><h2>Giới thiệu cho người thân, có thêm thu nhập</h2><p class="muted">Đăng ký làm Cộng tác viên FaCare Life'+(d.ctv?', cùng nhóm với tư vấn viên '+esc(d.ctv.ten):'')+'. Đào tạo miễn phí.</p><a class="btn" href="'+ROOT+'?p=dangky'+(ref?'&gt='+encodeURIComponent(ref):'')+'&sdt='+encodeURIComponent(CUR.sdt)+'">Đăng ký làm CTV</a></div>';
+  $('out').innerHTML=h;
+  $('out_btn').onclick=()=>{ store('fcl_kh',null); CUR=null; $('out').hidden=true; $('login').hidden=false; };
+}
+$('btn').onclick=()=>go($('sdt').value,$('don').value,$('nho').checked);
+(function(){
+  const s=load('fcl_kh'), t=load('fcl_tc');
+  const sdtQ=(QS.get('sdt')||'').replace(/[^0-9]/g,''), donQ=(QS.get('don')||'').toUpperCase();
+  if(sdtQ) $('sdt').value=sdtQ; if(donQ) $('don').value=donQ;
+  if(s&&s.sdt&&s.don) go(s.sdt,s.don,true);
+  else if(t&&t.sdt&&t.don&&!sdtQ){ $('sdt').value=t.sdt; $('don').value=t.don; }
+})();
+</script>
+</body>
+</html>

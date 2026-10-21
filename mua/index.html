@@ -110,6 +110,16 @@ textarea{min-height:80px}
 .done table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 .done td{padding:6px 0;border-bottom:1px solid var(--line)} .done td.r{text-align:right}
 .ref{font-size:14px;color:var(--muted)}
+.refill{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:14px}
+.refill a{display:flex;justify-content:space-between;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-decoration:none;color:var(--ink);font-size:15px}
+.refill a b{color:var(--navy);white-space:nowrap;font-variant-numeric:tabular-nums}
+.org{background:var(--navy);color:#e8eef8;border-radius:16px;padding:22px;display:grid;gap:14px;margin-top:22px}
+.org h3{color:#fff;font-size:22px}
+.org .cols{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:760px){.org .cols{grid-template-columns:repeat(3,1fr)}}
+.org .cols div{background:rgba(255,255,255,.08);border-radius:12px;padding:14px}
+.org .cols b{display:block;color:#fff;margin-bottom:4px}
+.org .btn-main{background:var(--gold);color:#fff;justify-self:start}
 
 footer{background:var(--navy);color:#dfe6f2;padding-block:28px;font-size:14px}
 footer .wrap{display:grid;gap:8px}
@@ -213,7 +223,29 @@ footer b{color:#fff}
         <tr><td>9 tháng</td><td class="r">4.050.000đ</td><td class="r">450.000đ</td><td class="r"><a href="#dat-mua" data-sp="THUE-GD1-09">Chọn</a></td></tr>
         <tr><td><b>12 tháng</b></td><td class="r"><b>4.800.000đ</b></td><td class="r"><b>400.000đ</b></td><td class="r"><a href="#dat-mua" data-sp="THUE-GD1-12">Chọn</a></td></tr>
       </table></div>
-      <p class="ref">Đặt cọc thiết bị 5.000.000đ mỗi hợp đồng, hoàn lại trong 7 ngày làm việc khi trả thiết bị nguyên vẹn.</p>
+      <p class="ref">Đặt cọc thiết bị 5.000.000đ mỗi hợp đồng, hoàn lại trong 7 ngày làm việc khi trả thiết bị nguyên vẹn. Hư hỏng, mất thiết bị thì bồi thường theo giá bán lẻ, trừ vào tiền cọc trước.</p>
+    </div>
+    <div id="que-thu" style="margin-top:28px">
+      <h3>Mua thêm que thử, kim lấy máu</h3>
+      <p class="ref">Dùng cho máy trong Vali. Đặt qua tư vấn viên của anh/chị để được giao tận nhà.</p>
+      <div class="refill">
+        <a href="#dat-mua" data-sp="VT-TD4370-25"><span>Que thử đường huyết TD-4370, 25 que (máy 5in1)</span><b>210.000đ</b></a>
+        <a href="#dat-mua" data-sp="VT-TD4360-25"><span>Que thử đường huyết TD-4360, 25 que</span><b>199.500đ</b></a>
+        <a href="#dat-mua" data-sp="VT-TD4360-50"><span>Que thử đường huyết TD-4360, 50 que và 50 kim</span><b>315.000đ</b></a>
+        <a href="#dat-mua" data-sp="VT-TD4653"><span>Que thử axit uric TD-4653, 10 que</span><b>136.500đ</b></a>
+        <a href="#dat-mua" data-sp="VT-TD4643"><span>Que thử cholesterol toàn phần TD-4643, 10 que</span><b>357.000đ</b></a>
+        <a href="#dat-mua" data-sp="VT-KIM50"><span>Kim lấy máu, 50 kim</span><b>21.000đ</b></a>
+      </div>
+    </div>
+    <div class="org">
+      <div class="eyebrow" style="color:#f0c977">Nhà thuốc · Phòng khám · Trường học · Doanh nghiệp</div>
+      <h3>Mua số lượng lớn, phân phối lại hoặc đặt Kiosk sức khỏe</h3>
+      <div class="cols">
+        <div><b>Đối tác phân phối</b>Nhập Vali, thiết bị để bán lại, cho thuê lại. Chiết khấu 20% đến 30% theo doanh số.</div>
+        <div><b>Tổ chức mua để dùng</b>Trường học, doanh nghiệp, câu lạc bộ trang bị Vali cho nhân viên, hội viên. Bộ phận Kinh doanh dự án tư vấn, báo giá.</div>
+        <div><b>Kiosk sức khỏe thông minh</b>FaCare AIoT Health Kiosk đặt tại sảnh, phòng khám, khu dân cư. Giá bán lẻ 279.000.000đ.</div>
+      </div>
+      <a class="btn btn-main" id="org-link" href="../doi-tac/">Xem chính sách và đăng ký tư vấn</a>
     </div>
   </div>
 </section>
@@ -223,7 +255,7 @@ footer b{color:#fff}
     <div class="eyebrow">Cam kết</div>
     <h2>Mua yên tâm</h2>
     <div class="trust">
-      <div><b>Thanh toán minh bạch</b>Chuyển khoản vào tài khoản công ty, nội dung là mã đơn. Không thu tiền mặt.</div>
+      <div><b>Thanh toán minh bạch</b>Chuyển khoản vào tài khoản công ty trong 24 giờ sau khi xác nhận đơn, nội dung là mã đơn. Không thu tiền mặt.</div>
       <div><b>Giá niêm yết</b>Giá theo quyết định của công ty, đã gồm VAT, giống nhau ở mọi nơi bán.</div>
       <div><b>Bảo hành rõ ràng</b>Thiết bị bảo hành 24 tháng, máy sinh hoá bảo hành trọn đời.</div>
       <div><b>Có người hướng dẫn</b>Giao tận nhà, hướng dẫn sử dụng và cài ứng dụng miễn phí.</div>
@@ -245,6 +277,12 @@ footer b{color:#fff}
           <option value="THUE-GD1-06" data-gia="3120000" data-thue="1">Thuê Vali Gia Đình 1, 6 tháng · 3.120.000đ</option>
           <option value="THUE-GD1-09" data-gia="4050000" data-thue="1">Thuê Vali Gia Đình 1, 9 tháng · 4.050.000đ</option>
           <option value="THUE-GD1-12" data-gia="4800000" data-thue="1">Thuê Vali Gia Đình 1, 12 tháng · 4.800.000đ</option>
+          <option value="VT-TD4370-25" data-gia="210000">Que đường huyết TD-4370 (25) · 210.000đ</option>
+          <option value="VT-TD4360-25" data-gia="199500">Que đường huyết TD-4360 (25) · 199.500đ</option>
+          <option value="VT-TD4360-50" data-gia="315000">Que đường huyết TD-4360 (50 que, 50 kim) · 315.000đ</option>
+          <option value="VT-TD4653" data-gia="136500">Que axit uric TD-4653 (10) · 136.500đ</option>
+          <option value="VT-TD4643" data-gia="357000">Que cholesterol TD-4643 (10) · 357.000đ</option>
+          <option value="VT-KIM50" data-gia="21000">Kim lấy máu (50) · 21.000đ</option>
         </select></div>
       <div class="row2">
         <div><label for="ten">Họ và tên</label><input id="ten" autocomplete="name"></div>
@@ -283,6 +321,7 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','
 const QS = new URLSearchParams(location.search);
 let CTV = (QS.get('ctv')||'').trim().toUpperCase().replace(/[^A-Z0-9-]/g,'');
 try{ if(CTV) localStorage.setItem('fcl_ref', CTV); else CTV = localStorage.getItem('fcl_ref') || ''; }catch(e){}
+if(CTV){ $('org-link').href='../doi-tac/?ctv='+encodeURIComponent(CTV); }
 if(CTV){
   $('refnote').hidden=false; $('refnote').textContent='Tư vấn viên của anh/chị: '+CTV+'. Tư vấn viên sẽ gọi xác nhận và hướng dẫn anh/chị.';
   fetch(API,{method:'POST',credentials:'omit',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn:'getRef',args:[CTV]})})
@@ -316,7 +355,8 @@ $('f').addEventListener('submit', e=>{
       $('done').innerHTML = '<h3>Đã nhận đơn '+esc(d.madon)+'</h3><p>Cảm ơn anh/chị. Chúng tôi sẽ gọi xác nhận trong 24 giờ.</p><table>'+rows+'<tr><td><b>Tổng</b></td><td class="r"><b>'+vnd(d.total)+'</b></td></tr></table>'
         + (d.taikhoan ? '<p><b>Thanh toán:</b> '+esc(d.taikhoan)+'<br>Nội dung chuyển khoản: <b>'+esc(d.madon)+'</b></p>' : '<p>Thông tin thanh toán sẽ được gửi khi gọi xác nhận. Vui lòng chỉ chuyển khoản vào tài khoản công ty, nội dung là mã đơn <b>'+esc(d.madon)+'</b>.</p>')
         + '<p class="ref">Vui lòng lưu lại mã đơn. Anh/chị theo dõi đơn và đánh giá tư vấn viên tại trang tra cứu.</p>'
-        + '<a class="btn btn-main" href="../?p=tracuu&don='+encodeURIComponent(d.madon)+'">Theo dõi đơn hàng</a>';
+        + '<a class="btn btn-main" href="../?p=tracuu&don='+encodeURIComponent(d.madon)+'">Theo dõi đơn hàng</a> '
+        + '<a class="btn btn-line" href="../khach/?sdt='+encodeURIComponent($('sdt').value)+'&don='+encodeURIComponent(d.madon)+'">Trang của tôi</a>';
       try{ localStorage.setItem('fcl_tc', JSON.stringify({don:d.madon, sdt:$('sdt').value})); }catch(e){}
       $('done').insertAdjacentHTML('beforeend','<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line)"><p><b>Muốn giới thiệu Vali cho người thân, bạn bè và có thêm thu nhập?</b> Đăng ký làm Cộng tác viên, được đào tạo miễn phí.</p><a class="btn btn-line" href="../?p=dangky'+(CTV?'&gt='+encodeURIComponent(CTV):'')+'&sdt='+encodeURIComponent($('sdt').value)+'">Đăng ký làm CTV</a></div>');
       $('f').hidden = true; $('done').hidden = false; $('done').scrollIntoView({behavior:'smooth',block:'start'});

@@ -56,7 +56,8 @@
   .badge{display:inline-block;min-width:20px;padding:0 6px;border-radius:999px;background:var(--red);color:#fff;font-size:12px;margin-left:4px}
   .banner{border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:14px;background:var(--gold2);color:#5e4410}
   .task{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;background:#fff}
-  .task .top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+  .task .top,.card>.top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+  .steps .acts{margin-top:8px}.btn.sm{width:auto;display:inline-block;margin:0}
   .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
   .acts button{flex:1 1 30%;margin:0;padding:9px 6px;font-size:13px}
   .call{color:var(--teal);font-weight:700;text-decoration:none}
@@ -254,34 +255,80 @@ function renderHome(){
   const active=d.tt==='Hoạt động';
   $('h_banner').innerHTML = active ? '' : '<div class="banner"><b>'+(d.tt==='Tạm dừng'?'Tài khoản đang tạm dừng.':'Đang chờ Admin duyệt.')+'</b> '
     +(d.tt==='Tạm dừng'?'Vui lòng liên hệ Admin.':'Admin sẽ liên hệ và mời bạn tham gia khoá đào tạo. Sau khi được duyệt, bạn lên đơn và chia sẻ trang giới thiệu được ngay'+(d.email?'; chúng tôi sẽ báo qua email '+esc(d.email)+'.':'.'))+'</div>';
-  const n=d.viec.length; $('h_badge').hidden=!n; $('h_badge').textContent=n;
+  const n=d.viec.length+((d.lotrinh&&d.lotrinh.dat<d.lotrinh.buoc.length)?1:0); $('h_badge').hidden=!n; $('h_badge').textContent=n;
   renderViec(); renderBan(); renderThu(); renderNhom();
-  tab(n ? 'viec' : (active ? 'ban' : 'viec'));
+  tab('viec');
 }
 function payText(x){
   const tk=ME.taikhoan;
   return 'Đơn '+x.ma+' · Tổng '+vnd(x.tong)+'.\n'+(tk?'Anh/chị chuyển khoản vào: '+tk+'\nNội dung chuyển khoản: '+x.ma:'Em gửi anh/chị thông tin tài khoản công ty ngay sau đây. Nội dung chuyển khoản: '+x.ma)+'\nTheo dõi đơn: '+BASE+'?p=tracuu&don='+x.ma;
 }
-function renderViec(){
-  const d=ME, v=d.viec;
-  let h='';
-  if(!v.length) h='<div class="card"><h3>Không có việc cần làm</h3><p class="muted">Khi khách đặt qua link của bạn, hoặc đơn đã giao cần xin đánh giá, việc sẽ hiện ở đây.</p>'+(d.tt==='Hoạt động'?'<button class="ghost" data-goto="ban">Chia sẻ trang giới thiệu</button>':'')+'</div>';
-  v.forEach(x=>{
-    if(x.loai==='goi'){
-      h+='<div class="task"><div class="top"><b>Gọi xác nhận đơn '+esc(x.ma)+'</b><span class="pill wait">'+(x.tuDat?'Khách tự đặt':'Chờ thanh toán')+'</span></div>'
-       +'<div>'+esc(x.kh||'')+' · <a class="call" href="tel:'+esc(x.sdt)+'">'+esc(x.sdt)+'</a></div>'
+const LT_ND={
+  1:['Dự buổi giới thiệu cơ hội (OPP)','Nghe giới thiệu FaCare Life, sản phẩm và chính sách CTV. Học viện xác nhận sau buổi.'],
+  2:['Học sản phẩm','Xem trang giới thiệu Vali, nắm 3 loại Vali và gói thuê: Gia Đình 1 (máy 5in1), Gia Đình 2 (máy đường huyết), Huấn luyện viên (máy 7in1). Vali đo huyết áp, đường huyết, axit uric, cholesterol, nhiệt độ, cân nặng; không có máy SpO2. Máy sinh hoá: đẩy que ra mới bật Bluetooth.'],
+  3:['Học chính sách và quy tắc','Bán đúng giá niêm yết. Khách chuyển khoản vào tài khoản công ty, nội dung là mã đơn, không thu tiền mặt. Không nói "chữa bệnh", không hứa kết quả. Hoa hồng bán Vali 20 đến 30% theo bậc (QĐ09); giới thiệu Đối tác, khách cho công ty 5% (QĐ12); gói dịch vụ theo QĐ10.'],
+  4:['Thực hành đo, cài ứng dụng','Tự đo đủ các chỉ số và cài ứng dụng FaCare cùng người hướng dẫn. Học viện xác nhận.'],
+  5:['Đào tạo thực chiến','Đi cùng người có kinh nghiệm tư vấn khách thật, chốt đơn đầu tiên. Học viện xác nhận.']};
+const VIEC_NHOM={goi:'ban',danhgia:'khach',huongdan:'khach',giahan:'khach',quethu:'khach',f1duyet:'tuyen',f1hoc:'hethong',f1ban:'hethong'};
+function taskCard(x){
+  const who='<div>'+esc(x.kh||'')+(x.sdt?' · <a class="call" href="tel:'+esc(x.sdt)+'">'+esc(x.sdt)+'</a>':'')+'</div>';
+  const link=x.ma?BASE+'?p=tracuu&don='+x.ma:'';
+  switch(x.loai){
+    case 'goi': return '<div class="task"><div class="top"><b>Gọi xác nhận đơn '+esc(x.ma)+'</b><span class="pill wait">'+(x.tuDat?'Khách tự đặt':'Chờ thanh toán')+'</span></div>'+who
        +'<div class="muted">'+esc(x.sp.join(', '))+' · '+vnd(x.tong)+' · đặt '+esc(x.ngay)+'</div>'
        +'<div class="acts"><button class="sm" data-kq="dongy" data-don="'+esc(x.ma)+'">Khách đồng ý</button><button class="sm ghost" data-kq="chualienlac" data-don="'+esc(x.ma)+'">Chưa liên lạc được</button><button class="sm ghost" data-kq="huy" data-don="'+esc(x.ma)+'">Khách huỷ</button></div>'
        +'<div class="acts"><button class="sm ghost" data-share="'+esc(payText(x))+'">Gửi thông tin thanh toán cho khách</button></div>'
        +(x.tuDat?'<p class="muted" style="margin:8px 0 0">Quá 24 giờ chưa ghi kết quả, Admin sẽ gọi khách thay bạn.</p>':'')+'<div class="kqmsg"></div></div>';
-    } else {
-      const link=BASE+'?p=tracuu&don='+x.ma;
-      h+='<div class="task"><div class="top"><b>Xin đánh giá đơn '+esc(x.ma)+'</b><span class="pill">Đã giao</span></div><div>'+esc(x.kh||'')+' · <a class="call" href="tel:'+esc(x.sdt)+'">'+esc(x.sdt)+'</a></div>'
-       +'<div class="acts"><button class="sm" data-share="'+esc('Cảm ơn anh/chị đã tin dùng Vali Y tế FaCare. Anh/chị dành 1 phút đánh giá giúp em nhé: '+link)+'">Gửi link đánh giá</button><button class="sm ghost" data-copy="'+esc(link)+'">Chép link</button></div></div>';
-    }
-  });
-  $('t_viec').innerHTML=h;
+    case 'danhgia': return '<div class="task"><div class="top"><b>Xin đánh giá đơn '+esc(x.ma)+'</b><span class="pill">Đã giao</span></div>'+who
+       +'<div class="acts"><button class="sm" data-share="'+esc('Cảm ơn anh/chị đã tin dùng Vali Y tế FaCare. Anh/chị dành 1 phút đánh giá giúp em nhé: '+link)+'">Gửi link đánh giá</button></div></div>';
+    case 'huongdan': return '<div class="task"><div class="top"><b>Hướng dẫn đo, cài ứng dụng · '+esc(x.ma)+'</b><span class="pill">Mới giao</span></div>'+who
+       +'<div class="muted">Gọi hoặc ghé hướng dẫn đo từng máy, cài ứng dụng FaCare, mời con cháu cùng xem. Xong báo Admin chuyển đơn sang Đã kích hoạt.</div>'
+       +'<div class="acts"><button class="sm ghost" data-share="'+esc('Anh/chị xem thiết bị, bảo hành và quyền lợi của gia đình tại đây: '+BASE+'khach/')+'">Gửi trang Của tôi cho khách</button></div></div>';
+    case 'giahan': return '<div class="task"><div class="top"><b>Gia hạn thuê · '+esc(x.ma)+'</b><span class="pill wait">'+(x.con>=0?'Còn '+x.con+' ngày':'Quá '+(-x.con)+' ngày')+'</span></div>'+who
+       +'<div class="muted">Kỳ thuê hết ngày '+esc(x.het)+'. Hỏi khách gia hạn (3, 6, 9, 12 tháng) hoặc chuyển sang mua; nếu trả máy, hẹn ngày thu hồi để hoàn cọc.</div>'
+       +'<div class="acts"><button class="sm ghost" data-share="'+esc('Kỳ thuê Vali Y tế của gia đình mình hết ngày '+x.het+'. Anh/chị muốn gia hạn thêm để tiếp tục theo dõi sức khỏe, em lên đơn giúp nhé: '+SHOP+'?ctv='+ME.ma+'#gia')+'">Gửi lời nhắc gia hạn</button></div></div>';
+    case 'quethu': return '<div class="task"><div class="top"><b>Nhắc mua que thử</b><span class="pill wait">'+x.ngay+' ngày</span></div>'+who
+       +'<div class="muted">Đã '+x.ngay+' ngày từ lần nhận Vali hoặc mua que gần nhất. Hỏi khách còn que không, lên đơn que thử nếu cần.</div>'
+       +'<div class="acts"><button class="sm ghost" data-share="'+esc('Anh/chị còn đủ que thử để đo hằng ngày không ạ? Em gửi link đặt que thử đúng loại, giao tận nhà: '+SHOP+'?ctv='+ME.ma+'#que-thu')+'">Gửi link mua que thử</button></div></div>';
+    case 'f1duyet': return '<div class="task"><div class="top"><b>Chào đón '+esc(x.kh)+'</b><span class="pill wait">Chờ duyệt</span></div>'+who
+       +'<div class="muted">Người bạn mời vừa đăng ký ('+esc(x.ma)+'). Gọi chào, mời dự buổi giới thiệu cơ hội để được duyệt sớm.</div></div>';
+    case 'f1hoc': return '<div class="task"><div class="top"><b>Kèm '+esc(x.kh)+' học</b><span class="pill">'+esc(x.dt||'Chưa')+'</span></div>'+who
+       +'<div class="muted">Giúp hoàn thành lộ trình học: bước tiếp theo sau "'+esc(x.dt||'Chưa')+'".</div></div>';
+    case 'f1ban': return '<div class="task"><div class="top"><b>Hỗ trợ '+esc(x.kh)+' bán đơn đầu</b><span class="pill wait">0đ tháng này</span></div>'+who
+       +'<div class="muted">Chưa có doanh số tháng này. Gọi hỏi khó khăn, cùng đi gặp một khách, chia sẻ cách bạn chốt đơn.</div></div>';
+  }
+  return '';
+}
+function group(id,title,sub,items,empty,extra){
+  return '<div class="card"><div class="top"><h2 style="margin:0">'+title+'</h2>'+(items.length?'<span class="badge">'+items.length+'</span>':'')+'</div>'
+    +(sub?'<p class="muted" style="margin:4px 0 10px">'+sub+'</p>':'<div style="height:8px"></div>')
+    +(items.length?items.map(taskCard).join(''):'<p class="muted" style="margin:0">'+empty+'</p>')+(extra||'')+'</div>';
+}
+function renderViec(){
+  const d=ME, v=d.viec, active=d.tt==='Hoạt động';
+  const by={ban:[],khach:[],tuyen:[],hethong:[]}; v.forEach(x=>{ const g=VIEC_NHOM[x.loai]; if(g) by[g].push(x); });
+  const lt=d.lotrinh||{buoc:[],dat:0};
+  let hoc='<div class="card"><div class="top"><h2 style="margin:0">1. Học theo lộ trình</h2><span class="pill">'+lt.dat+'/'+lt.buoc.length+'</span></div><ol class="steps" style="margin-top:12px">';
+  for(let i=1;i<=lt.buoc.length;i++){
+    const nd=LT_ND[i]||[lt.buoc[i-1],''], done=i<=lt.dat, next=i===lt.dat+1;
+    hoc+='<li class="'+(done?'done':'')+(next?' now':'')+'"><div><b>'+esc(nd[0])+'</b><span>'+(done?'Đã xong':esc(nd[1]))+'</span>'
+      +(next&&(i===2||i===3)?'<div class="acts">'+(i===2?'<a class="btn sm ghost" href="'+SHOP+'?ctv='+d.ma+'" target="_blank" rel="noopener">Mở trang sản phẩm</a>':'')+'<button class="sm" data-hoc="'+i+'">Tôi đã học xong</button></div>':'')
+      +'</div></li>';
+  }
+  hoc+='</ol><div id="hocmsg"></div></div>';
+  const banExtra = active ? '<p class="muted" style="margin:10px 0 0">Tháng '+esc(d.ky)+': doanh số '+vnd(d.dsKy)+', bậc '+pct(d.tyle)+(d.tiep?'. Còn '+vnd(d.tiep.moc-d.dsKy)+' để lên '+pct(d.tiep.tyle)+'.':'.')+'</p><button class="ghost" data-goto="ban">Chia sẻ trang giới thiệu, lên đơn</button>' : '';
+  const n=d.nhom||{soF1:0,soTong:0,dsNhomKy:0};
+  const tuyenExtra = active ? '<p class="muted" style="margin:10px 0 0">Bạn đã mời '+n.soF1+' người, nhóm có '+n.soTong+' thành viên. Khách hài lòng là người dễ trở thành CTV nhất.</p><button class="ghost" data-goto="nhom">Mời người vào nhóm</button>' : '';
+  $('t_viec').innerHTML = hoc
+    + group('ban','2. Bán hàng','Gọi xác nhận đơn trong 24 giờ, gửi thông tin thanh toán.',by.ban, active?'Không có đơn chờ gọi.':'Mở sau khi được duyệt.', banExtra)
+    + group('tuyen','3. Tuyển CTV mới','Chào đón người mới đăng ký qua link của bạn.',by.tuyen,'Chưa có người mới chờ duyệt.', tuyenExtra)
+    + group('hethong','4. Chăm sóc hệ thống','Kèm người bạn mời học đủ lộ trình và bán được đơn đầu.',by.hethong,'Nhóm của bạn đang ổn.', '')
+    + group('khach','5. Chăm sóc khách hàng','Hướng dẫn sau giao, xin đánh giá, nhắc gia hạn thuê và mua que thử.',by.khach,'Chưa có khách cần chăm sóc.', '');
   $('t_viec').querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>tab(b.dataset.goto));
+  $('t_viec').querySelectorAll('[data-hoc]').forEach(b=>b.onclick=()=>{
+    b.disabled=true;
+    api('hocXong',[CRED.ma,CRED.pin,b.dataset.hoc]).then(()=>loadHome()).catch(e=>{ b.disabled=false; $('hocmsg').innerHTML='<div class="msg err">'+esc(e.message)+'</div>'; });
+  });
   $('t_viec').querySelectorAll('[data-kq]').forEach(b=>b.onclick=()=>{
     const box=b.closest('.task'); box.querySelectorAll('button').forEach(x=>x.disabled=true);
     api('ctvXacNhan',[CRED.ma,CRED.pin,b.dataset.don,b.dataset.kq]).then(r=>{ box.querySelector('.kqmsg').innerHTML='<div class="msg ok">Đã ghi: '+esc(r.ghi)+'</div>'; setTimeout(loadHome,1200); })
@@ -420,6 +467,7 @@ function traCuu(){
     h+='</div>';
     if(d.coTheDanhGia) h+='<div class="card" id="rate"><h2>Đánh giá tư vấn viên</h2><div class="stars" id="g_stars">'+[1,2,3,4,5].map(i=>'<button type="button" data-s="'+i+'" aria-label="'+i+' sao">★</button>').join('')+'</div><label for="g_nx">Nhận xét</label><textarea id="g_nx"></textarea><button id="g_btn">Gửi đánh giá</button><div id="g_msg"></div></div>';
     else if(d.daDanhGia) h+='<div class="card"><p class="muted" style="margin:0">Cảm ơn anh/chị đã đánh giá.</p></div>';
+    h+='<a class="btn ghost" style="margin-bottom:12px" href="khach/?sdt='+encodeURIComponent($('q_sdt').value)+'&don='+encodeURIComponent(d.madon)+'">Xem tất cả thiết bị, bảo hành và quyền lợi của tôi</a>';
     h+='<div class="card cta"><h2>Giới thiệu Vali cho người thân, có thêm thu nhập</h2><p class="muted">Anh/chị có thể đăng ký làm Cộng tác viên FaCare Life'+(d.ctv?', cùng nhóm với tư vấn viên '+esc(d.ctv.ten):'')+'. Được đào tạo miễn phí, hưởng hoa hồng theo chính sách của EFCARE.</p><a class="btn" href="?p=dangky'+(d.ctv?'&gt='+encodeURIComponent(d.ctv.ma):'')+'&sdt='+encodeURIComponent($('q_sdt').value)+'">Đăng ký làm CTV</a></div>';
     $('q_out').innerHTML=h; $('q_out').hidden=false;
     if(d.coTheDanhGia){
