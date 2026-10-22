@@ -116,6 +116,18 @@
     <div class="chk"><input type="checkbox" id="m_nho" checked><label for="m_nho">Ghi nhớ trên máy này 30 ngày (chỉ chọn trên điện thoại của riêng bạn)</label></div>
     <button id="m_btn">Vào trang của tôi</button>
     <div id="m_msg"></div>
+    <p style="margin:12px 0 0;text-align:center"><a href="#" id="qp_open" class="call">Quên mã PIN?</a></p>
+    <div id="qp" hidden>
+      <h3 style="margin-top:12px">Đặt lại mã PIN</h3>
+      <p class="muted">Nhập mã CTV và số điện thoại đã đăng ký. Mã 6 số sẽ gửi tới email bạn đăng ký, hiệu lực 15 phút.</p>
+      <div class="row"><div><label for="qp_ma">Mã CTV</label><input id="qp_ma" placeholder="CTV-0001"></div><div><label for="qp_sdt">Số điện thoại</label><input id="qp_sdt" inputmode="tel"></div></div>
+      <button class="ghost" id="qp_gui">Gửi mã về email</button>
+      <div id="qp_b2" hidden>
+        <div class="row"><div><label for="qp_code">Mã 6 số trong email</label><input id="qp_code" inputmode="numeric" maxlength="6"></div><div><label for="qp_pin">PIN mới (4–6 số)</label><input id="qp_pin" type="password" inputmode="numeric" maxlength="6"></div></div>
+        <button id="qp_dat">Đặt lại PIN</button>
+      </div>
+      <div id="qp_msg"></div>
+    </div>
   </div>
   <div id="home" hidden>
     <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:10px">
@@ -254,6 +266,11 @@ $('m_btn').onclick = ()=> call('login',[$('m_ma').value,$('m_pin').value,$('m_nh
   if(r.token) SESSION.set(ME.ma, r.token); else { try{localStorage.setItem('fcl_ma',ME.ma)}catch(e){} }
   $('m_pin').value=''; renderHome();
 }, $('m_btn'), 'm_msg');
+$('qp_open').onclick=e=>{ e.preventDefault(); $('qp').hidden=false; $('qp_open').hidden=true; $('qp_ma').value=$('m_ma').value; };
+$('qp_gui').onclick=()=>call('quenPin',[$('qp_ma').value,$('qp_sdt').value],r=>{ msg('qp_msg',esc(r.ghi),true); $('qp_b2').hidden=false; },$('qp_gui'),'qp_msg');
+$('qp_dat').onclick=()=>call('datLaiPin',[$('qp_ma').value,$('qp_code').value,$('qp_pin').value],()=>{
+  $('m_ma').value=$('qp_ma').value; $('m_pin').value=''; $('qp').hidden=true; $('qp_open').hidden=false;
+  msg('m_msg','Đã đặt lại PIN. Đăng nhập bằng PIN mới.',true); },$('qp_dat'),'qp_msg');
 $('h_out').onclick = ()=>{ SESSION.clear(); CRED=null; ME=null; $('home').hidden=true; $('m_login').hidden=false; };
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
 function tab(t){ document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t)); ['viec','ban','thu','nhom'].forEach(k=>$('t_'+k).hidden=k!==t); }
