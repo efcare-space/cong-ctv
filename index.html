@@ -206,7 +206,7 @@ const BASE = location.origin + location.pathname;
 const SHOP = BASE + 'mua/';
 const $ = id => document.getElementById(id);
 const vnd = n => (Math.round(n)||0).toLocaleString('vi-VN') + 'đ';
-const pct = x => Math.round(x*100) + '%';
+const pct = x => (Math.round(x*1000)/10).toLocaleString('vi-VN') + '%';
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function msg(id, text, ok){ $(id).innerHTML = text ? '<div class="msg '+(ok?'ok':'err')+'">'+text+'</div>' : ''; }
 function api(fn, args){
@@ -445,10 +445,13 @@ function renderNhom(){
   let h='<div class="card"><h2>Nhóm của tôi · tháng '+esc(d.ky)+'</h2><div class="kpi">'
    +'<div>Doanh số nhóm tháng này<b>'+vnd(n.dsNhomKy)+'</b></div><div>Thành viên<b>'+n.soTong+'</b></div>'
    +'<div>Bạn mời trực tiếp<b>'+n.soF1+'</b></div><div>Khách thành CTV<b>'+n.soTuKhach+'</b></div></div>'
-   +(function(){ const q=d.quanLy||{}; const tiep=q.tiep?'Còn '+vnd(q.tiep.moc-(q.tiep.cap>='L3'?q.doiXet:q.doi))+' doanh thu đội để lên '+esc(q.tiep.cap)+' '+esc(q.tiep.ten)+'.':'Bạn đang ở cấp cao nhất.';
-      return '<div class="kpi" style="margin-top:8px"><div>Cấp quản lý tháng này<b>'+(q.cap?esc(q.cap)+' · '+esc(q.chucDanh):'Chưa đạt L1')+'</b></div><div>Hoa hồng quản lý tạm tính<b>'+vnd(q.thucNhan||0)+'</b></div></div>'
-       +'<p class="muted" style="margin:8px 0 0">'+tiep+(q.cap?' Thưởng cơ sở '+vnd(q.coSo)+' trừ phần của quản lý cấp dưới trực tiếp (QC06). Cấp được bổ nhiệm từ tháng sau khi đạt; áp dụng khi ký hợp đồng lao động.':' Đạt 600 triệu doanh thu đội trong tháng để lên L1 (QC06).')+'</p>'; })()
-   +'<p class="muted" style="margin:10px 0 0">Doanh số nhóm gồm của bạn ('+vnd(n.dsToiKy)+') và của mọi người trong nhóm, chỉ tính đơn khách đã thanh toán đủ. Từ trước đến nay: '+vnd(n.dsNhomTong)+'. Số này để bạn theo dõi và xét cấp quản lý; hoa hồng của mỗi người vẫn tính trên doanh số của chính người đó (QĐ09), thưởng giới thiệu CTV theo QĐ10.</p></div>';
+   +(function(){ const q=d.quanLy||{}; const tiep=q.tiep?'Còn '+vnd(Math.max(0,q.tiep.moc-(q.tiep.cap>='L3'?q.doiXet:q.doi)))+' doanh thu đội để đạt chức danh '+esc(q.tiep.cap)+' '+esc(q.tiep.ten)+'.':'Bạn đã đạt mức cao nhất.';
+      return '<div class="kpi" style="margin-top:8px"><div>Chức danh đang giữ<b>'+esc(q.chucDanh||'CTV')+'</b></div><div>Mức hoa hồng quản lý tháng này<b>'+(q.capHH?esc(q.capHH)+' · '+pct(q.tyle):'Chưa đạt 300 triệu')+'</b></div>'
+       +'<div>Hoa hồng quản lý tạm tính<b>'+vnd(q.thucNhan||0)+'</b></div><div>Quỹ đồng chia tạm tính<b>'+vnd(q.quy||0)+'</b></div></div>'
+       +'<p class="muted" style="margin:8px 0 0">Doanh thu đội tháng này (không gồm GTGT, không gồm cọc): '+vnd(q.doi||0)+'. '+tiep
+       +(q.capHH?' Hoa hồng cơ sở '+vnd(q.coSo)+' trừ hoa hồng cơ sở của quản lý cấp dưới trực tiếp (QĐ13).':' Đạt 300 triệu doanh thu đội trong tháng để có hoa hồng quản lý mức L1 4% (QĐ13).')
+       +' Mức hoa hồng theo doanh thu đội thực tế; chức danh bổ nhiệm từ ngày 01 tháng sau khi đạt, xét L3 trở lên theo quy tắc 70/30. Quỹ đồng chia chỉ cho người đang giữ chức danh. Áp dụng doanh thu từ 01/11/2026.</p>'; })()
+   +'<p class="muted" style="margin:10px 0 0">Doanh số nhóm gồm của bạn ('+vnd(n.dsToiKy)+') và của mọi người trong nhóm, chỉ tính đơn khách đã thanh toán đủ. Từ trước đến nay: '+vnd(n.dsNhomTong)+'. Hoa hồng bán hàng của mỗi người vẫn tính trên doanh số của chính người đó (QĐ09), thưởng giới thiệu CTV theo QĐ10.</p></div>';
   if(!n.thanhVien.length){
     h+='<div class="card"><h3>Nhóm chưa có ai</h3><p class="muted">Khi người bạn mời đăng ký qua link của bạn, hoặc khách hàng của bạn đăng ký làm CTV, họ sẽ hiện ở đây.</p></div>';
   } else {
