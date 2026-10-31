@@ -94,7 +94,7 @@
 <section id="dangky" hidden>
   <div class="card">
     <h2>Đăng ký Cộng tác viên</h2>
-    <p class="muted">Admin duyệt và mời bạn tham gia khoá đào tạo. Được duyệt rồi mới lên đơn được. Có email thì bạn được báo khi được duyệt và khi có khách đặt.</p>
+    <p class="muted">Đăng ký xong bạn vào học ngay, không phải chờ duyệt. Học xong và đạt bài kiểm tra thì lên đơn được. Có email thì bạn được báo khi được mở bán và khi có khách đặt.</p>
     <label for="r_ten">Họ và tên</label><input id="r_ten" autocomplete="name">
     <label for="r_sdt">Số điện thoại</label><input id="r_sdt" inputmode="tel" autocomplete="tel">
     <label for="r_email">Email (nên có, để nhận thông báo)</label><input id="r_email" inputmode="email" autocomplete="email">
@@ -249,7 +249,7 @@ show(PAGE);
 // ===== ĐĂNG KÝ
 $('r_btn').onclick = ()=> call('registerCTV',[{ten:$('r_ten').value,sdt:$('r_sdt').value,email:$('r_email').value,tinh:$('r_tinh').value,gt:$('r_gt').value,pin:$('r_pin').value,dongy:$('r_dongy').checked,hienSdt:$('r_hien').checked}], r=>{
   try{localStorage.setItem('fcl_ma',r.ma)}catch(e){}
-  msg('r_msg','Đăng ký thành công. Mã CTV của bạn: <b>'+esc(r.ma)+'</b>. Hãy ghi nhớ mã PIN. Admin sẽ liên hệ để duyệt và mời đào tạo.<br><br>Từ nay bạn chỉ cần mở <b>Trang của tôi</b>: link, mã QR, việc cần làm, thu nhập đều ở đó.', true);
+  msg('r_msg','Đăng ký thành công. Mã CTV của bạn: <b>'+esc(r.ma)+'</b>. Hãy ghi nhớ mã PIN. Học viện sẽ liên hệ mời bạn vào lớp đào tạo.<br><br>Từ nay bạn chỉ cần mở <b>Trang của tôi</b>: link, mã QR, việc cần làm, thu nhập đều ở đó.', true);
   $('r_btn').hidden=true;
   const b=document.createElement('a'); b.className='btn'; b.href='?p=cuatoi'; b.textContent='Vào Trang của tôi'; $('r_msg').appendChild(b);
 }, $('r_btn'), 'r_msg');
@@ -278,8 +278,8 @@ function renderHome(){
   const d=ME; $('m_login').hidden=true; $('home').hidden=false;
   $('h_ten').textContent=d.ten; $('h_sub').textContent=d.ma+' · Đào tạo: '+d.dt;
   const active=d.tt==='Hoạt động';
-  $('h_banner').innerHTML = active ? '' : '<div class="banner"><b>'+(d.tt==='Tạm dừng'?'Tài khoản đang tạm dừng.':'Đang chờ Admin duyệt.')+'</b> '
-    +(d.tt==='Tạm dừng'?'Vui lòng liên hệ Admin.':'Admin sẽ liên hệ và mời bạn tham gia khoá đào tạo. Sau khi được duyệt, bạn lên đơn và chia sẻ trang giới thiệu được ngay'+(d.email?'; chúng tôi sẽ báo qua email '+esc(d.email)+'.':'.'))+'</div>';
+  $('h_banner').innerHTML = active ? '' : '<div class="banner"><b>'+(d.tt==='Tạm dừng'?'Tài khoản đang tạm dừng.':'Bạn đang trong giai đoạn học.')+'</b> '
+    +(d.tt==='Tạm dừng'?'Vui lòng liên hệ Admin.':'Học viện sẽ mời bạn vào lớp. Học xong và đạt bài kiểm tra, bạn lên đơn và chia sẻ trang giới thiệu được ngay'+(d.email?'; chúng tôi sẽ báo qua email '+esc(d.email)+'.':'.'))+'</div>';
   const n=d.viec.length+((d.lotrinh&&d.lotrinh.dat<d.lotrinh.buoc.length)?1:0); $('h_badge').hidden=!n; $('h_badge').textContent=n;
   renderViec(); renderBan(); renderThu(); renderNhom();
   tab('viec');
@@ -317,8 +317,8 @@ function taskCard(x){
     case 'quethu': return '<div class="task"><div class="top"><b>Nhắc mua que thử</b><span class="pill wait">'+x.ngay+' ngày</span></div>'+who
        +'<div class="muted">Đã '+x.ngay+' ngày từ lần nhận Vali hoặc mua que gần nhất. Hỏi khách còn que không, lên đơn que thử nếu cần.</div>'
        +'<div class="acts"><button class="sm ghost" data-share="'+esc('Anh/chị còn đủ que thử để đo hằng ngày không ạ? Em gửi link đặt que thử đúng loại, giao tận nhà: '+SHOP+'?ctv='+ME.ma+'#que-thu')+'">Gửi link mua que thử</button></div></div>';
-    case 'f1duyet': return '<div class="task"><div class="top"><b>Chào đón '+esc(x.kh)+'</b><span class="pill wait">Chờ duyệt</span></div>'+who
-       +'<div class="muted">Người bạn mời vừa đăng ký ('+esc(x.ma)+'). Gọi chào, mời dự buổi giới thiệu cơ hội để được duyệt sớm.</div></div>';
+    case 'f1duyet': return '<div class="task"><div class="top"><b>Chào đón '+esc(x.kh)+'</b><span class="pill wait">Mới đăng ký</span></div>'+who
+       +'<div class="muted">Người bạn mời vừa đăng ký ('+esc(x.ma)+'). Gọi chào, mời dự buổi giới thiệu cơ hội và vào lớp đào tạo.</div></div>';
     case 'f1hoc': return '<div class="task"><div class="top"><b>Kèm '+esc(x.kh)+' học</b><span class="pill">'+esc(x.dt||'Chưa')+'</span></div>'+who
        +'<div class="muted">Giúp hoàn thành lộ trình học: bước tiếp theo sau "'+esc(x.dt||'Chưa')+'".</div></div>';
     case 'f1ban': return '<div class="task"><div class="top"><b>Hỗ trợ '+esc(x.kh)+' bán đơn đầu</b><span class="pill wait">0đ tháng này</span></div>'+who
@@ -347,8 +347,8 @@ function renderViec(){
   const n=d.nhom||{soF1:0,soTong:0,dsNhomKy:0};
   const tuyenExtra = active ? '<p class="muted" style="margin:10px 0 0">Bạn đã mời '+n.soF1+' người, nhóm có '+n.soTong+' thành viên. Khách hài lòng là người dễ trở thành CTV nhất.</p><button class="ghost" data-goto="nhom">Mời người vào nhóm</button>' : '';
   $('t_viec').innerHTML = hoc
-    + group('ban','2. Bán hàng','Gọi xác nhận đơn trong 24 giờ, gửi thông tin thanh toán.',by.ban, active?'Không có đơn chờ gọi.':'Mở sau khi được duyệt.', banExtra)
-    + group('tuyen','3. Tuyển CTV mới','Chào đón người mới đăng ký qua link của bạn.',by.tuyen,'Chưa có người mới chờ duyệt.', tuyenExtra)
+    + group('ban','2. Bán hàng','Gọi xác nhận đơn trong 24 giờ, gửi thông tin thanh toán.',by.ban, active?'Không có đơn chờ gọi.':'Mở sau khi đạt bài kiểm tra.', banExtra)
+    + group('tuyen','3. Tuyển CTV mới','Chào đón người mới đăng ký qua link của bạn.',by.tuyen,'Chưa có người mới đăng ký.', tuyenExtra)
     + group('hethong','4. Chăm sóc hệ thống','Kèm người bạn mời học đủ lộ trình và bán được đơn đầu.',by.hethong,'Nhóm của bạn đang ổn.', '')
     + group('khach','5. Chăm sóc khách hàng','Hướng dẫn sau giao, xin đánh giá, nhắc gia hạn thuê và mua que thử.',by.khach,'Chưa có khách cần chăm sóc.', '');
   $('t_viec').querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>tab(b.dataset.goto));
@@ -388,7 +388,7 @@ function drawDT(){
 }
 function renderBan(){
   const d=ME, active=d.tt==='Hoạt động';
-  if(!active){ $('t_ban').innerHTML='<div class="card"><h3>Chưa mở bán</h3><p class="muted">Bộ chia sẻ và chức năng lên đơn mở sau khi bạn được Admin duyệt.</p></div>'; return; }
+  if(!active){ $('t_ban').innerHTML='<div class="card"><h3>Chưa mở bán</h3><p class="muted">Bộ chia sẻ và chức năng lên đơn mở sau khi bạn đạt bài kiểm tra.</p></div>'; return; }
   $('t_ban').innerHTML =
     '<div class="card"><h2>Link giới thiệu theo đối tượng</h2><p class="muted">Chọn người bạn sắp gửi. Mỗi trang có link, mã QR và tin nhắn riêng; ai đặt mua hoặc đăng ký qua link đều ghi cho bạn. Trang hiện '+(d.hienSdt?'tên và số điện thoại':'tên')+' của bạn.</p>'
     +'<div class="dtpick">'+Object.keys(DT).map(k=>'<button type="button" data-dt="'+k+'">'+esc(DT[k].ten)+'</button>').join('')+'</div>'
